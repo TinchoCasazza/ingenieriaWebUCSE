@@ -1,61 +1,94 @@
-{% extends "adminlte/base.html" %}
-{% load i18n static %}
+<!DOCTYPE html>
+<html lang="en" >
 
-{% block body_class %}login-page{% endblock %}
+<head>
+  <meta charset="UTF-8">
+  <title>Material Login Form</title>
+  
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
 
-{% block body %}
-    <div class="login-box">
-        {% block logo %}
-        <div class="login-logo">
-            {# Mirrors block names used in _main_header.html #}
-            <a href="{% block logo_href %}/{% endblock %}">{% block logo_text %}<b>Admin</b>LTE{% endblock %}</a>
-        </div>
-        {% endblock %}
-        <!-- /.login-logo -->
-        <div class="login-box-body">
-            {% block login_errors %}
-                {% if form.errors and not form.non_field_errors %}
-                    <p class="alert alert-danger">
-                        {% if form.errors.items|length == 1 %}{% trans "Please correct the error below." %}{% else %}
-                            {% trans "Please correct the errors below." %}{% endif %}
-                    </p>
-                {% endif %}
+  <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,500,700,900|RobotoDraft:400,100,300,500,700,900'>
+<link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css'>
 
-                {% if form.non_field_errors %}
-                    {% for error in form.non_field_errors %}
-                        <p class="alert alert-danger">
-                            {{ error }}
-                        </p>
-                    {% endfor %}
-                {% endif %}
-            {% endblock login_errors %}
+      <link rel="stylesheet" href="../static/admin-lte/dist/css/login_style.css">
 
-            {% block login_form %}
-                <form action="" method="post">
-                    {% csrf_token %}
-                    {% if message %}
-                        <p class="login-box-msg" style="color: red;">{{ message }}</p>
-                    {% endif %}
-                    <div class="form-group has-feedback">
-                        <input name="username" class="form-control" placeholder="Username">
-                        <span class="glyphicon glyphicon-user form-control-feedback"></span>
-                    </div>
-                    <div class="form-group has-feedback">
-                        <input type="password" name="password" class="form-control" placeholder="Password">
-                        <span class="glyphicon glyphicon-lock form-control-feedback"></span>
-                    </div>
-                    <div class="row">
-                        <div class="col-xs-8">
-                            {% block login_form_links %}
-                            {% endblock %}
-                        </div>
-                        <div class="col-xs-4">
-                            <button type="submit" class="btn btn-primary btn-block btn-flat">Login</button>
-                        </div>
-                    </div>
-                </form>
-            {% endblock login_form %}
+  
+</head>
 
-        </div>
-    </div>
-{% endblock %}
+<body>
+
+  
+<!-- Mixins-->
+<!-- Pen Title-->
+
+<div class="container">
+  <div class="card"></div>
+  <div class="card">
+    <h1 class="title">Login</h1>
+    <form method="POST"  action="">
+      {% csrf_token %}
+      <div class="input-container">
+        <input type="text" name="username" required="required"/>
+        <label for="username">Nombre de usuario</label>
+        <div class="bar"></div>
+      </div>
+      <div class="input-container">
+        <input type="password" name="password" required="required"/>
+        <label for="password">Contraseña</label>
+        <div class="bar"></div>
+      </div>
+      <div class="button-container">
+        <button type="submit"><span>Iniciar</span></button>
+        <input type="hidden" name="next" value="/inicio/" />
+      </div>
+      {% if messages %}
+      <div class="alert alert-danger">
+          <ul class="messages">
+            {% for message in messages %}
+            <li>{% if message.tags %}{% endif %}{{ message }}</li>
+            {% endfor %}
+          </ul>
+      </div>
+      {% endif %}
+  
+      <!---<div class="footer"><a href="#">Forgot your password?</a></div>-->
+    </form>
+  </div>
+  <div class="card alt">
+    <div class="toggle"></div>
+    <h1 class="title">Register
+      <div class="close"></div>
+    </h1>
+    <form>
+      <div class="input-container">
+        <input type="#{type}" id="#{label}" required="required"/>
+        <label for="#{label}">Username</label>
+        <div class="bar"></div>
+      </div>
+      <div class="input-container">
+        <input type="#{type}" id="#{label}" required="required"/>
+        <label for="#{label}">Password</label>
+        <div class="bar"></div>
+      </div>
+      <div class="input-container">
+        <input type="#{type}" id="#{label}" required="required"/>
+        <label for="#{label}">Repeat Password</label>
+        <div class="bar"></div>
+      </div>
+      <div class="button-container">
+        <button><span>Next</span></button>
+      </div>
+    </form>
+  </div>
+</div>
+  <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+
+  
+
+    <script  src="../static/admin-lte/dist/js/login.js"></script>
+
+
+
+</body>
+
+</html>

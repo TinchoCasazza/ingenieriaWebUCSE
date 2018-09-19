@@ -398,7 +398,7 @@ Block Reference
 '''''''''''
 
     The entirety of the header navigation
-
+<input type="hidden" name="next" value="/inicio/" />
 ``nav_bar_center``
 ''''''''''''''''''
 

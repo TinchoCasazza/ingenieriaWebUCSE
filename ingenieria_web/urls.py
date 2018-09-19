@@ -18,12 +18,15 @@ from django.conf.urls import url, include
 from django.contrib import admin
 from django.views.generic.base import TemplateView
 from ingenieria_web.social import views
+from django.contrib.auth.views import LoginView, login_required
+
 
 urlpatterns = [
-    url(r'^$', TemplateView.as_view(template_name='adminlte/index.html')),
-    url(r'^login/$', TemplateView.as_view(template_name='adminlte/login.html')),
+    url(r'^$', views.login, name="login_url"),
+    url(r'^login/$', views.login, name="login_aux_url"),
+    url(r'^logout/$', views.logout, name="logout_url"),
+    url(r'^inicio/$', login_required(views.inicio), name="inicio_url"),
     url(r'^admin/', admin.site.urls),
-    url(r'login_inicio/', views.login_prueba, name="login_url" ),
 ]
 
 if settings.DEBUG:
