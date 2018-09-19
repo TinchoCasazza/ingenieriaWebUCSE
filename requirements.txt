@@ -1,5 +1,4 @@
 django==2.1.1
-python==3.6
 django-heroku
 gunicorn
 django-debug-toolbar
