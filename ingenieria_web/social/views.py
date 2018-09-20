@@ -1,10 +1,12 @@
 from django.shortcuts import render
 from django.contrib import messages
 from django.http import HttpResponseRedirect
+from .models import Publicacion
 # Create your views here.
 
 def inicio(request):
-    return render(request, 'adminlte/index.html')
+    listaPublicaciones = Publicacion.objects.all()
+    return render(request, 'adminlte/index.html', {'listaPublicaciones' : listaPublicaciones})
 
 from django.contrib.auth import authenticate, login
 from django.contrib.auth import logout as django_logout
@@ -56,5 +58,19 @@ def register(request):
         else:
                 form = UserCreationForm()
         return render(request, 'inicio.html', {'form': form})
+        
+def publicar(request):
 
+        if request.method == 'POST':
+                contenido = request.POST.get('contenidoPublicacion')
+                publicacion = Publicacion()
+
+                publicacion.idUserPublico = request.user
+                publicacion.Titulo = "Prueba"
+                publicacion.Contenido = contenido
+                publicacion.save()
+                return HttpResponseRedirect('inicio/')
+        else:
+                publicaciones = Publicacion.objects.all()
+                return render(request, 'adminlte/index.html', {listaPublicaciones : publicaciones})
 

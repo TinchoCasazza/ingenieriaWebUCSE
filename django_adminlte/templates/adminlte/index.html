@@ -1,199 +1,202 @@
 {% extends 'adminlte/base.html' %}
+<link href="bootstrap-modal-carousel.css" rel="stylesheet" />
 
 {% block content %}
 <div class="row">
-        <div class="col-xs-12">
-          <div class="box">
+  <!-- /.box-header -->
+
+    <div class="col-md-12">
+        <div class="box">
             <div class="box-header">
-              <h3 class="box-title">Editor
+              <h3 class="box-title">Publicar
                 <small></small>
               </h3>
               <!-- tools box -->
               <div class="pull-right box-tools">
                 <button type="button" class="btn btn-default btn-sm" data-widget="collapse" data-toggle="tooltip" title="" data-original-title="Collapse">
                   <i class="fa fa-minus"></i></button>
-                <button type="button" class="btn btn-default btn-sm" data-widget="remove" data-toggle="tooltip" title="" data-original-title="Remove">
-                  <i class="fa fa-times"></i></button>
               </div>
               <!-- /. tools -->
             </div>
             <!-- /.box-header -->
             <div class="box-body pad">
               <form method="POST" >
-                <li>
-                  <div class="btn-group">
-                    <a class="btn  btn-default" data-wysihtml5-command="bold" title="CTRL+B" tabindex="-1" href="javascript:;" unselectable="on">Bold</a>
-                    <a class="btn  btn-default" data-wysihtml5-command="italic" title="CTRL+I" tabindex="-1" href="javascript:;" unselectable="on">Italic</a>
-                    <a class="btn  btn-default" data-wysihtml5-command="underline" title="CTRL+U" tabindex="-1" href="javascript:;" unselectable="on">Underline</a>
-                    
-                    <a class="btn  btn-default" data-wysihtml5-command="small" title="CTRL+S" tabindex="-1" href="javascript:;" unselectable="on">Small</a>
-                    
-                  </div>
-                </li>
-                <textarea class="col-xs-12" rows="10" cols="50">
-
-                </textarea>
+                {% csrf_token %}
+                <textarea id="contenidoPublicacion" placeholder="Escriba aca lo que quiera publicar" class="col-xs-12" rows="10" cols="40"></textarea>
                 <div class="col-xs-12" style="margin-top: 15px; text-align: right;">
-                  <button type="button" class="btn btn-success" id="btnPublicar">Publicar</button>            
+                  <button type="submit" class="btn btn-default btn-sm" id="btnSubirImagen">Adjuntar imagen</button>    
+                  <button type="submit" class="btn btn-success btn-sm" id="btnPublicar" onclick="Publicar()">Subir</button>
+                </div>
+              </form>
+            </div></div>
+        <!-- Box Comment -->
+        {% for publicacion in listaPublicaciones %}
+             <div class="box box-default">
+                <div class="box-header with-border">
+                    <div class="user-block">
+                        <img class="img-circle" src="https://www.gravatar.com/avatar/d89c1edbad2692462ed75e3ea268fa01?s=90&d=mm" alt="User Image">
+                        <span class="username"><a href="#">{{ publicacion.idUserPublico }}</a></span>
+                        <span class="description">{{ publicacion.FechaPublicacion }}</span>
+                      </div>
+                    <div class="box-tools">
+                    {% if publicacion.idUserPublico == request.user %}  
+                    <button type="button" id="btnBorrar{{ publicacion.idPublicacion }}"  onclick="eliminar()" class="btn btn-box-tool btnBorrar" data-widget="remove"><i class="fa fa-times"></i></button>
+                    {% endif %}
+                  </div>
+                  </div>  
+                <div class="box-body">{{ publicacion.Contenido }}</div>
+                
+              
+                        <!-- /.box-footer -->
+          <div class="box-footer">
+              <form action="#" method="post">
+                <img class="img-responsive img-circle img-sm" src="https://www.gravatar.com/avatar/d89c1edbad2692462ed75e3ea268fa01?s=90&d=mm" alt="Alt Text">
+                <!-- .img-push is used to add margin to elements next to floating images -->
+                <div class="img-push">
+                  <input type="text" class="form-control input-sm" placeholder="Escriba su comentario">
                 </div>
               </form>
             </div>
           </div>
-          <div class="box box-default">
-            <div class="box-header with-border">
-              <h3 class="box-title">Bienvenidos a Sarasa!</h3>
-            </div>  
-          </div>
-          <div class="box box-default">
-            <div class="box-header with-border">
-              <div class="timeline-item">
-                <span class="time"><i class="fa fa-clock-o"></i> 5 dias atras</span>
-
-                <h3 class="timeline-header"><a href="#">Nico</a> compartio un video</h3>
-
-                <div class="timeline-body">
-                  <div class="embed-responsive embed-responsive-4by3">
-                    <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/tMWkeBIohBs" allowfullscreen="" frameborder="0"></iframe>
-                  </div>
-                </div>
-                <div class="timeline-footer">
-                  <a href="#" class="btn btn-xs bg-maroon">Comentarios</a>
-                </div>
+            <!-- /.box-footer -->
+              {% empty %}
+              <div class="box box-default">
+                <div class="box-header with-border">
+                  <h3 class="box-title">Se el primero en publicar!</h3>
+                </div>  
               </div>
-            </div>
-            </div>   
+        {% endfor %}
+
+       
+</div>
+
+
+<div class="modal fade bd-example-modal-lg" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          Plan Ingenieria 2008
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+
+            <div id="myCarousel" class="carousel slide carousel-fit" data-ride="carousel">
+                <!-- Indicators -->
+                <ol class="carousel-indicators">
+                  <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                  <li data-target="#myCarousel" data-slide-to="1"></li>
+                  <li data-target="#myCarousel" data-slide-to="2"></li>
+                </ol>
+              
+                <!-- Wrapper for slides -->
+                <div class="carousel-inner">
+                  <div class="item active">
+                      <img class="img-responsive" src="../static/images/plan_ingenieria.jpeg" style="max-height:800px;">
+
+                  </div>
+                  <div class="item">
+                     <img class="img-responsive" src="../static/images/plan_ingenieria2.jpeg" style="max-height:800px;">
+  {{ publicacion.idPublicacion }}"                 </div>
+ {{ publicacion.idPublicacion }}"
+  {{ publicacion.idPublicacion }}"               </div>
+              
+                <!-- Controls -->
+                <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+                  <span class="glyphicon glyphicon-chevron-left"></span>
+                </a>
+                <a class="right carousel-control" href="#myCarousel" data-slide="next">
+                  <span class="glyphicon glyphicon-chevron-right"></span>
+                </a>
+              </div>
+            
         </div>
       </div>
+    </div>
+  </div>
 
-        <div class="modal fade" id="modal-default" style="display: none;">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">×</span></button>
-                <h4 class="modal-title">Default Modal</h4>
-              </div>
-              <div class="modal-body">
-                <p>{% include 'adminlte/login.html' %}</p>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
-              </div>
-            </div>
-            <!-- /.modal-content -->
-          </div>
-          <!-- /.modal-dialog -->
-        </div>
-        <!-- /.modal -->
 
-        <div class="modal modal-primary fade" id="modal-primary">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">×</span></button>
-                <h4 class="modal-title">Primary Modal</h4>
-              </div>
-              <div class="modal-body">
-                <p>One fine body…</p>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-outline">Save changes</button>
-              </div>
-            </div>
-            <!-- /.modal-content -->
-          </div>
-          <!-- /.modal-dialog -->
-        </div>
-        <!-- /.modal -->
 
-        <div class="modal modal-info fade" id="modal-info">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">×</span></button>
-                <h4 class="modal-title">Info Modal</h4>
-              </div>
-              <div class="modal-body">
-                <p>One fine body…</p>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-outline">Save changes</button>
-              </div>
-            </div>
-            <!-- /.modal-content -->
-          </div>
-          <!-- /.modal-dialog -->
-        </div>
-        <!-- /.modal -->
 
-        <div class="modal modal-warning fade" id="modal-warning">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">×</span></button>
-                <h4 class="modal-title">Warning Modal</h4>
-              </div>
-              <div class="modal-body">
-                <p>One fine body…</p>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-outline">Save changes</button>
-              </div>
-            </div>
-            <!-- /.modal-content -->
-          </div>
-          <!-- /.modal-dialog -->
-        </div>
-        <!-- /.modal -->
+<script src="bootstrap-modal-carousel.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script> 
 
-        <div class="modal modal-success fade" id="modal-success">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">×</span></button>
-                <h4 class="modal-title">Success Modal</h4>
-              </div>
-              <div class="modal-body">
-                <p>One fine body…</p>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-outline">Save changes</button>
-              </div>
-            </div>
-            <!-- /.modal-content -->
-          </div>
-          <!-- /.modal-dialog -->
-        </div>
-        <!-- /.modal -->
 
-        <div class="modal modal-danger fade" id="modal-danger">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">×</span></button>
-                <h4 class="modal-title">Danger Modal</h4>
-              </div>
-              <div class="modal-body">
-                <p>One fine body…</p>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-outline">Save changes</button>
-              </div>
-            </div>
-            <!-- /.modal-content -->
-          </div>
-          <!-- /.modal-dialog -->
-        </div>
-        <!-- /.modal -->
+<script>
+$(document).ready(function() {           
+  $.ajaxSetup({ 
+      beforeSend: function(xhr, settings) {
+          function getCookie(name) {
+              var cookieValue = null;
+              if (document.cookie && document.cookie != '') {
+                  var cookies = document.cookie.split(';');
+                  for (var i = 0; i < cookies.length; i++) {
+                      var cookie = jQuery.trim(cookies[i]);
+                      // Does this cookie string begin with the name we want?
+                      if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                          cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                          break;
+                          }
+                      }
+                  }
+                  return cookieValue;
+              }
+          if (!(/^http:.*/.test(settings.url) || /^https:.*/.test(settings.url))) {
+              // Only send the token to relative URLs i.e. locally.
+              xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
+          }
+      } 
+  });
+
+  function getCookie(name) {
+      var cookieValue = null;
+      if (document.cookie && document.cookie != '') {
+          var cookies = document.cookie.split(';');
+          for (var i = 0; i < cookies.length; i++) {
+              var cookie = jQuery.trim(cookies[i]);
+              // Does this cookie string begin with the name we want?
+              if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                  cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                  break;
+              }
+          }
+      }
+      return cookieValue;
+  }
+  var csrftoken = getCookie('csrftoken');
+  function csrfSafeMethod(method) {
+      // these HTTP methods do not require CSRF protection
+      return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+  }
+  $.ajaxSetup({
+      beforeSend: function(xhr, settings) {
+          if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+              xhr.setRequestHeader("X-CSRFToken", csrftoken);
+          }
+      }
+  });
+
+
+
+} );
+
+  function Publicar(){
+    var contenidoPublicacion = $("#contenidoPublicacion").val();
+    console.log(contenidoPublicacion)
+    $.ajax({
+      type: 'POST',
+      url: '/publicar/', //direccion a donde hace las requets
+      data: {contenidoPublicacion: contenidoPublicacion},
+      success: function (data) {
+
+      },
+      error: function(data) {
+      }
+    });
+};
+
+
+</script>
+  
 {% endblock %}
