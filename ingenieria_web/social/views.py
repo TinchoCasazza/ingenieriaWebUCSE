@@ -38,7 +38,7 @@ from django.contrib.auth.models import (
     BaseUserManager, AbstractBaseUser
 )
 from django.contrib.auth.models import User
-import pdb
+
 
 def register(request):
         if request.method == 'POST':
@@ -56,3 +56,5 @@ def register(request):
         else:
                 form = UserCreationForm()
         return render(request, 'inicio.html', {'form': form})
+
+
