@@ -62,8 +62,6 @@ class Publicacion(models.Model):
     FechaBajaPublicacion = models.DateField(default= None, editable = False,null = True)
     FechaModiPublicacion = models.DateField(default = None, editable = False, null = True)
 
-    def __str__(self):
-        return (self.Titulo, self.idPublicacion)
 
 class Comentario(models.Model):
     idComentario = models.AutoField(primary_key = True)
