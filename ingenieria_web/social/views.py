@@ -15,8 +15,8 @@ def login(request):
                 return HttpResponseRedirect('inicio/')
         else:
                 if request.method == 'POST':
-                        username = request.POST['username']
-                        password = request.POST['password']
+                        username = request.POST.get('username')
+                        password = request.POST.get('password')
                         user = authenticate(request, username=username, password=password)
                         if user is not None:
                                 auth_login(request , user)
@@ -27,7 +27,32 @@ def login(request):
                                 return render(request, 'adminlte/login.html' , {'error': messages} )
                 else: 
                         return render(request, 'adminlte/login.html' ,{} )
+       
 
 def logout(request):
     django_logout(request)
     return  HttpResponseRedirect('/login/')
+
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import (
+    BaseUserManager, AbstractBaseUser
+)
+from django.contrib.auth.models import User
+import pdb
+
+def register(request):
+        if request.method == 'POST':
+                username = request.POST.get('username')
+                password = request.POST.get('password')
+
+                user = User.objects.create_user(username= request.POST.get('username'),email=request.POST.get('email'),password=request.POST.get('password'))
+
+                user.save()
+                user = authenticate(request, username= username, password= password)
+                if user is not None:
+                        auth_login(request , user)
+                        if request.user.is_authenticated:
+                                return HttpResponseRedirect('/inicio/')
+        else:
+                form = UserCreationForm()
+        return render(request, 'inicio.html', {'form': form})

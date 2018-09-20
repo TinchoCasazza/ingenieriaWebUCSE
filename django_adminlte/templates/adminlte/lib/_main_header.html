@@ -4,9 +4,9 @@
     {% block logo %}
     <a href="{% block logo_href %}/{% endblock %}" class="logo">
         <!-- mini logo for sidebar mini 50x50 pixels -->
-        <span class="logo-mini">{% block logo_text_small %}<b>A</b>LTE{% endblock %}</span>
+        <span class="logo-mini">{% block logo_text_small %}<b>S</b>rs{% endblock %}</span>
         <!-- logo for regular state and mobile devices -->
-        <span class="logo-lg">{% block logo_text %}<b>Admin</b>LTE{% endblock %}</span>
+        <span class="logo-lg">{% block logo_text %}<b>Sarasa</b>{% endblock %}</span>
     </a>
     {% endblock %}
 
@@ -39,7 +39,7 @@
                                     <img src="{% avatar_url size=180 %}" class="img-circle" alt="User Image">
                                     <p>
                                         {% firstof request.user.get_short_name request.user.get_username %}
-                                        <small>Member since {{ request.user.date_joined }}</small>
+                                        <small>Miembro desde {{ request.user.date_joined }}</small>
                                     </p>
                                 </li>
                                 {% endblock %}
@@ -49,10 +49,10 @@
                                 <li class="user-footer">
                                     <div class="pull-left">
                                         <a href="{% block change_password_url %}{% url 'admin:password_change' %}{% endblock %}"
-                                           class="btn btn-default btn-flat">{% trans 'Change password' %}</a>
+                                           class="btn btn-default btn-flat">{% trans 'Cambiar Contraseña' %}</a>
                                     </div>
                                     <div class="pull-right">
-                                        <a href="{% block logout_url %}{% logout_url %}{% endblock %}" class="btn btn-default btn-flat">Sign out</a>
+                                        <a href="{% block logout_url %}{% logout_url %}{% endblock %}" class="btn btn-default btn-flat">Salir</a>
                                     </div>
                                 </li>
                                 {% endblock %}
