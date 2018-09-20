@@ -14,7 +14,7 @@ from django.contrib.auth import login as auth_login
 CRITICAL = 50
 def login(request):
         if request.user.is_authenticated:
-                return HttpResponseRedirect('inicio/')
+                return HttpResponseRedirect('/inicio/')
         else:
                 if request.method == 'POST':
                         username = request.POST.get('username')
@@ -22,7 +22,7 @@ def login(request):
                         user = authenticate(request, username=username, password=password)
                         if user is not None:
                                 auth_login(request , user)
-                                return HttpResponseRedirect('inicio/')
+                                return HttpResponseRedirect('/inicio/')
                         else:
                                 messages.set_level(request, messages.WARNING)
                                 messages.add_message(request, CRITICAL, u'Usuario o Contrase\xf1a incorrectos.')
