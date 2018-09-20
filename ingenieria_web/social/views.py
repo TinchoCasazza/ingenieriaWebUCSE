@@ -22,7 +22,7 @@ def login(request):
                         user = authenticate(request, username=username, password=password)
                         if user is not None:
                                 auth_login(request , user)
-                                return render(request, 'adminlte/index.html', {})
+                                return HttpResponseRedirect('inicio/')
                         else:
                                 messages.set_level(request, messages.WARNING)
                                 messages.add_message(request, CRITICAL, u'Usuario o Contrase\xf1a incorrectos.')
