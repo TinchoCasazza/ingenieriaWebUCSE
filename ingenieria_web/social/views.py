@@ -1,12 +1,13 @@
 from django.shortcuts import render
 from django.contrib import messages
 from django.http import HttpResponseRedirect
-from .models import Publicacion
+from .models import Publicacion, Grupo
 # Create your views here.
 
 def inicio(request):
     listaPublicaciones = Publicacion.objects.all()
-    return render(request, 'adminlte/index.html', {'listaPublicaciones' : listaPublicaciones})
+    listaGrupos = Grupo.objects.all().order_by('NombreGrupo')
+    return render(request, 'adminlte/index.html', {'listaPublicaciones' : listaPublicaciones, 'listaGrupos': listaGrupos})
 
 from django.contrib.auth import authenticate, login
 from django.contrib.auth import logout as django_logout

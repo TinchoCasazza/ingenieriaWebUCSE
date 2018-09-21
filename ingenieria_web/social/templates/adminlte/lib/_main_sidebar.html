@@ -20,6 +20,21 @@
             <i class="fa fa-laptop"></i> <span>Admin</span>
         </a>
     </li>
-
+    <li class="treeview">
+        <a href="#">
+            <i class="fa fa-users"></i> <span>Grupos</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+        </a>
+        <ul class="treeview-menu">
+            {% for grupo in listaGrupos %}
+                <li><a href="index.html"><i class="fa fa-circle-o"></i> Metodoloía de Estudio</a></li>
+                <li class=""><a href="index2.html"><i class="fa fa-circle-o"></i> Ing  Web</a></li>
+                {% empty %}
+                    <li class=""><a href="/grupo/nuevo/"><i class="fa fa-circle-o"></i> Crear Nuevo Grupo</a></li>
+            {% endfor %}
+        </ul>
+    </li>
     {% endif %}
 {% endblock nav_links %}
