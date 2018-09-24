@@ -6,7 +6,9 @@
   <!-- /.box-header -->
 
     <div class="col-md-12">
-        <div class="box">
+       <!-- Si el usuario esta logeado y tiene permisos para publicar  -->
+      {% if request.user.is_authenticated %}
+         <div class="box">
             <div class="box-header">
               <h3 class="box-title">Publicar
                 <small></small>
@@ -18,23 +20,27 @@
               </div>
               <!-- /. tools -->
             </div>
-            <!-- /.box-header -->
-            <div class="box-body pad">
-              <form method="POST" >
-                {% csrf_token %}
-                <textarea id="contenidoPublicacion" placeholder="Escriba aca lo que quiera publicar" class="col-xs-12" rows="10" cols="40"></textarea>
-                <div class="col-xs-12" style="margin-top: 15px; text-align: right;">
-                  <button type="submit" class="btn btn-default btn-sm" id="btnSubirImagen">Adjuntar imagen</button>    
-                  <button type="submit" class="btn btn-success btn-sm" id="btnPublicar" onclick="Publicar()">Subir</button>
+              <!-- /.box-header -->
+                <div class="box-body pad">
+                  <form method="POST" >
+                    {% csrf_token %}
+                    <textarea id="contenidoPublicacion" placeholder="Escriba aca lo que quiera publicar" class="col-xs-12" rows="10" cols="40"></textarea>
+                    <div class="col-xs-12" style="margin-top: 15px; text-align: right;">
+                      <button type="submit" class="btn btn-default btn-sm" id="btnSubirImagen">Adjuntar imagen</button>    
+                      <button type="submit" class="btn btn-success btn-sm" id="btnPublicar" onclick="Publicar()">Subir</button>
+                    </div>
+                  </form>
                 </div>
-              </form>
-            </div></div>
+              </div>
+              {% endif %}
         <!-- Box Comment -->
         {% for publicacion in listaPublicaciones %}
              <div class="box box-default">
                 <div class="box-header with-border">
                     <div class="user-block">
-                        <img class="img-circle" src="https://www.gravatar.com/avatar/d89c1edbad2692462ed75e3ea268fa01?s=90&d=mm" alt="User Image">
+                        {% if avatar_url == empty %}
+                          <img class="img-circle" src="https://cdn1.vectorstock.com/i/thumb-large/66/60/avatar-business-man-graphic-vector-9646660.jpg" alt="User Image">
+                        {% endif %}
                         <span class="username"><a href="#">{{ publicacion.idUserPublico }}</a></span>
                         <span class="description">{{ publicacion.FechaPublicacion }}</span>
                       </div>

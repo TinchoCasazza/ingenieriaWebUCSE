@@ -5,7 +5,7 @@ from .models import Publicacion, Grupo
 # Create your views here.
 
 def inicio(request):
-    listaPublicaciones = Publicacion.objects.all()
+    listaPublicaciones = Publicacion.objects.all().order_by('-FechaPublicacion')
     listaGrupos = Grupo.objects.all().order_by('NombreGrupo')
     return render(request, 'adminlte/index.html', {'listaPublicaciones' : listaPublicaciones, 'listaGrupos': listaGrupos})
 
@@ -72,6 +72,6 @@ def publicar(request):
                 publicacion.save()
                 return HttpResponseRedirect('inicio/')
         else:
-                publicaciones = Publicacion.objects.all()
+                publicaciones = Publicacion.objects.all().order_by('-FechaPublicacion')
                 return render(request, 'adminlte/index.html', {listaPublicaciones : publicaciones})
 
