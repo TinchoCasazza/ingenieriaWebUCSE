@@ -22,7 +22,7 @@ from django.contrib.auth.views import LoginView, login_required
 
 
 urlpatterns = [
-    url(r'^$', views.login, name="login_url"),
+    url(r'^$', views.inicio, name="inicio_url"),
     url(r'^login/$', views.login, name="login_aux_url"),
     url(r'^logout/$', views.logout, name="logout_url"),
     url(r'^register/$', views.register, name="register_url"),
