@@ -26,7 +26,7 @@ urlpatterns = [
     url(r'^login/$', views.login, name="login_aux_url"),
     url(r'^logout/$', views.logout, name="logout_url"),
     url(r'^register/$', views.register, name="register_url"),
-    url(r'^inicio/$', login_required(views.inicio), name="inicio_url"),
+    url(r'^inicio/$', views.inicio, name="inicio_url"),
     url(r'^publicar/$', views.publicar, name="publicar_url"),
     url(r'^admin/', admin.site.urls),
 ]

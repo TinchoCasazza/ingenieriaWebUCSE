@@ -59,6 +59,13 @@
 
                             </ul>
                         </li>
+                    {% else %}
+                        <li class="dropdown user user-menu">
+                            <div class="pull-right" style="margin-top: 10%; margin-right: 8%">
+                                <a  href="/login/" class="btn btn-default btn-flat">Ingresar</a>
+                            </div>
+                        </li>   
+
                     {% endif %}
                 {% endblock header_dropdowns %}
             </ul>
