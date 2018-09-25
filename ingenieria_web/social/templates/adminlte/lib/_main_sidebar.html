@@ -28,12 +28,10 @@
             </span>
         </a>
         <ul class="treeview-menu">
-            {% for grupo in listaGrupos %}
-                <li><a href="index.html"><i class="fa fa-circle-o"></i> Metodoloía de Estudio</a></li>
-                <li class=""><a href="index2.html"><i class="fa fa-circle-o"></i> Ing  Web</a></li>
-                {% empty %}
-                    <li class=""><a href="/grupo/nuevo/"><i class="fa fa-circle-o"></i> Crear Nuevo Grupo</a></li>
-            {% endfor %}
+            <li><a href="index.html"><i class="fa fa-circle-o"></i> Nuevo Grupo</a></li>
+            {% if listaGrupos != None %}
+                <li><a href="{% url 'grupos_url' %}"><i class="fa fa-circle-o"></i> Mis Grupos</a></li>
+            {% endif %}
         </ul>
     </li>
     {% endif %}

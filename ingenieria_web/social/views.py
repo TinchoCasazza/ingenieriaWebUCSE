@@ -75,3 +75,5 @@ def publicar(request):
                 publicaciones = Publicacion.objects.all().order_by('-FechaPublicacion')
                 return render(request, 'adminlte/index.html', {listaPublicaciones : publicaciones})
 
+def grupos(request):
+        return render(request, 'grupos.html', {})

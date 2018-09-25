@@ -22,13 +22,22 @@ from django.contrib.auth.views import LoginView, login_required
 
 
 urlpatterns = [
-    url(r'^$', views.inicio, name="inicio_url"),
+
+    # Acount
     url(r'^login/$', views.login, name="login_aux_url"),
     url(r'^logout/$', views.logout, name="logout_url"),
     url(r'^register/$', views.register, name="register_url"),
+    
+    # Inicio
+    url(r'^$', views.inicio, name="inicio_url"),
     url(r'^inicio/$', views.inicio, name="inicio_url"),
-    url(r'^publicar/$', views.publicar, name="publicar_url"),
     url(r'^admin/', admin.site.urls),
+
+    #Publicaciones
+    url(r'^publicar/$', views.publicar, name="publicar_url"),
+
+    #Grupos
+    url(r'^grupos/$', views.grupos, name="grupos_url"),   
 ]
 
 if settings.DEBUG:
