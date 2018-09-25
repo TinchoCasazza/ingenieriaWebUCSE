@@ -7,7 +7,7 @@ from .models import Publicacion, Grupo
 def inicio(request):
     listaPublicaciones = Publicacion.objects.all().order_by('-FechaPublicacion')
     listaGrupos = Grupo.objects.all().order_by('NombreGrupo')
-    return render(request, 'adminlte/index.html', {'listaPublicaciones' : listaPublicaciones, 'listaGrupos': listaGrupos})
+    return render(request, 'adminlte/index.html', {'listaPublicaciones' : listaPublicaciones},{'listaGrupos': listaGrupos})
 
 from django.contrib.auth import authenticate, login
 from django.contrib.auth import logout as django_logout
@@ -76,4 +76,5 @@ def publicar(request):
                 return render(request, 'adminlte/index.html', {listaPublicaciones : publicaciones})
 
 def grupos(request):
-        return render(request, 'grupos.html', {})
+        lista_Grupos = Grupo.objects.all().order_by('NombreGrupo')
+        return render(request, 'adminlte/grupos.html', {'lista_grupos' : lista_Grupos})

@@ -13,20 +13,18 @@ class CategoriaUsuario(models.Model):
     def __str__(self):
         return (self.NombreCategoriaU)
 
-class CategoriaGrupo(models.Model):
-    idCategoriaG = models.AutoField(primary_key=True)
-    NombreCategoriaG = models.CharField(blank=False, max_length=50)
+class PrivacidadGrupo(models.Model):
+    idPrivacidadG = models.AutoField(primary_key=True)
+    Privacidad = models.CharField(blank=False, max_length=50)
 
     def __str__(self):
-        return (self.NombreCategoriaG)
+        return (self.Privacidad)
 
 class Grupo(models.Model):
     idGrupo = models.AutoField(primary_key=True)
     NombreGrupo = models.CharField(blank= False, max_length=50)
     Creador = models.ForeignKey(User, on_delete=models.CASCADE)
-    CategoriaGrupo = models.ForeignKey(CategoriaGrupo, on_delete=models.CASCADE)
-    Visibilidad = models.BooleanField(default=True)
-    NecesitaInvitacion = models.BooleanField(default=False)
+    NivelAcceso = models.ForeignKey(PrivacidadGrupo, on_delete=models.CASCADE)
     FechaCreacionG = models.DateField(("Fecha Creacion"), default = datetime.date.today)
     FechaBajaG = models.DateField(default= None, null = True, editable = False)
     FechaModiG = models.DateField(default = None, null = True, editable = False)
