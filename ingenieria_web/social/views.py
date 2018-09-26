@@ -1,13 +1,14 @@
 from django.shortcuts import render
 from django.contrib import messages
 from django.http import HttpResponseRedirect
-from .models import Publicacion, Grupo
+from .models import Publicacion, Grupo, Carrera
 # Create your views here.
 
 def inicio(request):
     listaPublicaciones = Publicacion.objects.all().order_by('-FechaPublicacion')
     listaGrupos = Grupo.objects.all().order_by('NombreGrupo')
-    return render(request, 'adminlte/index.html', {'listaPublicaciones' : listaPublicaciones},{'listaGrupos': listaGrupos})
+    listaCarreras = Carrera.objects.all().order_by('NombreCarrera')
+    return render(request, 'adminlte/index.html',{'listaCarreras': listaCarreras, 'listaPublicaciones' : listaPublicaciones ,'listaGrupos': listaGrupos})
 
 from django.contrib.auth import authenticate, login
 from django.contrib.auth import logout as django_logout
@@ -78,3 +79,4 @@ def publicar(request):
 def grupos(request):
         lista_Grupos = Grupo.objects.all().order_by('NombreGrupo')
         return render(request, 'adminlte/grupos.html', {'lista_grupos' : lista_Grupos})
+

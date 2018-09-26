@@ -70,6 +70,9 @@ class Comentario(models.Model):
     FechaModiComentario = models.DateField(default = None, editable = False, null = True)
     FechaBajaComentario = models.DateField(default = None, editable = False, null = True)
 
+class Carrera(models.Model):
+    idCarrera = models.AutoField(primary_key=True)
+    NombreCarrera = models.CharField(blank=False, max_length=50)
 
-
-
+    def __str__(self):
+        return (self.NombreCarrera)
