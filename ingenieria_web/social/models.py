@@ -3,6 +3,7 @@ from django.utils import timezone
 from django.contrib.auth.models import AbstractUser
 from django.contrib.auth.models import User
 import datetime
+from django.utils.text import slugify
 # Create your models here.
 
 

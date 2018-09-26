@@ -14,12 +14,7 @@
             <i class="fa fa-book"></i> <span>Plan de Estudio</span>
         </a>
     </li>
-    {% if request.user.is_staff %}
-    <li>
-        <a href="/admin/">
-            <i class="fa fa-laptop"></i> <span>Admin</span>
-        </a>
-    </li>
+    {% if request.user.is_authenticated %}
     <li class="treeview">
         <a href="#">
             <i class="fa fa-users"></i> <span>Grupos</span>
@@ -33,6 +28,13 @@
                 <li><a href="{% url 'grupos_url' %}"><i class="fa fa-circle-o"></i> Mis Grupos</a></li>
             {% endif %}
         </ul>
+    </li>
+    {% endif %}
+    {% if request.user.is_staff %}
+    <li>
+        <a href="/admin/">
+            <i class="fa fa-laptop"></i> <span>Admin</span>
+        </a>
     </li>
     {% endif %}
 {% endblock nav_links %}

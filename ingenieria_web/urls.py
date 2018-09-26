@@ -17,27 +17,30 @@ from django.conf import settings
 from django.conf.urls import url, include
 from django.contrib import admin
 from django.views.generic.base import TemplateView
-from ingenieria_web.social import views
+from ingenieria_web.social import views as social_views
+from ingenieria_web.search import views as search_views
 from django.contrib.auth.views import LoginView, login_required
-
 
 urlpatterns = [
 
     # Acount
-    url(r'^login/$', views.login, name="login_aux_url"),
-    url(r'^logout/$', views.logout, name="logout_url"),
-    url(r'^register/$', views.register, name="register_url"),
+    url(r'^login/$', social_views.login, name="login_aux_url"),
+    url(r'^logout/$', social_views.logout, name="logout_url"),
+    url(r'^register/$', social_views.register, name="register_url"),
     
     # Inicio
-    url(r'^$', views.inicio, name="inicio_url"),
-    url(r'^inicio/$', views.inicio, name="inicio_url"),
+    url(r'^$', social_views.inicio, name="inicio_url"),
+    url(r'^inicio/$', social_views.inicio, name="inicio_url"),
     url(r'^admin/', admin.site.urls),
 
     #Publicaciones
-    url(r'^publicar/$', views.publicar, name="publicar_url"),
+    url(r'^publicar/$', social_views.publicar, name="publicar_url"),
 
     #Grupos
-    url(r'^grupos/$', views.grupos, name="grupos_url"),   
+    url(r'^grupos/$', social_views.grupos, name="grupos_url"),   
+
+    #Busqueda
+    url(r'^busqueda/$', search_views.search, name="search_url"),  
 ]
 
 if settings.DEBUG:

@@ -23,10 +23,10 @@ INTERNAL_IPS = ['127.0.0.1']
 
 INSTALLED_APPS = [
     'ingenieria_web.social',
-
+    'ingenieria_web.search',
     'django_adminlte',
     'django_adminlte_theme',
-
+    'django_elasticsearch_dsl',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -35,6 +35,12 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'debug_toolbar',
 ]
+
+ELASTICSEARCH_DSL={
+    'default': {
+        'hosts': 'localhost:9200'
+    },
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -102,7 +108,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/1.10/topics/i18n/
 
-LANGUAGE_CODE = 'en-Us'
+LANGUAGE_CODE = 'es-Es'
 
 TIME_ZONE = 'UTC'
 
