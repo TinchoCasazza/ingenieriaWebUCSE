@@ -3,7 +3,6 @@ from ingenieria_web.search.documents import GrupoDocument
 # Create your views here.
 
 def search(request):
-
     q = request.GET.get('q')
 
     if q:

@@ -38,7 +38,7 @@ INSTALLED_APPS = [
 
 ELASTICSEARCH_DSL={
     'default': {
-        'hosts': 'localhost:9200'
+        'hosts': 'https://s4b264ksk0:f2tu2wl0my@sarasa-cluster-1213602894.us-east-1.bonsaisearch.net'
     },
 }
 
