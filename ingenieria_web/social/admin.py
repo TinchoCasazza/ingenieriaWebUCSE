@@ -1,4 +1,4 @@
 from django.contrib import admin
-from .models import PrivacidadGrupo, Grupo, UserGrupos, Publicacion, Carrera
+from .models import PrivacidadGrupo, Grupo, UserGrupos, Publicacion
 # Register your models here.
-admin.register(PrivacidadGrupo, Grupo, UserGrupos, Publicacion, Carrera)(admin.ModelAdmin)
+admin.register(PrivacidadGrupo, Grupo, UserGrupos, Publicacion)(admin.ModelAdmin)

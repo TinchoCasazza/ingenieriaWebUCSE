@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.contrib import messages
 from django.http import HttpResponseRedirect
-from .models import Publicacion, Grupo, Carrera
+from .models import Publicacion, Grupo
 # Create your views here.
 
 def inicio(request):
