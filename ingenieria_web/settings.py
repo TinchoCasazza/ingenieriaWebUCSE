@@ -40,7 +40,7 @@ INSTALLED_APPS = [
 verify_certs=False
 ELASTICSEARCH_DSL={
     'default': {
-        'hosts': 'https://sarasa-cluster-1213602894.us-east-1.bonsaisearch.net'
+        'hosts': 'https://s4b264ksk0:f2tu2wl0my@sarasa-cluster-1213602894.us-east-1.bonsaisearch.net'
     },
 }
 
