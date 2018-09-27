@@ -4,3 +4,4 @@ gunicorn
 django-debug-toolbar
 elasticsearch-dsl==6.1.0
 django-elasticsearch-dsl==0.5.0
+certifi
