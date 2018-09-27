@@ -76,6 +76,17 @@ def publicar(request):
                 publicaciones = Publicacion.objects.all().order_by('-FechaPublicacion')
                 return render(request, 'adminlte/index.html', {listaPublicaciones : publicaciones})
 
+def borrarPublicacion(request):
+        if request.method == 'POST':
+                pkPublicacion = request.POST.get('publicacionId')
+                publicacion = Publicacion()
+                publicacion = Publicacion.objects.get(idPublicacion = pkPublicacion)
+                if request.user == publicacion.idUserPublico:
+                        publicacion.delete()
+        publicaciones = Publicacion.objects.all().order_by('-FechaPublicacion')
+        return render(request, 'adminlte/index.html', {'listaPublicaciones' : publicaciones})        
+
+
 def grupos(request):
         lista_Grupos = Grupo.objects.all().order_by('NombreGrupo')
         return render(request, 'adminlte/grupos.html', {'lista_grupos' : lista_Grupos})
