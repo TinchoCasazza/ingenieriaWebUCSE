@@ -37,7 +37,7 @@ INSTALLED_APPS = [
 ]
 
 
-}
+
 ELASTICSEARCH_DSL={
     'default': {
         'hosts': 'https://sarasa-cluster-1213602894.us-east-1.bonsaisearch.net'
