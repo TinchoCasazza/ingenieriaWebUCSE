@@ -34,10 +34,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'debug_toolbar',
+    'elasticsearch',
 ]
 
-
-
+verify_certs=False
 ELASTICSEARCH_DSL={
     'default': {
         'hosts': 'https://sarasa-cluster-1213602894.us-east-1.bonsaisearch.net'
