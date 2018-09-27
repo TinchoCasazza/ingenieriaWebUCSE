@@ -47,7 +47,7 @@
                     <div class="box-tools">
                     {% if publicacion.idUserPublico == request.user %} 
                     <button type="button" class="btn btn-box-tool" data-widget="edit"><i class="fa fa-pencil"></i></button> 
-                    <button type="button" id="btnBorrar{{ publicacion.idPublicacion }}"  onclick="eliminar()" class="btn btn-box-tool btnBorrar" data-widget="remove"><i class="fa fa-times"></i></button>
+                    <button type="button" id="btnBorrar{{ publicacion.idPublicacion }}"  onclick="borrarPublicacion(this)" class="btn btn-box-tool btnBorrar" data-widget="remove"><i class="fa fa-times"></i></button>
                     
                     {% endif %}
                   </div>
@@ -157,8 +157,6 @@ $(document).ready(function() {
         return true;
     }
   };
- 
-  
   
   $('#generarPDF').click(function () {   
 
@@ -246,7 +244,7 @@ $(document).ready(function() {
 
 } );
 
-  function Publicar(){
+function Publicar(){
     var contenidoPublicacion = $("#contenidoPublicacion").val();
     console.log(contenidoPublicacion)
     $.ajax({
@@ -260,6 +258,28 @@ $(document).ready(function() {
       }
     });
 };
+
+function borrarPublicacion(comp){
+
+  // Recibe como "COMP" el ID de la publicacion a ELIMINAR
+  let publicacionId = comp.id;
+  var pkPublicacion = publicacionId.substr(9);
+
+  // Se parcea el ID , y se realiza el POST a la URL 
+  $.ajax({
+      type: 'POST',
+      url: '/publicar/borrar/', //direccion a donde hace las requets
+      data: {publicacionId: pkPublicacion},
+      success: function (data) {
+          console.log("Borrado exitosamente ");
+      },
+      error: function(data) {
+          console.log(data);
+          console.log("Accion no permitida ");
+      }
+  });
+
+}
 
 
 </script>
