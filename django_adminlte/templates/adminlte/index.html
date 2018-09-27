@@ -84,31 +84,29 @@
       <div class="modal-content">
         <div class="modal-header">
           <div class="btn-group">
-                  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                    <span class="caret"></span>
-                    <span class="sr-only">Toggle Dropdown</span>
+              <select class="input-group" id="selectCarrera">
+                <option selected > 
                     {% if request.user.is_authenticated %}
                         {{ user.carrera }}
                         Carrera del Usuario
                     {% else %}
                         {{ listaCarreras.first }}
                     {% endif %}
-                  </button>
-                  <ul class="dropdown-menu" role="menu">
+                </option>
                     {% for carrera in listaCarreras%}
-                      <li><a href="#">{{ carrera.NombreCarrera }}</a></li>
+                     <option> {{ carrera.NombreCarrera }} </option>
                     {% endfor %}
-                  </ul>
-                </div>
-                <button id="generarPDF" class="btn btn-default">
-                  <i class="fa fa-download"></i>
-                </button>      
+              </select>
+            </div>
+            <button id="generarPDF" class="btn btn-success">
+               Generar PDF <i class="fa fa-download"></i>
+            </button>      
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
         <div class="modal-body">
-
+            <h4  id="carrera" class="modal-title" align="center" style="font-weight:bold"></h4>
             <div id="myCarousel" class="carousel slide carousel-fit" data-ride="carousel">
                 <!-- Indicators -->
                 <ol class="carousel-indicators">
@@ -125,9 +123,8 @@
                   </div>
                   <div class="item">
                      <img class="img-responsive" src="../static/images/plan_ingenieria2.jpeg" style="max-height:800px;">
-                        {{ publicacion.idPublicacion }}"                 </div>
-                        {{ publicacion.idPublicacion }}"
-                        {{ publicacion.idPublicacion }}"               </div>
+                  </div>
+                </div>
               
                 <!-- Controls -->
                 <a class="left carousel-control" href="#myCarousel" data-slide="prev">
@@ -156,11 +153,17 @@ $(document).ready(function() {
   var doc = new jsPDF();
  
   $('#generarPDF').click(function () {   
-
       doc.fromHTML($('#imgCarrera').html(), 15, 15, {
           'width': 170
       });
       doc.save('sample-file.pdf');
+  });
+
+  $('#carrera').text( "Plan de estudio de " + $('#selectCarrera option:selected').html());
+  $('#selectCarrera').change(function(){
+    var seleccion = $('#selectCarrera option:selected').html();
+    $('#carrera').text( "Plan de estudio de " + seleccion);
+    console.log(seleccion);
   });
 
 

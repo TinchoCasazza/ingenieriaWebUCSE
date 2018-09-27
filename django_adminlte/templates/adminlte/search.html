@@ -1,5 +1,8 @@
+{% extends 'adminlte/base.html' %}
 
+{% block content %}
 {% for grupo in grupos %}
     {{ grupo.NombreGrupo }}
     <br>
 {% endfor %}
+{% endblock %}
