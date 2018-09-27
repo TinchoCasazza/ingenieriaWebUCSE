@@ -105,7 +105,7 @@
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <div class="modal-body">
+        <div id="modalBody" class="modal-body">
             <h4  id="carrera" class="modal-title" align="center" style="font-weight:bold"></h4>
             <div id="myCarousel" class="carousel slide carousel-fit" data-ride="carousel">
                 <!-- Indicators -->
@@ -145,17 +145,40 @@
 
 <script src="bootstrap-modal-carousel.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script> 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/0.9.0rc1/jspdf.min.js"></script>
+<script src="https://code.jquery.com/jquery-1.12.3.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.4/jspdf.min.js"></script>
 
 <script>
 $(document).ready(function() {    
 
   var doc = new jsPDF();
+  var specialElementHandlers = {
+    '#exampleModal': function (element, renderer) {
+        return true;
+    }
+  };
  
+  
+  
   $('#generarPDF').click(function () {   
-      doc.fromHTML($('#imgCarrera').html(), 15, 15, {
-          'width': 170
+
+      // Carga los elementos del PDF
+      var contenido = window.document.getElementById("modalBody");
+      var imgData =  new Image();
+      imgData.src = '../static/images/plan_ingenieria.jpeg';
+      var imgData2 =  new Image();
+      imgData2.src = '../static/images/plan_ingenieria2.jpeg';
+
+      doc.fromHTML(contenido, 15, 15, {
+          'width': 170,
+          'elementHandlers': specialElementHandlers
       });
+      console.log(imgData);
+
+      // Seteo de los parametros del PDF
+      doc.addImage(imgData, 'JPEG',0,10, 210, 210);
+      doc.addPage();
+      doc.addImage(imgData2, 'JPEG',0,10, 200, 210);
       doc.save('sample-file.pdf');
   });
 
