@@ -2,5 +2,5 @@ django==2.1.1
 django-heroku
 gunicorn
 django-debug-toolbar
-elasticsearch-dsl==6.2.1
+elasticsearch-dsl==6.1.0
 django-elasticsearch-dsl==0.5.0
