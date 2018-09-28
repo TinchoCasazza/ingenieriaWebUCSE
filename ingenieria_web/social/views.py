@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.contrib import messages
 from django.http import HttpResponseRedirect
-from .models import Publicacion, Grupo
+from .models import Publicacion, Grupo, EstadoPublicacion
 # Create your views here.
 
 def inicio(request):
@@ -80,10 +80,25 @@ def borrarPublicacion(request):
                 pkPublicacion = request.POST.get('publicacionId')
                 publicacion = Publicacion()
                 publicacion = Publicacion.objects.get(idPublicacion = pkPublicacion)
+                estado = EstadoPublicacion.objects.get(Estado = 'Eliminado')
                 if request.user == publicacion.idUserPublico:
-                        publicacion.delete()
+                        publicacion.Estado = estado
+                        publicacion.save()
         publicaciones = Publicacion.objects.all().order_by('-FechaPublicacion')
         return render(request, 'adminlte/index.html', {'listaPublicaciones' : publicaciones})        
+
+
+def guardarPublicacion(request):
+        if request.method == 'POST':
+                pkPublicacion = request.POST.get('publicacionId')
+                contenido = request.POST.get('contenido')
+                publicacion = Publicacion()
+                publicacion = Publicacion.objects.get(idPublicacion = pkPublicacion)
+                if request.user == publicacion.idUserPublico:
+                        publicacion.Contenido = contenido
+                        publicacion.save()
+        publicaciones = Publicacion.objects.all().order_by('-FechaPublicacion')
+        return render(request, 'adminlte/index.html', {'listaPublicaciones' : publicaciones})
 
 
 def grupos(request):

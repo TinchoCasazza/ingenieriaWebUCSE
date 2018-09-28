@@ -46,13 +46,12 @@
                       </div>
                     <div class="box-tools">
                     {% if publicacion.idUserPublico == request.user %} 
-                    <button type="button" class="btn btn-box-tool" data-widget="edit"><i class="fa fa-pencil"></i></button> 
+                    <button type="button" id="btnModificar{{ publicacion.idPublicacion }}" onclick="modificarPublicacion(this)" class="btn btn-box-tool" data-widget="edit"><i class="fa fa-pencil"></i></button> 
                     <button type="button" id="btnBorrar{{ publicacion.idPublicacion }}"  onclick="borrarPublicacion(this)" class="btn btn-box-tool btnBorrar" data-widget="remove"><i class="fa fa-times"></i></button>
                     
-                    {% endif %}
                   </div>
                   </div>  
-                <div class="box-body">{{ publicacion.Contenido }}</div>
+                <div id="publicacion{{ publicacion.idPublicacion }}" class="box-body">{{ publicacion.Contenido }}</div>
                 
               
                         <!-- /.box-footer -->
@@ -66,6 +65,7 @@
               </form>
             </div>
           </div>
+        {% endif %}
             <!-- /.box-footer -->
               {% empty %}
               <div class="box box-default">
@@ -73,6 +73,7 @@
                   <h3 class="box-title">Se el primero en publicar!</h3>
                 </div>  
               </div>
+          
         {% endfor %}
 
        
@@ -147,6 +148,8 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script> 
 <script src="https://code.jquery.com/jquery-1.12.3.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.4/jspdf.min.js"></script>
+<script src="path/to/bootstrap.js"></script>
+<script src="path/to/bootstrap-confirmation.js"></script>
 
 <script>
 $(document).ready(function() {    
@@ -186,7 +189,6 @@ $(document).ready(function() {
     $('#carrera').text( "Plan de estudio de " + seleccion);
     console.log(seleccion);
   });
-
 
   $.ajaxSetup({ 
       beforeSend: function(xhr, settings) {
@@ -281,6 +283,36 @@ function borrarPublicacion(comp){
 
 }
 
+function modificarPublicacion(comp){
+  let publicacionId = comp.id;
+  var pkPublicacion = publicacionId.substr(12);
+
+  var selector = "#publicacion" + pkPublicacion;
+  var contenidoPublicacion = $(selector).text();
+  $(selector).html('<textarea id="contenidoModifacion' + pkPublicacion + '" class="col-xs-12" cols="40" style="resize: none;"></textarea><div class="pull-right" style="margin-top:5px;"><button type="button" id="btnGuardar'+ pkPublicacion +'" class="btn btn-success btn-sm" onclick="guardarPublicacion(this)">Guardar</button></div>');
+  $("#contenidoModifacion" + pkPublicacion).val(contenidoPublicacion);
+};
+
+function guardarPublicacion(comp){
+  let publicacionId = comp.id;
+  var pkPublicacion = publicacionId.substr(10);
+
+  var contenido = $("#contenidoModifacion" + pkPublicacion).val();
+  // Se parcea el ID , y se realiza el POST a la URL 
+  $.ajax({
+      type: 'POST',
+      url: '/publicar/guardar/', //direccion a donde hace las requets
+      data: {publicacionId: pkPublicacion , contenido: contenido},
+      success: function (data) {
+          var selector = "#publicacion" + pkPublicacion;
+          $(selector).html(contenido);
+          console.log("Modificado exitosamente ");
+      },
+      error: function(data) {
+          console.log("Accion no permitida ");
+      }
+  });
+}
 
 </script>
   

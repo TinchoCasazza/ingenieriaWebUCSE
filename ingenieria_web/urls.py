@@ -36,6 +36,7 @@ urlpatterns = [
     #Publicaciones
     url(r'^publicar/$', social_views.publicar, name="publicar_url"),
     url(r'^publicar/borrar/$', social_views.borrarPublicacion, name="borrarPublicacion_url"),
+    url(r'^publicar/guardar/$', social_views.guardarPublicacion, name="guardarPublicacion_url"),
 
     #Grupos
     url(r'^grupos/$', social_views.grupos, name="grupos_url"),   

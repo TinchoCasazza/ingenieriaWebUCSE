@@ -50,6 +50,13 @@ class UserGrupos(models.Model):
     Permisos = models.ForeignKey(Permisos, on_delete=models.CASCADE)
 
 
+class EstadoPublicacion(models.Model):
+    idEstadoPublicacion = models.AutoField(primary_key= True)
+    Estado = models.CharField(blank=False, max_length = 30)
+    
+    def __str__(self):
+        return (self.Estado)
+
 class Publicacion(models.Model):
     idPublicacion = models.AutoField(primary_key= True)
     idUserPublico = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -60,7 +67,7 @@ class Publicacion(models.Model):
     FechaPublicacion = models.DateField(("Date"), auto_now=True)
     FechaBajaPublicacion = models.DateField(default= None, editable = False,null = True)
     FechaModiPublicacion = models.DateField(default = None, editable = False, null = True)
-
+    Estado = models.ForeignKey(EstadoPublicacion, on_delete=models.CASCADE)
 
 class Comentario(models.Model):
     idComentario = models.AutoField(primary_key = True)
@@ -70,5 +77,4 @@ class Comentario(models.Model):
     FechaComentario = models.DateField(("Date"), auto_now=True)
     FechaModiComentario = models.DateField(default = None, editable = False, null = True)
     FechaBajaComentario = models.DateField(default = None, editable = False, null = True)
-
 
