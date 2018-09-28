@@ -48,7 +48,7 @@
                     {% if publicacion.idUserPublico == request.user %} 
                     <button type="button" id="btnModificar{{ publicacion.idPublicacion }}" onclick="modificarPublicacion(this)" class="btn btn-box-tool" data-widget="edit"><i class="fa fa-pencil"></i></button> 
                     <button type="button" id="btnBorrar{{ publicacion.idPublicacion }}"  onclick="borrarPublicacion(this)" class="btn btn-box-tool btnBorrar" data-widget="remove"><i class="fa fa-times"></i></button>
-                    
+                  {% endif %}                   
                   </div>
                   </div>  
                 <div id="publicacion{{ publicacion.idPublicacion }}" class="box-body">{{ publicacion.Contenido }}</div>
@@ -65,7 +65,7 @@
               </form>
             </div>
           </div>
-        {% endif %}
+        
             <!-- /.box-footer -->
               {% empty %}
               <div class="box box-default">
