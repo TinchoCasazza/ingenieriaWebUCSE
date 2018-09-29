@@ -52,10 +52,10 @@ class UserGrupos(models.Model):
 
 class EstadoPublicacion(models.Model):
     idEstadoPublicacion = models.AutoField(primary_key= True)
-    Estado = models.CharField(blank=False, max_length = 30)
+    NombreEstado = models.CharField(blank=False, max_length = 30)
     
     def __str__(self):
-        return (self.Estado)
+        return (self.NombreEstado)
 
 class Publicacion(models.Model):
     idPublicacion = models.AutoField(primary_key= True)
