@@ -286,6 +286,7 @@ function borrarPublicacion(comp){
 function modificarPublicacion(comp){
   let publicacionId = comp.id;
   var pkPublicacion = publicacionId.substr(12);
+  $("#" + publicacionId).hide();
 
   var selector = "#publicacion" + pkPublicacion;
   var contenidoPublicacion = $(selector).text();
@@ -296,6 +297,9 @@ function modificarPublicacion(comp){
 function guardarPublicacion(comp){
   let publicacionId = comp.id;
   var pkPublicacion = publicacionId.substr(10);
+  
+  console.log(publicacionId);
+  $("#btnModificar" + pkPublicacion).show();
 
   var contenido = $("#contenidoModifacion" + pkPublicacion).val();
   // Se parcea el ID , y se realiza el POST a la URL 
