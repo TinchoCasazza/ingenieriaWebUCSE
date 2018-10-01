@@ -24,7 +24,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='publicacion',
             name='Estado',
-            field=models.ForeignKey(default=1, on_delete=django.db.models.deletion.CASCADE, to='social.EstadoPublicacion'),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='social.EstadoPublicacion'),
             preserve_default=False,
         ),
     ]

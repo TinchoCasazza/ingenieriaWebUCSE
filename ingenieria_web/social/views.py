@@ -80,7 +80,7 @@ def borrarPublicacion(request):
                 pkPublicacion = request.POST.get('publicacionId')
                 publicacion = Publicacion()
                 publicacion = Publicacion.objects.get(idPublicacion = pkPublicacion)
-                estado = EstadoPublicacion.objects.get(Estado = 'Eliminado')
+                estado = EstadoPublicacion.objects.get(NombreEstado = 'Eliminado')
                 if request.user == publicacion.idUserPublico:
                         publicacion.Estado = estado
                         publicacion.save()
