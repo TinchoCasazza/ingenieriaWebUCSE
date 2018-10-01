@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.contrib import messages
 from django.http import HttpResponseRedirect
-from .models import Publicacion, Grupo, EstadoPublicacion
+from .models import Publicacion, Grupo, EstadoPublicacion, Comentario
 # Create your views here.
 
 def inicio(request):
@@ -97,6 +97,21 @@ def guardarPublicacion(request):
                 if request.user == publicacion.idUserPublico:
                         publicacion.Contenido = contenido
                         publicacion.save()
+        publicaciones = Publicacion.objects.all().order_by('-FechaPublicacion')
+        return render(request, 'adminlte/index.html', {'listaPublicaciones' : publicaciones})
+
+
+def comentarPublicacion(request):
+        if request.method == 'POST':
+                pkPublicacion = request.POST.get('publicacionId')
+                contenido = request.POST.get('contenido')
+                comentario = Comentario()
+                publicacion = Publicacion()
+                publicacion = Publicacion.objects.get(idPublicacion = pkPublicacion)
+                comentario.idPublicacionC = publicacion
+                comentario.idUserComento = request.user
+                comentario.ContenidoComentario = contenido
+                comentario.save()
         publicaciones = Publicacion.objects.all().order_by('-FechaPublicacion')
         return render(request, 'adminlte/index.html', {'listaPublicaciones' : publicaciones})
 

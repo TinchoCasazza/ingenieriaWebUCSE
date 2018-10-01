@@ -57,10 +57,11 @@
                         <!-- /.box-footer -->
           <div class="box-footer">
               <form action="#" method="post">
+                {% csrf_token %}
                 <img class="img-responsive img-circle img-sm" src="https://www.gravatar.com/avatar/d89c1edbad2692462ed75e3ea268fa01?s=90&d=mm" alt="Alt Text">
                 <!-- .img-push is used to add margin to elements next to floating images -->
                 <div class="img-push">
-                  <input type="text" class="form-control input-sm" placeholder="Escriba su comentario">
+                  <input id="contenidoComentario{{ publicacion.idPublicacion }}" onkeypress="validarEnter(event,{{publicacion.idPublicacion}})" type="text" class="form-control input-sm" placeholder="Escriba su comentario {{ publicacion.idUserPublico }}">
                 </div>
               </form>
             </div>
@@ -294,6 +295,8 @@ function modificarPublicacion(comp){
   $("#contenidoModifacion" + pkPublicacion).val(contenidoPublicacion);
 };
 
+
+
 function guardarPublicacion(comp){
   let publicacionId = comp.id;
   var pkPublicacion = publicacionId.substr(10);
@@ -318,6 +321,31 @@ function guardarPublicacion(comp){
   });
 }
 
+function validarEnter(e,pk){
+    if (e.keyCode === 13 && !e.shiftKey) {
+        e.preventDefault();
+        publicarComentario(pk);
+    }
+}
+
+
+function publicarComentario(pk){
+  
+  var contenido = $("#contenidoComentario" + pk).val();
+  // Se parcea el ID , y se realiza el POST a la URL 
+  $.ajax({
+      type: 'POST',
+      url: '/publicar/comentar/', //direccion a donde hace las requets
+      data: {publicacionId: pk , contenido: contenido},
+      success: function (data) {
+          console.log("Comentado exitosamente ");
+          $("#contenidoComentario" + pk).val("");
+      },
+      error: function(data) {
+          console.log("Accion no permitida ");
+      }
+  });
+}
 </script>
   
 {% endblock %}
