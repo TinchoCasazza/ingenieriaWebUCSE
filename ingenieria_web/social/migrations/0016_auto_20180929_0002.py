@@ -6,13 +6,6 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('social', '0015_auto_20180928_1426'),
+        ('social', '0015_auto_20180929_0022'),
     ]
 
-    operations = [
-        migrations.RenameField(
-            model_name='estadopublicacion',
-            old_name='Estado',
-            new_name='NombreEstado',
-        ),
-    ]
