@@ -52,7 +52,7 @@ class UserGrupos(models.Model):
 
 class EstadoPublicacion(models.Model):
     idEstadoPublicacion = models.AutoField(primary_key= True)
-    NombreEstado = models.CharField(blank=False, max_length = 30)
+    NombreEstado = models.CharField(blank=False, max_length = 30, null = True)
     
     def __str__(self):
         return (self.NombreEstado)
@@ -67,7 +67,7 @@ class Publicacion(models.Model):
     FechaPublicacion = models.DateField(("Date"), auto_now=True)
     FechaBajaPublicacion = models.DateField(default= None, editable = False,null = True)
     FechaModiPublicacion = models.DateField(default = None, editable = False, null = True)
-    Estado = models.ForeignKey(EstadoPublicacion, on_delete=models.CASCADE)
+    Estado = models.ForeignKey(EstadoPublicacion, on_delete=models.CASCADE, null = True)
 
 class Comentario(models.Model):
     idComentario = models.AutoField(primary_key = True)
