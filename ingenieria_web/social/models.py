@@ -64,7 +64,7 @@ class Publicacion(models.Model):
     Destacar = models.BooleanField(default = False)
     Titulo = models.CharField(blank=False, max_length = 30)
     Contenido = models.TextField(blank=False)
-    FechaPublicacion = models.DateField(("Date"), auto_now=True)
+    FechaPublicacion = models.DateField(("Date"), auto_now=True, editable = False)
     FechaBajaPublicacion = models.DateField(default= None, editable = False,null = True)
     FechaModiPublicacion = models.DateField(default = None, editable = False, null = True)
     Estado = models.ForeignKey(EstadoPublicacion, on_delete=models.CASCADE)
