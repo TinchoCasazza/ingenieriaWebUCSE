@@ -50,24 +50,22 @@ class UserGrupos(models.Model):
     Permisos = models.ForeignKey(Permisos, on_delete=models.CASCADE)
 
 
-class EstadoPublicacion(models.Model):
-    idEstadoPublicacion = models.AutoField(primary_key= True)
-    NombreEstado = models.CharField(blank=False, max_length = 30, default = None)
-    
-    def __str__(self):
-        return (self.NombreEstado)
+
 
 class Publicacion(models.Model):
     idPublicacion = models.AutoField(primary_key= True)
     idUserPublico = models.ForeignKey(User, on_delete=models.CASCADE)
     idGrupoPu = models.ForeignKey(Grupo, on_delete=models.CASCADE, null = True)
-    Estado = models.ForeignKey(EstadoPublicacion, on_delete=models.CASCADE, null= True, default= None)
     Destacar = models.BooleanField(default = False)
+    Publicado = models.BooleanField(default = False)
+    Borrador = models.BooleanField(default = False)
+    Eliminado = models.BooleanField(default = False)
     Titulo = models.CharField(blank=False, max_length = 30)
     Contenido = models.TextField(blank=False)
     FechaPublicacion = models.DateField(("Date"), auto_now=True, editable = False)
     FechaBajaPublicacion = models.DateField(default= None, editable = False,null = True)
     FechaModiPublicacion = models.DateField(default = None, editable = False, null = True)
+
 
 
 class Comentario(models.Model):
