@@ -67,7 +67,7 @@ class Publicacion(models.Model):
     FechaPublicacion = models.DateField(("Date"), auto_now=True, editable = False)
     FechaBajaPublicacion = models.DateField(default= None, editable = False,null = True)
     FechaModiPublicacion = models.DateField(default = None, editable = False, null = True)
-    Estado = models.ForeignKey(EstadoPublicacion, on_delete=models.CASCADE, null = True)
+    Estado_id = models.ForeignKey(EstadoPublicacion, on_delete=models.CASCADE, null = True)
 
 class Comentario(models.Model):
     idComentario = models.AutoField(primary_key = True)
