@@ -18,6 +18,12 @@ ALLOWED_HOSTS = ['*']
 
 INTERNAL_IPS = ['127.0.0.1']
 
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'sarasa.ucse@gmail.com'
+EMAIL_HOST_PASSWORD = 'gatoperro1'
+EMAIL_PORT = 587
+
 
 # Application definition
 
@@ -35,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'debug_toolbar',
     'elasticsearch',
+    'widget_tweaks',
 ]
 
 verify_certs=False

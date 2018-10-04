@@ -1,0 +1,70 @@
+{% extends "adminlte/base.html" %}
+{% load i18n static %}
+
+{% block body_class %}register-page{% endblock %}
+
+{% block body %}
+    <div class="register-box">
+        {% block logo %}
+        <div class="register-logo">
+            {# Mirrors block names used in _main_header.html #}
+            <a href="{% block logo_href %}/{% endblock %}">{% block logo_text %}<b>Sarasa</b>UCSE{% endblock %}</a>
+        </div>
+        {% endblock %}
+        <!-- /.register-logo -->
+        <div class="register-box-body">
+
+            {% block register_errors %}
+            {% if form.errors %}
+                {% for field in form %}
+                    {% for error in field.errors %}
+                        <p class="alert alert-danger">
+                            {{ error }}
+                        </p>
+                    {% endfor %}
+                {% endfor %}
+            {% endif %}
+            {% endblock %}
+            {% block register_form %}
+                <form action="" method="post">
+                    {% csrf_token %}
+                    {% if messages %}
+                        <p class="register-box-msg" style="color: red;">{{ message }}</p>
+                    {% endif %}
+                    {% load widget_tweaks %}
+                    <div class="form-group has-feedback">
+                        {{ form.username|add_class:"form-control"|append_attr:"placeholder:Nombre de Usuario"}}
+                        <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                    </div>
+                    <div class="form-group has-feedback">
+                        {{ form.email|add_class:"form-control"|append_attr:"placeholder:Correo Electronico" }}
+                        <span class="glyphicon glyphicon-envelope  form-control-feedback"></span>
+                    </div>
+                    <div class="form-group has-feedback">
+                        {{ form.password1|add_class:"form-control"|append_attr:"placeholder:Ingrese Contraseña" }}
+                        <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                    </div>
+                    <div class="form-group has-feedback">
+                        {{ form.password2|add_class:"form-control"|append_attr:"placeholder:Reingrese Contraseña" }}
+                        <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                    </div>
+                    {% for error in field.errors %}
+                        <p style="color: red">{{ error }}</p>
+                    {% endfor %}
+                    
+                    <div class="row">
+                        <div class="col-xs-8">
+                            {% block register_form_links %}
+                                <a class="a-register" href="/login/">Volver al Inicio de Sesion</a>
+                            {% endblock %}
+                        </div>
+                        <div class="col-xs-4">
+                            <button type="submit" class="btn btn-primary btn-block btn-flat">Registrarse</button>
+                        </div>
+                    </div>
+                </form>
+            {% endblock register_form %}
+
+        </div>
+    </div>
+{% endblock %}

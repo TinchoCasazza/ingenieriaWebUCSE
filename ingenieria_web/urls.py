@@ -26,7 +26,9 @@ urlpatterns = [
     # Acount
     url(r'^login/$', social_views.login, name="login_aux_url"),
     url(r'^logout/$', social_views.logout, name="logout_url"),
-    url(r'^register/$', social_views.register, name="register_url"),
+    url(r'^signup/$', social_views.signup, name='signup'),
+    url(r'^activate/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
+        social_views.activate, name='activate'),
     
     # Inicio
     url(r'^$', social_views.inicio, name="inicio_url"),

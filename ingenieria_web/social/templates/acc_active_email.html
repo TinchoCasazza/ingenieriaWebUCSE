@@ -1,0 +1,6 @@
+{% autoescape off %}
+Hi {{ user.username }},
+Por favor haga click en el siguiente enlace para activar su cuenta,
+http://{{ domain }}{% url 'activate' uidb64=uid token=token %}
+Bienvenido a Sarasa!
+{% endautoescape %}

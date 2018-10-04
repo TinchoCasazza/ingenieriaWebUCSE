@@ -1,7 +1,26 @@
 from django.shortcuts import render
 from django.contrib import messages
 from django.http import HttpResponseRedirect
+from django.template import context
 from .models import Publicacion, Grupo, Comentario
+
+from django.http import HttpResponse
+from django.shortcuts import render, redirect
+from .forms import SignupForm
+from django.contrib.sites.shortcuts import get_current_site
+from django.utils.encoding import force_bytes, force_text
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.template.loader import render_to_string
+from .tokens import account_activation_token
+from django.contrib.auth.models import User
+from django.core.mail import EmailMessage
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import (
+    BaseUserManager, AbstractBaseUser
+)
+from django.contrib.auth import authenticate, login
+from django.contrib.auth import logout as django_logout
+from django.contrib.auth import login as auth_login
 # Create your views here.
 
 def inicio(request):
@@ -9,9 +28,7 @@ def inicio(request):
     listaGrupos = Grupo.objects.all().order_by('NombreGrupo')
     return render(request, 'adminlte/index.html',{'listaPublicaciones' : listaPublicaciones ,'listaGrupos': listaGrupos})
 
-from django.contrib.auth import authenticate, login
-from django.contrib.auth import logout as django_logout
-from django.contrib.auth import login as auth_login
+
 CRITICAL = 50
 def login(request):
         if request.user.is_authenticated:
@@ -27,7 +44,7 @@ def login(request):
                         else:
                                 messages.set_level(request, messages.WARNING)
                                 messages.add_message(request, CRITICAL, u'Usuario o Contrase\xf1a incorrectos.')
-                                return render(request, 'adminlte/login.html' , {'error': messages} )
+                                return render(request, 'adminlte/login.html' , {'messages': messages} )
                 else: 
                         return render(request, 'adminlte/login.html' ,{} )
        
@@ -36,36 +53,49 @@ def logout(request):
     django_logout(request)
     return  HttpResponseRedirect('/login/')
 
-from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.models import (
-    BaseUserManager, AbstractBaseUser
-)
-from django.contrib.auth.models import User
 
 
-def register(request):
-        if request.method == 'POST':
-                username = request.POST.get('username')
-                password = request.POST.get('password')
-                password2 = request.POST.get('password2')
+def signup(request):
+    if request.method == 'POST':
+        form = SignupForm(request.POST)
+        if form.is_valid():
+            user = form.save(commit=False)
+            user.is_active = False
+            user.save()
+            current_site = get_current_site(request)
+            mail_subject = 'SarasaUCSE | Activacion Mail'
+            message = render_to_string('acc_active_email.html', {
+                'user': user,
+                'domain': current_site.domain,
+                'uid':urlsafe_base64_encode(force_bytes(user.pk)).decode(),
+                'token': account_activation_token.make_token(user),
+            })
+            to_email = form.cleaned_data.get('email')
+            email = EmailMessage(
+                        mail_subject, message, to=[to_email]
+            )
+            email.send()
+            return HttpResponse('Por favor confirme su Email para terminar con el registro')
+    else:
+        form = SignupForm()
+    return render(request, 'adminlte/signup.html', {'form': form})
 
-                if password != password2:
-                        messages.set_level(request, messages.WARNING)
-                        messages.add_message(request, CRITICAL, u'Las contrase\xf1as no son iguales')
-                        return render(request, 'adminlte/login.html' , {'error': messages} )
+def activate(request, uidb64, token):
+    try:
+        uid = force_text(urlsafe_base64_decode(uidb64))
+        user = User.objects.get(pk=uid)
+    except(TypeError, ValueError, OverflowError, User.DoesNotExist):
+        user = None
+    if user is not None and account_activation_token.check_token(user, token):
+        user.is_active = True
+        user.save()
+        login(request, user)
+        # return redirect('home')
+        return HttpResponse('Gracias por activar tu mail, ahora puedes usar Sarasa Completamente!.')
+    else:
+        return HttpResponse('Link de activacion es invalidad!')
 
-                user = User.objects.create_user(username= request.POST.get('username'),email=request.POST.get('email'),password=request.POST.get('password'))
 
-                user.save()
-                user = authenticate(request, username= username, password= password)
-                if user is not None:
-                        auth_login(request , user)
-                        if request.user.is_authenticated:
-                                return HttpResponseRedirect('/inicio/')
-        else:
-                form = UserCreationForm()
-        return render(request, 'inicio.html', {'form': form})
-        
 def publicar(request):
 
         if request.method == 'POST':
