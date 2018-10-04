@@ -51,7 +51,12 @@
                   {% endif %}                   
                   </div>
                   </div>  
-                <div id="publicacion{{ publicacion.idPublicacion }}" class="box-body">{{ publicacion.Contenido }}</div>
+                <div class="box-body">
+                    <p id="publicacion{{ publicacion.idPublicacion }}" >{{ publicacion.Contenido }}</p>
+                    <ul class="list-inline">
+                        <li><a href="#" class="link-black text-lg"><i class="fa fa-thumbs-up margin-r-5"></i>Me Gusta</a></li>
+                    </ul>
+                </div>
                 
               
                         <!-- /.box-footer -->
@@ -60,6 +65,7 @@
                 {% csrf_token %}
                 <img class="img-responsive img-circle img-sm" src="https://www.gravatar.com/avatar/d89c1edbad2692462ed75e3ea268fa01?s=90&d=mm" alt="Alt Text">
                 <!-- .img-push is used to add margin to elements next to floating images -->
+                
                 <div class="img-push">
                   <input id="contenidoComentario{{ publicacion.idPublicacion }}" onkeypress="validarEnter(event,{{publicacion.idPublicacion}})" type="text" class="form-control input-sm" placeholder="Escriba su comentario {{ publicacion.idUserPublico }}">
                 </div>
@@ -139,7 +145,7 @@
             
         </div>
       </div>
-    </div>
+    </div>  
   </div>
 
 

@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en" >
-
+{% block javascript %}
+{% include 'adminlte/lib/_scripts.html' %}
+{% endblock %}
 <head>
   <meta charset="UTF-8">
   <title>Sarara | Login </title>
@@ -17,9 +19,14 @@
 
 <body>
 
-  
+<div class="alert alert-danger alert-dismissible">
+    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+    <h4><i class="icon fa fa-ban"></i> Alert!</h4>
+    Usuario y Contraseña erroneos.
+</div>
 <!-- Mixins-->
 <!-- Pen Title-->
+
 
 <div class="container" style="margin-top: 5%">
   <div class="card"></div>
@@ -94,18 +101,21 @@
 <script>
 
 
+
+
 function Registrar(){
     var pdata = $("#formRegistro").serialize();
     var username1 = $("#username1").val();
     var password1 = $("#password1").val();
+    var password2 = $("#password2").val();
     var email = $("#email").val();
 
     $.ajax({
       type: 'POST',
       url: '/register/', //direccion a donde hace las requets
-      data: {username: username1, password: password1, email: email},
+      data: {username: username1, password: password1, password2:password2, email: email},
       success: function (data) {
-        window.location.href= "/inicio";
+         window.location.href= "/inicio";
       },
       error: function(data) {
       }
