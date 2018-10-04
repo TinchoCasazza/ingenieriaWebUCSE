@@ -42,9 +42,8 @@ def login(request):
                                 auth_login(request , user)
                                 return HttpResponseRedirect('/inicio/')
                         else:
-                                messages.set_level(request, messages.WARNING)
-                                messages.add_message(request, CRITICAL, u'Usuario o Contrase\xf1a incorrectos.')
-                                return render(request, 'adminlte/login.html' , {'messages': messages} )
+                                messages.warning(request, u'Usuario o Contrase\xf1a incorrectos.') 
+                                return render(request, 'adminlte/login.html' , {} )
                 else: 
                         return render(request, 'adminlte/login.html' ,{} )
        
