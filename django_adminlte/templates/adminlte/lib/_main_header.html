@@ -2,9 +2,11 @@
 <header class="main-header">
     <!-- Logo -->
     {% block logo %}
+    
     <a href="{% block logo_href %}/{% endblock %}" class="logo">
         <!-- mini logo for sidebar mini 50x50 pixels -->
         <span class="logo-mini">{% block logo_text_small %}<b>S</b>rs{% endblock %}</span>
+
         <!-- logo for regular state and mobile devices -->
         <span class="logo-lg">{% block logo_text %}<b>Sarasa</b>{% endblock %}</span>
     </a>
@@ -58,7 +60,10 @@
 
                             </ul>
                         </li>
-                    {% else %}
+                        <li>
+                            <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
+                        </li>
+                    {% else %}  
                         <li class="dropdown user user-menu">
                             <div class="pull-right">
                                 <a  href="/login/" class="btn bg-navy margin">Ingresar</a>
@@ -68,8 +73,10 @@
                     {% endif %}
                 {% endblock header_dropdowns %}
             </ul>
+            
         </div>
         {% endblock nav_custom_menu %}
     </nav>
     {% endblock %}
+    
 </header>
