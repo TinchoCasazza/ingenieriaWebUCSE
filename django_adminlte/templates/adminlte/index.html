@@ -206,6 +206,15 @@ $(document).ready(function() {
     }
   };
 
+  $('#skin').on('click touchstart','li', function() {
+    var bodyColor = $("#bodyColor");
+    
+    bodyColor.removeClass();
+    bodyColor.addClass("hold-transition");
+    bodyColor.addClass("sidebar-mini");
+    bodyColor.addClass($(this).attr('data'));
+  });
+
   $('#generarPDF').click(function () {   
 
       // Carga los elementos del PDF
@@ -393,12 +402,7 @@ function publicarComentario(pk){
 
 function cambiarColor(skin){
 
-    var bodyColor = $("#bodyColor");
     
-    bodyColor.removeClass();
-    bodyColor.addClass("hold-transition");
-    bodyColor.addClass("sidebar-mini");
-    bodyColor.addClass(skin);
 
 }
 </script>
