@@ -158,3 +158,5 @@ def grupos(request):
         lista_Grupos = Grupo.objects.all().order_by('NombreGrupo')
         return render(request, 'adminlte/grupos.html', {'lista_grupos' : lista_Grupos})
 
+def perfil(request):
+        return render(request, 'adminlte/perfil.html')

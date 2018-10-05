@@ -46,6 +46,9 @@ urlpatterns = [
 
     #Busqueda
     url(r'^busqueda/$', search_views.search, name="search_url"),  
+
+    #Perfil
+    url(r'^perfil/$', social_views.perfil, name="perfil_url"),  
 ]
 
 if settings.DEBUG:
