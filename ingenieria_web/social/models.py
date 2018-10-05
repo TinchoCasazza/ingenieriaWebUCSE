@@ -7,6 +7,8 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.conf import settings
 # Create your models here.
+
+
 class Carrera(models.Model):
     idCarrera = models.AutoField(primary_key=True)
     NombreCarrera = models.CharField(blank = False, max_length=40)
@@ -16,7 +18,7 @@ class Skin(models.Model):
     nombreSkin = models.CharField(blank = False, max_length=40)
     
 
-class User(AbstractUser):
+class UserManager(AbstractUser):
     carrera = models.ForeignKey(Carrera, on_delete=models.CASCADE, null=True)
     skinUser = models.ForeignKey(Skin, on_delete=models.CASCADE, null=True)
 

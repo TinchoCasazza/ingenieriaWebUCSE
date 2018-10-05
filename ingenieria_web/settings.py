@@ -43,8 +43,10 @@ INSTALLED_APPS = [
     'debug_toolbar',
     'elasticsearch',
     'widget_tweaks',
-]
-AUTH_USER_MODEL = 'social.User'
+    
+] 
+
+AUTH_USER_MODEL = 'social.UserManager'
 verify_certs=False
 ELASTICSEARCH_DSL={
     'default': {

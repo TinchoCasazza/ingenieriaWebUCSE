@@ -12,7 +12,6 @@ from django.utils.encoding import force_bytes, force_text
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.template.loader import render_to_string
 from .tokens import account_activation_token
-from django.contrib.auth.models import User
 from django.core.mail import EmailMessage
 from django.contrib.auth.forms import UserCreationForm 
 from django.contrib.auth.models import (
@@ -23,6 +22,10 @@ from .forms import NuevoGrupo
 from django.contrib.auth import authenticate, login
 from django.contrib.auth import logout as django_logout
 from django.contrib.auth import login as auth_login
+
+from django.contrib.auth import get_user_model
+User = get_user_model()
+
 # Create your views here.
 
 def inicio(request):
