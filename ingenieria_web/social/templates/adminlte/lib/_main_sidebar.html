@@ -23,7 +23,7 @@
             </span>
         </a>
         <ul class="treeview-menu">
-            <li><a href="index.html"><i class="fa fa-circle-o"></i> Nuevo Grupo</a></li>
+            <li><a data-target="#grupoModal" data-toggle="modal" href="#grupoModal"><i class="fa fa-circle-o"></i> Nuevo Grupo</a></li>
             {% if listaGrupos != None %}
                 <li><a href="{% url 'grupos_url' %}"><i class="fa fa-circle-o"></i> Mis Grupos</a></li>
             {% endif %}

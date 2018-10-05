@@ -14,10 +14,12 @@ from django.template.loader import render_to_string
 from .tokens import account_activation_token
 from django.contrib.auth.models import User
 from django.core.mail import EmailMessage
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm 
 from django.contrib.auth.models import (
     BaseUserManager, AbstractBaseUser
 )
+from .forms import NuevoGrupo
+
 from django.contrib.auth import authenticate, login
 from django.contrib.auth import logout as django_logout
 from django.contrib.auth import login as auth_login
@@ -26,7 +28,8 @@ from django.contrib.auth import login as auth_login
 def inicio(request):
     listaPublicaciones = Publicacion.objects.all().order_by('-FechaPublicacion')
     listaGrupos = Grupo.objects.all().order_by('NombreGrupo')
-    return render(request, 'adminlte/index.html',{'listaPublicaciones' : listaPublicaciones ,'listaGrupos': listaGrupos})
+    formNuevoGrupo = NuevoGrupo()
+    return render(request, 'adminlte/index.html',{'listaPublicaciones' : listaPublicaciones ,'listaGrupos': listaGrupos, 'formNuevoGrupo': formNuevoGrupo})
 
 
 CRITICAL = 50
