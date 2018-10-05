@@ -1,10 +1,25 @@
 from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import AbstractUser
-from django.contrib.auth.models import User
 import datetime
 
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+from django.conf import settings
 # Create your models here.
+class Carrera(models.Model):
+    idCarrera = models.AutoField(primary_key=True)
+    NombreCarrera = models.CharField(blank = False, max_length=40)
+
+class Skin(models.Model):
+    idSkin = models.AutoField(primary_key= True)
+    nombreSkin = models.CharField(blank = False, max_length=40)
+    
+
+class User(AbstractUser):
+    carrera = models.ForeignKey(Carrera, on_delete=models.CASCADE, null=True)
+    skinUser = models.ForeignKey(Skin, on_delete=models.CASCADE, null=True)
+
 
 
 class CategoriaUsuario(models.Model):
@@ -24,7 +39,7 @@ class PrivacidadGrupo(models.Model):
 class Grupo(models.Model):
     idGrupo = models.AutoField(primary_key=True)
     NombreGrupo = models.CharField(blank= False, max_length=50)
-    Creador = models.ForeignKey(User, on_delete=models.CASCADE)
+    Creador = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     NivelAcceso = models.ForeignKey(PrivacidadGrupo, on_delete=models.CASCADE)
     FechaCreacionG = models.DateField(("Fecha Creacion"), default = datetime.date.today)
     FechaBajaG = models.DateField(default= None, null = True, editable = False)
@@ -45,16 +60,14 @@ class Permisos(models.Model):
 
 
 class UserGrupos(models.Model):
-    idUser = models.ForeignKey(User, on_delete=models.CASCADE)
+    idUser = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     idGrupoUsuario = models.ForeignKey(Grupo, on_delete=models.CASCADE)
     Permisos = models.ForeignKey(Permisos, on_delete=models.CASCADE)
 
 
-
-
 class Publicacion(models.Model):
     idPublicacion = models.AutoField(primary_key= True)
-    idUserPublico = models.ForeignKey(User, on_delete=models.CASCADE)
+    idUserPublico = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     idGrupoPu = models.ForeignKey(Grupo, on_delete=models.CASCADE, null = True)
     Destacar = models.BooleanField(default = False)
     Publicado = models.BooleanField(default = False, null=True)
@@ -70,7 +83,7 @@ class Publicacion(models.Model):
 
 class Comentario(models.Model):
     idComentario = models.AutoField(primary_key = True)
-    idUserComento = models.ForeignKey(User, on_delete=models.CASCADE)
+    idUserComento = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     idPublicacionC = models.ForeignKey(Publicacion, on_delete=models.CASCADE)
     ContenidoComentario = models.TextField(null = True)
     FechaComentario = models.DateField(("Date"), auto_now=True)

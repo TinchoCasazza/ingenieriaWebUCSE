@@ -77,7 +77,8 @@ def signup(request):
                         mail_subject, message, to=[to_email]
             )
             email.send()
-            return HttpResponse('Por favor confirme su Email para terminar con el registro')
+            valido = True
+            return render(request, 'adminlte/signup.html', {'form': form, 'valido': valido})
     else:
         form = SignupForm()
     return render(request, 'adminlte/signup.html', {'form': form})
@@ -92,8 +93,8 @@ def activate(request, uidb64, token):
         user.is_active = True
         user.save()
         auth_login(request, user)
-        # return redirect('home')
-        return HttpResponse('Gracias por activar tu mail, ahora puedes usar Sarasa Completamente!.')
+        return HttpResponseRedirect('/')
+        
     else:
         return HttpResponse('Link de activacion es invalidad!')
 

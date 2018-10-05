@@ -33,7 +33,12 @@
                 <form action="" method="post">
                     {% csrf_token %}
                     {% if messages %}
-                        <p class="register-box-msg" style="color: red;">{{ message }}</p>
+                            <p class="alert alert-danger" style="color: red;">{{ message }}</p>
+                    {% endif %}
+                    {% if valido %}
+                        <p class="alert alert-success" style="color: white;">
+                            Listo!, Ahora solo queda que confirme su direccion de email.
+                        </p>
                     {% endif %}
                     {% load widget_tweaks %}
                     <div class="form-group has-feedback">
@@ -60,6 +65,8 @@
                         <div class="col-xs-8">
                             {% block register_form_links %}
                                 <a class="a-register" href="/login/">Volver al Inicio de Sesion</a>
+                                <br>
+                                <a class="a-register" href="/">Volver al inicio</a>
                             {% endblock %}
                         </div>
                         <div class="col-xs-4">

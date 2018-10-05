@@ -23,6 +23,7 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'sarasa.ucse@gmail.com'
 EMAIL_HOST_PASSWORD = 'gatoperro1'
 EMAIL_PORT = 587
+#AUTH_USER_MODEL = 'auth.User'
 
 
 # Application definition
@@ -43,7 +44,7 @@ INSTALLED_APPS = [
     'elasticsearch',
     'widget_tweaks',
 ]
-
+AUTH_USER_MODEL = 'social.User'
 verify_certs=False
 ELASTICSEARCH_DSL={
     'default': {
