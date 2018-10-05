@@ -1,6 +1,11 @@
 {% extends 'adminlte/base.html' %}
 <link href="bootstrap-modal-carousel.css" rel="stylesheet" />
 
+{% block title_outer %}
+       <title>{% block title %} Sarasa | Inicio {% endblock %}</title>
+{% endblock %}
+
+
 {% block content %}
 <div class="row">
   <!-- /.box-header -->
@@ -67,7 +72,7 @@
                 <!-- .img-push is used to add margin to elements next to floating images -->
                 
                 <div class="img-push">
-                  <input id="contenidoComentario{{ publicacion.idPublicacion }}" onkeypress="validarEnter(event,{{publicacion.idPublicacion}})" type="text" class="form-control input-sm" placeholder="Escriba su comentario {{ publicacion.idUserPublico }}">
+                  <input id="contenidoComentario{{ publicacion.idPublicacion }}" onkeypress="validarEnter(event,{{publicacion.idPublicacion}})" type="text" class="form-control input-sm" placeholder="Escriba su comentario {{ request.user.get_username }}">
                 </div>
               </form>
             </div>
@@ -167,7 +172,7 @@ $(document).ready(function() {
         return true;
     }
   };
-  
+
   $('#generarPDF').click(function () {   
 
       // Carga los elementos del PDF
@@ -351,6 +356,17 @@ function publicarComentario(pk){
           console.log("Accion no permitida ");
       }
   });
+}
+
+function cambiarColor(skin){
+
+    var bodyColor = $("#bodyColor");
+    
+    bodyColor.removeClass();
+    bodyColor.addClass("hold-transition");
+    bodyColor.addClass("sidebar-mini");
+    bodyColor.addClass(skin);
+
 }
 </script>
   

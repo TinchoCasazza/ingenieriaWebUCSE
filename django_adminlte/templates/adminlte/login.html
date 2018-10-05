@@ -1,6 +1,10 @@
 {% extends "adminlte/base.html" %}
 {% load i18n static %}
 
+{% block title_outer %}
+        <title>{% block title %} Sarasa | Ingresar {% endblock %}</title>
+{% endblock %}
+
 {% block body_class %}login-page{% endblock %}
 
 {% block body %}
