@@ -158,7 +158,9 @@ def comentarPublicacion(request):
         return render(request, 'adminlte/index.html', {'listaPublicaciones' : publicaciones})
 
 
-def grupos(request):
+def grupos(request, pk=None):
+        if pk:
+                return HttpResponse("Hola")
         lista_Grupos = Grupo.objects.all().order_by('NombreGrupo')
         return render(request, 'adminlte/grupos.html', {'lista_grupos' : lista_Grupos})
 

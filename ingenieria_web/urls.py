@@ -43,7 +43,7 @@ urlpatterns = [
 
     #Grupos
     url(r'^grupos/$', social_views.grupos, name="grupos_url"),   
-
+    url(r'^grupos/(?P<pk>\d+)/$', social_views.grupos, name="grupos_url_with_pk"),   
     #Busqueda
     url(r'^busqueda/$', search_views.search, name="search_url"),  
 
