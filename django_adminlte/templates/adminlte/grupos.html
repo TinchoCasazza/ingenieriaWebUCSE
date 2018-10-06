@@ -14,8 +14,10 @@
             
             <div class="box collapsed-box" style="border-radius:8px">
                 <div class="box-header with-border">
-                    <h3 class="box-title">{{ grupo.NombreGrupo }}</h3>
-
+                    
+                    <a href="{% url 'grupos_url_with_pk' pk=grupo.idGrupo %}">
+                        <h3 class="box-title">{{ grupo.NombreGrupo }}</h3>
+                    </a>
                     <div class="box-tools pull-right">
                         <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip">
                                 
