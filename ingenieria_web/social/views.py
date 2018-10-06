@@ -160,7 +160,7 @@ def comentarPublicacion(request):
 
 def grupos(request, pk=None):
         if pk:
-                return HttpResponse("Hola")
+                return HttpResponse("grupo" + pk)
         lista_Grupos = Grupo.objects.all().order_by('NombreGrupo')
         return render(request, 'adminlte/grupos.html', {'lista_grupos' : lista_Grupos})
 

@@ -2,8 +2,24 @@
 {% extends 'adminlte/base.html' %}
 
 {% block content %}
-{% for grupo in grupos %}
-    {{ grupo.NombreGrupo }}
-    <br>
-{% endfor %}
+    <h3>Resultados de busqueda:</h3>
+    <!-- Default box -->
+    <div class="row">
+        <!-- /.box-header -->
+        <div class="col-md-12">
+        
+            {% for grupo in grupos %}
+            
+            <div class="box collapsed-box" style="border-radius:8px">
+                <div class="box-header with-border">
+                    
+                    <a href="{% url 'grupos_url_with_pk' pk=grupo.idGrupo %}">
+                        <h3 class="box-title">{{ grupo.NombreGrupo }}</h3>
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    <!-- /.box -->
 {% endblock %}

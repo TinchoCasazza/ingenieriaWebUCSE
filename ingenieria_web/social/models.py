@@ -43,7 +43,7 @@ class Grupo(models.Model):
     NombreGrupo = models.CharField(blank= False, max_length=50)
     Creador = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     NivelAcceso = models.ForeignKey(PrivacidadGrupo, on_delete=models.CASCADE)
-    FechaCreacionG = models.DateField(("Fecha Creacion"), default = datetime.date.today)
+    FechaCreacionG = models.DateField(("Fecha Creacion"), default = datetime.date.today, editable = False)
     FechaBajaG = models.DateField(default= None, null = True, editable = False)
     FechaModiG = models.DateField(default = None, null = True, editable = False)
 

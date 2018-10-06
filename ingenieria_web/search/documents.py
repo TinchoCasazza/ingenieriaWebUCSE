@@ -9,5 +9,6 @@ class GrupoDocument(DocType):
         model = Grupo
 
         fields = [
+            'idGrupo',
             'NombreGrupo',
         ]
