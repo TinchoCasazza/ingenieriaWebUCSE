@@ -92,96 +92,10 @@
 </div>
 
 
-<div class="modal fade bd-example-modal-lg" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <div class="btn-group">
-              <select class="input-group" id="selectCarrera">
-                <option selected > 
-                    {% if request.user.is_authenticated %}
-                        {{ user.carrera }}
-                        Carrera del Usuario
-                    {% else %}
-                        {{ listaCarreras.first }}
-                    {% endif %}
-                </option>
-                    {% for carrera in listaCarreras%}
-                     <option> {{ carrera.NombreCarrera }} </option>
-                    {% endfor %}
-              </select>
-            </div>
-            <button id="generarPDF" class="btn btn-success">
-               Generar PDF <i class="fa fa-download"></i>
-            </button>      
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div id="modalBody" class="modal-body">
-            <h4  id="carrera" class="modal-title" align="center" style="font-weight:bold"></h4>
-            <div id="myCarousel" class="carousel slide carousel-fit" data-ride="carousel">
-                <!-- Indicators -->
-                <ol class="carousel-indicators">
-                  <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-                  <li data-target="#myCarousel" data-slide-to="1"></li>
-                  <li data-target="#myCarousel" data-slide-to="2"></li>
-                </ol>
-              
-                <!-- Wrapper for slides -->
-                <div class="carousel-inner">
-                  <div id="imgCarrera" class="item active">
-                      <img class="img-responsive" src="../static/images/plan_ingenieria.jpeg" style="max-height:800px;">
-
-                  </div>
-                  <div class="item">
-                     <img class="img-responsive" src="../static/images/plan_ingenieria2.jpeg" style="max-height:800px;">
-                  </div>
-                </div>
-              
-                <!-- Controls -->
-                <a class="left carousel-control" href="#myCarousel" data-slide="prev">
-                  <span class="glyphicon glyphicon-chevron-left"></span>
-                </a>
-                <a class="right carousel-control" href="#myCarousel" data-slide="next">
-                  <span class="glyphicon glyphicon-chevron-right"></span>
-                </a>
-              </div>
-            
-        </div>
-      </div>
-    </div>  
-  </div>
 
 
-  <div class="modal" id="grupoModal" tabindex="-1" role="dialog">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-        <span aria-hidden="true">×</span></button>
-        <h4 class="modal-title">Nuevo Grupo</h4>
-      </div>
-      <div class="modal-body">
-          <form action="" method="post">
-              {% csrf_token %}
-              {% load widget_tweaks %}
-              <div class="form-group">
-                  <label for="NombreGrupo">Nombre del Grupo:</label>
-                  {{ formNuevoGrupo.NombreGrupo|add_class:"form-control" }}
-              </div>  
-              <div class="form-group">
-                  <label for="NivelAcceso">Nivel de Acceso:</label>
-                  {{ formNuevoGrupo.NivelAcceso|add_class:"form-control" }}
-              </div>
-          </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-success">Crear</button>
-        <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
-      </div>
-    </div>
-  </div>
+
+
 </div>
 
 
@@ -405,6 +319,21 @@ function cambiarColor(skin){
     
 
 }
+
+function CrearGrupo(){
+    var infoGrupo = $("#infoGrupo").serialize();
+    
+    console.log(infoGrupo)
+    $.ajax({
+      type: 'POST',
+      url: '/grupos/crear_grupo/', //direccion a donde hace las requets
+      data: {infoGrupo: infoGrupo},
+      success: function (data) {
+      },
+      error: function(data) {
+      }
+    });
+};
 </script>
   
 {% endblock %}

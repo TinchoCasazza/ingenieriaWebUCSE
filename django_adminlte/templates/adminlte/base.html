@@ -57,8 +57,11 @@
                 {% endblock %}
 
                 {% block content_block_wrap %}
-                    {% block content %}{% endblock %}
+                    {% block content %}
+                    {% endblock %}
                 {% endblock %}
+                {% include 'adminlte/components/crear_grupo.html' %}
+                {% include 'adminlte/components/plan_estudio.html' %}
             </section>
             {% endblock %}
 
@@ -70,6 +73,7 @@
         {% endblock %}
 
     </div>
+
 {% endblock body %}
 
 {% block javascript %}

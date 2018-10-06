@@ -16,7 +16,13 @@
                     <a href="{% url 'grupos_url_with_pk' pk=grupo.idGrupo %}">
                         <h3 class="box-title">{{ grupo.NombreGrupo }}</h3>
                     </a>
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-block btn-success btn-sm" data-widget="collapse" data-toggle="tooltip">
+                            Suscribirse
+                        </button>
+                    </div>
                 </div>
+
             </div>
             {% endfor %}
         </div>

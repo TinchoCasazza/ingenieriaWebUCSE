@@ -17,4 +17,8 @@ class SignupForm(UserCreationForm):
 class NuevoGrupo(ModelForm):
     class Meta:
         model = Grupo
-        exclude = ['idGrupo','Creador','FechaCreacionG']
+        exclude = ['idGrupo','FechaCreacionG']
+    
+    def __init__(self, user, *args, **kwargs):
+        super(NuevoGrupo, self).__init__(*args, **kwargs)
+        self.fields['Creador'] = user

@@ -50,6 +50,7 @@ class Grupo(models.Model):
     def __str__(self):
         return (self.NombreGrupo)
 
+
 class Permisos(models.Model):
     idPermisos = models.AutoField(primary_key = True)
     NombrePerm = models.CharField(max_length = 30, blank = False)
