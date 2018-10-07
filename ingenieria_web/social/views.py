@@ -31,7 +31,7 @@ User = get_user_model()
 def inicio(request):
     listaPublicaciones = Publicacion.objects.all().order_by('-FechaPublicacion')
     listaGrupos = Grupo.objects.all().order_by('NombreGrupo')
-    formNuevoGrupo = NuevoGrupo(request.user, request.POST or None)
+    formNuevoGrupo = NuevoGrupo()
     return render(request, 'adminlte/index.html',{'listaPublicaciones' : listaPublicaciones ,'listaGrupos': listaGrupos, 'formNuevoGrupo': formNuevoGrupo})
 
 
@@ -166,14 +166,15 @@ def grupos(request, pk=None):
 
 def crear_grupo(request):
         if request.method == 'POST':
-                form = NuevoGrupo(request.user, request.POST)
-                import pdb; pdb.set_trace()
+                form = NuevoGrupo(request.POST)
+                print(form.errors)
                 if form.is_valid():
-                       
                         form.save()
                         return HttpResponseRedirect('/grupos/')
                 else:
                         return HttpResponseRedirect('/')
+                
+                
 
 def perfil(request):
         return render(request, 'adminlte/perfil.html')
