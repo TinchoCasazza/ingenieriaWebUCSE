@@ -317,14 +317,17 @@ function publicarComentario(pk){
 }
 
 function CrearGrupo(){
-    var infoGrupo = $("#infoGrupo").serialize();
-    
-    console.log(infoGrupo)
+    var nombreGrupo = $("#id_NombreGrupo").val();
+    var nivelAcceso = $('#id_NivelAcceso option:selected').text();
+
+    console.log(nivelAcceso);
     $.ajax({
       type: 'POST',
       url: '/grupos/crear_grupo/', //direccion a donde hace las requets
-      data: {infoGrupo: infoGrupo},
+      data: {nombreGrupo: nombreGrupo, nivelAcceso : nivelAcceso},
       success: function (data) {
+            console.log("Grupo creado "+ nombreGrupo + " con exito ");
+            location.href ="/grupos/";
       },
       error: function(data) {
       }

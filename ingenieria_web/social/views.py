@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.contrib import messages
 from django.http import HttpResponseRedirect
 from django.template import context
-from .models import Publicacion, Grupo, Comentario, Skin
+from .models import Publicacion, Grupo, Comentario, Skin, PrivacidadGrupo
 
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
@@ -168,14 +168,20 @@ def grupos(request, pk=None):
 
 def crear_grupo(request):
         if request.method == 'POST':
-                form = NuevoGrupo(request.POST)
-                print(form.errors)
-                if form.is_valid():
-                        form.save()
-                        return HttpResponseRedirect('/grupos/')
-                else:
-                        return HttpResponseRedirect('/')
+                nombreGrupo = request.POST.get('nombreGrupo')
+                nivelAcceso = request.POST.get('nivelAcceso')
                 
+                print(nivelAcceso)
+                
+                grupo = Grupo()
+                privacidad = PrivacidadGrupo()
+
+                privacidad = PrivacidadGrupo.objects.get(Privacidad = nivelAcceso)
+                grupo.NombreGrupo = nombreGrupo
+                grupo.NivelAcceso = privacidad
+                grupo.Creador = request.user
+                grupo.save()
+                return HttpResponseRedirect('/grupos/')
                 
 
 def perfil(request):
