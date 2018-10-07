@@ -94,6 +94,8 @@ def activate(request, uidb64, token):
         user = None
     if user is not None and account_activation_token.check_token(user, token):
         user.is_active = True
+        instanciaSkin = Skin.objects.get(nombreSkin = 'skin-green')
+        user.skinUser = instanciaSkin
         user.save()
         auth_login(request, user)
         return HttpResponseRedirect('/')
