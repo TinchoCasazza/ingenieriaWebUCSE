@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.contrib import messages
 from django.http import HttpResponseRedirect
 from django.template import context
-from .models import Publicacion, Grupo, Comentario
+from .models import Publicacion, Grupo, Comentario, Skin
 
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
@@ -177,3 +177,14 @@ def crear_grupo(request):
 
 def perfil(request):
         return render(request, 'adminlte/perfil.html')
+
+
+def cambiarSkin(request):
+        if request.method == 'POST':
+                skin = request.POST.get('skin')
+                usuario = request.user
+                instanciaSkin = Skin.objects.get(nombreSkin = skin)
+                usuario.skinUser = instanciaSkin
+                usuario.save()
+        return render(request, 'adminlte/index.html')
+                

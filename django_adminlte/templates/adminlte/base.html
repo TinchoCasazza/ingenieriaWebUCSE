@@ -17,7 +17,9 @@
 
     {% block extra_head %}{% endblock %}
 </head>
-<body id="bodyColor" class="hold-transition skin-green sidebar-mini {% block body_class %}{% block bodyclass %}{% endblock %}{% endblock %}">
+
+
+<body id="bodyColor" class="hold-transition {% if request.user.is_authenticated %} {{ request.user.skinUser }} {% else %} skin-green {% endif %} sidebar-mini {% block body_class %}{% block bodyclass %}{% endblock %}{% endblock %}">
 
 {% block body %}
     <div class="wrapper">

@@ -120,15 +120,6 @@ $(document).ready(function() {
     }
   };
 
-  $('#skin').on('click touchstart','li', function() {
-    var bodyColor = $("#bodyColor");
-    
-    bodyColor.removeClass();
-    bodyColor.addClass("hold-transition");
-    bodyColor.addClass("sidebar-mini");
-    bodyColor.addClass($(this).attr('data'));
-  });
-
   $('#generarPDF').click(function () {   
 
       // Carga los elementos del PDF
@@ -156,6 +147,17 @@ $(document).ready(function() {
     var seleccion = $('#selectCarrera option:selected').html();
     $('#carrera').text( "Plan de estudio de " + seleccion);
     console.log(seleccion);
+  });
+
+  $('#skin').on('click touchstart','li', function() {
+    var bodyColor = $("#bodyColor");
+    
+    bodyColor.removeClass();
+    bodyColor.addClass("hold-transition");
+    bodyColor.addClass("sidebar-mini");
+    bodyColor.addClass($(this).attr('data'));
+    CambiarSkin($(this).attr('data'));
+
   });
 
   $.ajaxSetup({ 
@@ -314,12 +316,6 @@ function publicarComentario(pk){
   });
 }
 
-function cambiarColor(skin){
-
-    
-
-}
-
 function CrearGrupo(){
     var infoGrupo = $("#infoGrupo").serialize();
     
@@ -334,6 +330,24 @@ function CrearGrupo(){
       }
     });
 };
+
+
+
+function CambiarSkin(skin){
+
+    console.log("Post " + skin); 
+    $.ajax({
+      type: 'POST',
+      url: '/cambiarSkin/', //direccion a donde hace las requets
+      data: {skin: skin},
+      success: function (data) {
+          console.log("Cambio exitoso a " + skin);
+      },
+      error: function(data) {
+      }
+    });
+};
+
 </script>
   
 {% endblock %}

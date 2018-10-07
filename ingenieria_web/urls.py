@@ -50,6 +50,9 @@ urlpatterns = [
 
     #Perfil
     url(r'^perfil/$', social_views.perfil, name="perfil_url"),  
+
+    #Skin
+    url(r'^cambiarSkin/$', social_views.cambiarSkin, name="cambiarSkin_url"),  
 ]
 
 if settings.DEBUG:

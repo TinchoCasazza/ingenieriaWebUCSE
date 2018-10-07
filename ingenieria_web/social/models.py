@@ -16,6 +16,9 @@ class Carrera(models.Model):
 class Skin(models.Model):
     idSkin = models.AutoField(primary_key= True)
     nombreSkin = models.CharField(blank = False, max_length=40)
+
+    def __str__(self):
+        return (self.nombreSkin)
     
 
 class UserManager(AbstractUser):
