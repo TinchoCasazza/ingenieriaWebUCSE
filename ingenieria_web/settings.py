@@ -43,7 +43,7 @@ INSTALLED_APPS = [
     'debug_toolbar',
     'elasticsearch',
     'widget_tweaks',
-    
+    'rest_framework',
 ] 
 
 AUTH_USER_MODEL = 'social.UserManager'

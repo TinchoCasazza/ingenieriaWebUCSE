@@ -209,3 +209,26 @@ def cambiarSkin(request):
                 usuario.save()
         return render(request, 'adminlte/index.html')
                 
+#Api
+from django.http import JsonResponse
+from rest_framework import viewsets
+
+from rest_framework.filters import OrderingFilter
+from django_filters.rest_framework import DjangoFilterBackend
+
+from .serializers import GrupoSerializer
+
+def api_v1(request):
+    return render(request, 'api_v1.html', {})
+
+def api_cantidad_grupos(request):
+    data = {
+        'cantidad_grupos': Grupo.objects.count()
+    }
+    return JsonResponse(data)
+
+class GrupoViewSet(viewsets.ModelViewSet):
+    queryset = Grupo.objects.all().order_by('NombreGrupo')
+    serializer_class = GrupoSerializer
+    filter_backends = (OrderingFilter, DjangoFilterBackend)
+

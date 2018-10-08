@@ -20,6 +20,11 @@ from django.views.generic.base import TemplateView
 from ingenieria_web.social import views as social_views
 from ingenieria_web.search import views as search_views
 from django.contrib.auth.views import LoginView, login_required
+from rest_framework import routers
+
+router = routers.DefaultRouter()
+router.register('grupos', social_views.GrupoViewSet)
+
 
 urlpatterns = [
 
@@ -53,6 +58,11 @@ urlpatterns = [
 
     #Skin
     url(r'^cambiarSkin/$', social_views.cambiarSkin, name="cambiarSkin_url"),  
+
+    #Api
+    url(r'ejemplo_api_v1/$', social_views.api_v1),
+    url(r'api_v1/cantidad_grupos/$', social_views.api_cantidad_grupos),
+    url(r'api_v1/', include(router.urls)),
 ]
 
 if settings.DEBUG:
