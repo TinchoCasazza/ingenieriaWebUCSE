@@ -90,7 +90,6 @@ class Publicacion(models.Model):
     FechaModiPublicacion = models.DateField(default = None, editable = False, null = True)
 
 
-
 class Comentario(models.Model):
     idComentario = models.AutoField(primary_key = True)
     idUserComento = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
@@ -100,3 +99,9 @@ class Comentario(models.Model):
     FechaModiComentario = models.DateField(default = None, editable = False, null = True)
     FechaBajaComentario = models.DateField(default = None, editable = False, null = True)
 
+class Suscripcion(models.Model):
+    idSuscripcion = models.AutoField(primary_key = True)
+    emisor = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='emisor')
+    receptor = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='receptor')
+    idGrupoSuscribio = models.ForeignKey(Grupo, on_delete=models.CASCADE, null = True)
+    fecha_peticion = models.DateField(auto_now=True)
