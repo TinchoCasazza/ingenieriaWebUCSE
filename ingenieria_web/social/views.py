@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.contrib import messages
 from django.http import HttpResponseRedirect
 from django.template import context
-from .models import Publicacion, Grupo, Comentario, Skin, PrivacidadGrupo
+from .models import Publicacion, Grupo, Comentario, Skin, PrivacidadGrupo,UserGrupos, Permisos
 
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
@@ -163,8 +163,15 @@ def comentarPublicacion(request):
 def grupos(request, pk=None):
         if pk:
                 return HttpResponse("grupo" + pk)
+        lista_gruposuser = UserGrupos.objects.all().filter(idUser=request.user)
         lista_Grupos = Grupo.objects.all().order_by('NombreGrupo')
-        return render(request, 'adminlte/grupos.html', {'lista_grupos' : lista_Grupos})
+        lista_grupos = []
+        for grupo in lista_Grupos:
+            for grupouser in lista_gruposuser:
+                if grupo == grupouser.idGrupoUsuario:
+                    lista_grupos.append(grupo)
+
+        return render(request, 'adminlte/grupos.html', {'lista_grupos' : lista_grupos})
 
 def crear_grupo(request):
         if request.method == 'POST':
@@ -174,6 +181,7 @@ def crear_grupo(request):
                 print(nivelAcceso)
                 
                 grupo = Grupo()
+                usergrupo = UserGrupos()
                 privacidad = PrivacidadGrupo()
 
                 privacidad = PrivacidadGrupo.objects.get(Privacidad = nivelAcceso)
@@ -181,6 +189,10 @@ def crear_grupo(request):
                 grupo.NivelAcceso = privacidad
                 grupo.Creador = request.user
                 grupo.save()
+                usergrupo.idGrupoUsuario = grupo
+                usergrupo.idUser = grupo.Creador
+                usergrupo.Permisos = Permisos.objects.get(NombrePerm = 'Administrador')
+                usergrupo.save()
                 return HttpResponseRedirect('/grupos/')
                 
 

@@ -64,11 +64,15 @@ class Permisos(models.Model):
     EditarGrupo = models.BooleanField(default = False)
     EliminarGrupo = models.BooleanField(default = False)
 
+    def __str__(self):
+        return (self.NombrePerm)
+
 
 class UserGrupos(models.Model):
     idUser = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     idGrupoUsuario = models.ForeignKey(Grupo, on_delete=models.CASCADE)
     Permisos = models.ForeignKey(Permisos, on_delete=models.CASCADE)
+
 
 
 class Publicacion(models.Model):
