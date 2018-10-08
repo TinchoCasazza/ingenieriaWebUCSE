@@ -29,6 +29,7 @@
             <ul class="nav navbar-nav">
                 {% block header_dropdowns %}
                     {% if request.user.is_authenticated %}
+                        {% include 'adminlte/components/solicitudGrupos.html'  %}
                         <li class="dropdown user user-menu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                 <img src="{% avatar_url size=50 %}" class="user-image" alt="User Image">
