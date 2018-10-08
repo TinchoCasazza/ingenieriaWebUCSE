@@ -19,6 +19,7 @@ from django.contrib import admin
 from django.views.generic.base import TemplateView
 from ingenieria_web.social import views as social_views
 from ingenieria_web.search import views as search_views
+from django.contrib.auth import views as auth_views
 from django.contrib.auth.views import LoginView, login_required
 from rest_framework import routers
 
@@ -63,6 +64,15 @@ urlpatterns = [
     url(r'ejemplo_api_v1/$', social_views.api_v1),
     url(r'api_v1/cantidad_grupos/$', social_views.api_cantidad_grupos),
     url(r'api_v1/', include(router.urls)),
+
+    #Recuperar Contraseña
+    url(r'^password_reset/$', auth_views.PasswordResetView.as_view(template_name ='adminlte/registration/password_reset_form.html'), name='password_reset'),
+    url(r'^password_reset/done/$', auth_views.PasswordResetDoneView.as_view(template_name ='adminlte/registration/password_reset_done.html'), name='password_reset_done'),
+    url(r'^reset/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
+        auth_views.PasswordResetConfirmView.as_view(template_name ='adminlte/registration/password_reset_confirm.html'), 
+            name='password_reset_confirm'),
+    url(r'^reset/done/$', auth_views.PasswordResetCompleteView.as_view(template_name ='adminlte/registration/password_reset_complete.html'), name='password_reset_complete'),
+
 ]
 
 if settings.DEBUG:

@@ -29,13 +29,13 @@ EMAIL_PORT = 587
 # Application definition
 
 INSTALLED_APPS = [
+    'django.contrib.auth',
     'ingenieria_web.social',
     'ingenieria_web.search',
     'django_adminlte',
     'django_adminlte_theme',
     'django_elasticsearch_dsl',
     'django.contrib.admin',
-    'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
@@ -76,9 +76,9 @@ TEMPLATES = [
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
+                'django.contrib.auth.context_processors.auth',
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
         },
@@ -97,6 +97,7 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
+
 
 
 # Password validation
