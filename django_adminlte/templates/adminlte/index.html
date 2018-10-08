@@ -351,6 +351,42 @@ function CambiarSkin(skin){
     });
 };
 
+function CargarNotificaciones(){
+
+
+    $.ajax({
+      type: 'GET',
+      url: '//', //direccion a donde hace las requets
+      success: function (data) {
+      },
+      error: function(data) {
+      }
+    });
+};
+
+function ArmarNotificacionHtml(data){
+    
+    var usuario = data.usuario;
+    var fecha = data.fecha;
+    var grupo = data.grupo;
+
+    <li>
+        <a href="#">
+            <div class="pull-left">
+                <img src="usuario.imagen" class="img-circle" alt="User Image">
+            </div>
+            <h4>
+                grupo.nombre
+                <small><i class="fa fa-clock-o"></i> fecha </small>
+            </h4>
+            <p>Solicitud para ser miebro del grupo</p>
+        </a>
+    </li>
+
+    $("#menuNotificaciones").html()
+};
+
+
 </script>
   
 {% endblock %}
