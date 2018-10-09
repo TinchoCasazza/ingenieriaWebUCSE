@@ -329,6 +329,29 @@ function CargarNotificaciones(){
       }
     });
 };
+
+$("#iFoto").click(function () {
+  $("input[type='file']").trigger('click');
+  console.log("entre");
+});
+
+$('input[type="file"]').on('change', function() {
+  var file = $(this)[0].files[0];
+  console.log(file);
+  $.ajax({
+      type: 'POST',
+      url: '/fotoPerfil/', //direccion a donde hace las requets
+      data: {file: file},
+      contentType: false,
+      processData: false,
+      success: function (data) {
+          console.log("Upload exitoso ");
+      },
+      error: function(data) {
+      }
+    });
+})
+
 </script>
   
 {% endblock %}

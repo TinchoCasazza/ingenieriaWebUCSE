@@ -142,4 +142,7 @@ LOGIN_REDIRECT_URL = '/'
 
 STATIC_URL = '/static/'
 
+MEDIA_URL = '/django_adminlte/static/avatars/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'django_adminlte/static/')
+
 django_heroku.settings(locals())

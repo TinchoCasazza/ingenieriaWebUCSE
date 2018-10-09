@@ -18,6 +18,7 @@ from django.contrib.auth.models import (
     BaseUserManager, AbstractBaseUser
 )
 from .forms import NuevoGrupo
+from django.core.files.storage import FileSystemStorage
 
 from django.contrib.auth import authenticate, login
 from django.contrib.auth import logout as django_logout
@@ -208,6 +209,16 @@ def cambiarSkin(request):
                 usuario.skinUser = instanciaSkin
                 usuario.save()
         return render(request, 'adminlte/index.html')
+
+def simple_upload(request):
+    if request.method == 'POST':
+        file = request.FILES.get('file')
+
+        usuario = request.user
+        usuario.avatar = file
+        usuario.save()
+        print(file)
+    return render(request, 'adminlte/index.html')
                 
 #Api
 from django.http import JsonResponse

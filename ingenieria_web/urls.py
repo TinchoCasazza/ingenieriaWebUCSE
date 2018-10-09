@@ -51,6 +51,7 @@ urlpatterns = [
     url(r'^grupos/$', social_views.grupos, name="grupos_url"),   
     url(r'^grupos/(?P<pk>\d+)/$', social_views.grupos, name="grupos_url_with_pk"),
     url(r'^grupos/crear_grupo/$', social_views.crear_grupo, name="grupos_url_create"),     
+    
     #Busqueda
     url(r'^busqueda/$', search_views.search, name="search_url"),  
 
@@ -60,6 +61,9 @@ urlpatterns = [
     #Skin
     url(r'^cambiarSkin/$', social_views.cambiarSkin, name="cambiarSkin_url"),  
 
+    #FotoPerfil
+    url(r'^fotoPerfil/$', social_views.simple_upload, name="fotoPerfil_url"),  
+    
     #Api
     url(r'ejemplo_api_v1/$', social_views.api_v1),
     url(r'api_v1/cantidad_grupos/$', social_views.api_cantidad_grupos),

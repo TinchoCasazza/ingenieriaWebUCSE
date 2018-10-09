@@ -8,8 +8,14 @@
             {% if request.user.is_authenticated %}
                 <div class="user-panel">
                     <div class="pull-left image">
-                        <img src="{% avatar_url size=90 %}" class="img-circle" alt="User Image">
-                         <a href="/"><span class="badge bg-red" style="right: 20%;position: relative;bottom: -20%;"><i class="fa fa-camera" aria-hidden="true"></i></span></a>
+                        <img src="../static/{{ request.user.avatar }}" width="90%" height="90%" class="img-circle" alt="User Image">
+                        <div class="badge bg-red" style="cursor: pointer; right: 20%;position: relative;">
+                            <form method="post" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                <i id="iFoto"  class="fa fa-camera" aria-hidden="true"></i>
+                                <input name="file" type="file" style="display: none;" name="" id="">
+                            </form>
+                         </div>    
                     </div>
                     <div class="pull-left info">
                         <p>{% firstof request.user.get_full_name|capfirst request.user.username|capfirst %}</p>
