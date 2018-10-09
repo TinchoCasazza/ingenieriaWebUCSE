@@ -63,7 +63,6 @@
                     {% endblock %}
                 {% endblock %}
                 {% include 'adminlte/components/crear_grupo.html' %}
-                {% include 'adminlte/components/plan_estudio.html' %}
             </section>
             {% endblock %}
 
@@ -77,6 +76,8 @@
     </div>
 
 {% endblock body %}
+
+{% include 'adminlte/components/plan_estudio.html' %}
 
 {% block javascript %}
 {% include 'adminlte/lib/_scripts.html' %}
