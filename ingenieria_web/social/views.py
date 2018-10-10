@@ -228,6 +228,7 @@ from rest_framework.filters import OrderingFilter
 from django_filters.rest_framework import DjangoFilterBackend
 
 from .serializers import GrupoSerializer
+from .serializers import UserSerializer
 
 def api_v1(request):
     return render(request, 'api_v1.html', {})
@@ -243,3 +244,11 @@ class GrupoViewSet(viewsets.ModelViewSet):
     serializer_class = GrupoSerializer
     filter_backends = (OrderingFilter, DjangoFilterBackend)
 
+from django.contrib.auth import get_user_model
+
+
+class UserViewSet(viewsets.ModelViewSet):
+        User = get_user_model()
+        queryset = User.objects.all()
+        serializer_class = UserSerializer
+        filter_backends = (OrderingFilter, DjangoFilterBackend)
