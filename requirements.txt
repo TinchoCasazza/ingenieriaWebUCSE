@@ -8,3 +8,4 @@ certifi
 django-widget-tweaks
 djangorestframework
 django_filter
+Pillow
