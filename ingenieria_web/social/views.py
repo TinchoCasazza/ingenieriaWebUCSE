@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.contrib import messages
 from django.http import HttpResponseRedirect
 from django.template import context
-from .models import Publicacion, Grupo, Comentario, Skin, PrivacidadGrupo,UserGrupos, Permisos
+from .models import Publicacion, Grupo, Comentario, Skin, PrivacidadGrupo,UserGrupos, Permisos, Suscripcion
 
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
@@ -196,6 +196,22 @@ def crear_grupo(request):
                 usergrupo.save()
                 return HttpResponseRedirect('/grupos/')
                 
+def suscribirUsuario(request):
+        if request.method == 'POST':
+                grupoId = request.POST.get('id')
+                usuarioEmisor = request.user
+
+                grupo = Grupo.objects.get(idGrupo = grupoId)
+
+                suscripcion = Suscripcion()
+
+                suscripcion.emisor = usuarioEmisor
+                suscripcion.idGrupoSuscribio = grupo
+                suscripcion.receptor = grupo.Creador
+
+                suscripcion.save()
+        return render(request, 'adminlte/grupos.html')
+
 
 def perfil(request):
         return render(request, 'adminlte/perfil.html')
