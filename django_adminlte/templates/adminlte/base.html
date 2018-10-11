@@ -1,4 +1,6 @@
-{% load static %}<!DOCTYPE html>
+{% load static %}
+{% load staticfiles %}
+<!DOCTYPE html>
 <html>
 <head>
     {% block title_outer %}
@@ -17,7 +19,6 @@
 
     {% block extra_head %}{% endblock %}
 </head>
-
 
 <body id="bodyColor" class="hold-transition {% if request.user.is_authenticated %} {{ request.user.skinUser }} {% else %} skin-green {% endif %} sidebar-mini {% block body_class %}{% block bodyclass %}{% endblock %}{% endblock %}">
 
