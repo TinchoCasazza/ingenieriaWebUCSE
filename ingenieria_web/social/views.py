@@ -210,14 +210,13 @@ def cambiarSkin(request):
                 usuario.save()
         return render(request, 'adminlte/index.html')
 
+
 def simple_upload(request):
     if request.method == 'POST':
-        file = request.FILES.get('file')
-
         usuario = request.user
-        usuario.avatar = file
+        usuario.avatar = request.FILES.get('file')
+        
         usuario.save()
-        print(file)
     return render(request, 'adminlte/index.html')
                 
 #Api
@@ -229,6 +228,7 @@ from django_filters.rest_framework import DjangoFilterBackend
 
 from .serializers import GrupoSerializer
 from .serializers import UserSerializer
+from django.contrib.auth import get_user_model
 
 def api_v1(request):
     return render(request, 'api_v1.html', {})
@@ -243,9 +243,6 @@ class GrupoViewSet(viewsets.ModelViewSet):
     queryset = Grupo.objects.all().order_by('NombreGrupo')
     serializer_class = GrupoSerializer
     filter_backends = (OrderingFilter, DjangoFilterBackend)
-
-from django.contrib.auth import get_user_model
-
 
 class UserViewSet(viewsets.ModelViewSet):
         User = get_user_model()

@@ -8,12 +8,12 @@
             {% if request.user.is_authenticated %}
                 <div class="user-panel">
                     <div class="pull-left image">
-                        <img src="../static/{{ request.user.avatar }}" width="90%" height="90%" class="img-circle" alt="User Image">
-                        <div class="badge bg-red" style="cursor: pointer; right: 20%;position: relative;">
-                            <form method="post" enctype="multipart/form-data">
+                        <img src="../static/{{ request.user.avatar }}" style="width:45px ; height:45px" class="img-circle" alt="User Image">
+                        <div id="divUsuario" class="badge bg-red" style="cursor: pointer; right: 20%;position: relative;">
+                            <form id="formAvatar" method="post" enctype="multipart/form-data">
                                 {% csrf_token %}
                                 <i id="iFoto"  class="fa fa-camera" aria-hidden="true"></i>
-                                <input name="file" type="file" style="display: none;" name="" id="">
+                                <input name="file" type="file" style="display: none;" accept="image/*" name="" id="">
                             </form>
                          </div>    
                     </div>
