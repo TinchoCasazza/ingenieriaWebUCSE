@@ -8,7 +8,7 @@
             {% if request.user.is_authenticated %}
                 <div class="user-panel">
                     <div class="pull-left image">
-                        <img src="../static/{{ request.user.avatar }}" style="width:45px ; height:45px" class="img-circle" alt="User Image">
+                        <img src="../static/{{ request.user.avatar }}" size="90" class="img-circle" alt="User Image">
                         <div id="divUsuario" class="badge bg-red" style="cursor: pointer; right: 20%;position: relative;">
                             <form id="formAvatar" method="post" enctype="multipart/form-data">
                                 {% csrf_token %}

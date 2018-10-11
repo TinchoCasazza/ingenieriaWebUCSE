@@ -44,7 +44,7 @@
                 <div class="box-header with-border">
                     <div class="user-block">
                         {% if avatar_url == empty %}
-                          <img class="img-circle" src="https://cdn1.vectorstock.com/i/thumb-large/66/60/avatar-business-man-graphic-vector-9646660.jpg" alt="User Image">
+                          <img class="img-circle" src="../static/{{ request.user.avatar }}" alt="User Image">
                         {% endif %}
                         <span class="username"><a href="#">{{ publicacion.idUserPublico }}</a></span>
                         <span class="description">{{ publicacion.FechaPublicacion }}</span>
@@ -68,7 +68,7 @@
           <div class="box-footer">
               <form action="#" method="post">
                 {% csrf_token %}
-                <img class="img-responsive img-circle img-sm" src="https://www.gravatar.com/avatar/d89c1edbad2692462ed75e3ea268fa01?s=90&d=mm" alt="Alt Text">
+                <img class="img-responsive img-circle img-sm" src="../static/{{ request.user.avatar }}" alt="Alt Text">
                 <!-- .img-push is used to add margin to elements next to floating images -->
                 
                 <div class="img-push">
