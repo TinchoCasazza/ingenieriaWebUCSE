@@ -52,7 +52,9 @@ urlpatterns = [
     url(r'^grupos/$', social_views.grupos, name="grupos_url"),   
     url(r'^grupos/(?P<pk>\d+)/$', social_views.grupos, name="grupos_url_with_pk"),
     url(r'^grupos/crear_grupo/$', social_views.crear_grupo, name="grupos_url_create"),     
-    
+    url(r'^grupos/suscribirse/$', social_views.suscribirUsuario, name="grupos_url_suscripcion"),     
+
+
     #Busqueda
     url(r'^busqueda/$', search_views.search, name="search_url"),  
 
