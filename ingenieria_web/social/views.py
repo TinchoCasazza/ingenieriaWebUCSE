@@ -247,6 +247,7 @@ from django_filters.rest_framework import DjangoFilterBackend
 
 from .serializers import GrupoSerializer
 from .serializers import UserSerializer
+from .serializers import SuscripcionSerializer
 from django.contrib.auth import get_user_model
 
 def api_v1(request):
@@ -267,4 +268,9 @@ class UserViewSet(viewsets.ModelViewSet):
         User = get_user_model()
         queryset = User.objects.all()
         serializer_class = UserSerializer
+        filter_backends = (OrderingFilter, DjangoFilterBackend)
+
+class SuscripcionViewSet(viewsets.ModelViewSet):
+        queryset = Suscripcion.objects.all()
+        serializer_class = SuscripcionSerializer
         filter_backends = (OrderingFilter, DjangoFilterBackend)

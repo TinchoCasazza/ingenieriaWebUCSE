@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Grupo, UserManager
+from .models import Grupo, UserManager, Suscripcion
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
@@ -11,3 +11,8 @@ class GrupoSerializer(serializers.HyperlinkedModelSerializer):
         model = Grupo
         fields = ('idGrupo','NombreGrupo', 'Creador')
 
+
+class SuscripcionSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Suscripcion
+        fields = '__all__'

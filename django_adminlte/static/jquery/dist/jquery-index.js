@@ -186,7 +186,7 @@ function Suscribirse(comp){
 function MostrarSuscripciones(){
     $.ajax({
         type: 'GET',
-        url: '/grupos/suscribirse/', //direccion a donde hace las requets
+        url: '/api_v1/suscripcion/', //direccion a donde hace las requets
         success: function (data) {
             console.log(data);
         },
@@ -195,6 +195,6 @@ function MostrarSuscripciones(){
     });
 }
     
-//setInterval(MostrarSuscripciones, 3000);
+setInterval(MostrarSuscripciones, 3000);
 
 //--------------------------------//

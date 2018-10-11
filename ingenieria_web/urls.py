@@ -26,6 +26,7 @@ from rest_framework import routers
 router = routers.DefaultRouter()
 router.register('grupos', social_views.GrupoViewSet)
 router.register('usuarios', social_views.UserViewSet)
+router.register('suscripcion', social_views.SuscripcionViewSet)
 
 
 urlpatterns = [
