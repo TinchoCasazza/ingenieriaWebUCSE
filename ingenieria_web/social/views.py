@@ -178,13 +178,9 @@ def crear_grupo(request):
         if request.method == 'POST':
                 nombreGrupo = request.POST.get('nombreGrupo')
                 nivelAcceso = request.POST.get('nivelAcceso')
-                
-                print(nivelAcceso)
-                
                 grupo = Grupo()
                 usergrupo = UserGrupos()
                 privacidad = PrivacidadGrupo()
-
                 privacidad = PrivacidadGrupo.objects.get(Privacidad = nivelAcceso)
                 grupo.NombreGrupo = nombreGrupo
                 grupo.NivelAcceso = privacidad
