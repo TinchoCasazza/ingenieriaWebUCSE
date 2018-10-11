@@ -180,5 +180,21 @@ function Suscribirse(comp){
         error: function(data) {
         }
       });
+
 }
+
+function MostrarSuscripciones(){
+    $.ajax({
+        type: 'GET',
+        url: '/grupos/suscribirse/', //direccion a donde hace las requets
+        success: function (data) {
+            console.log(data);
+        },
+        error: function(data) {
+        }
+    });
+}
+    
+//setInterval(MostrarSuscripciones, 3000);
+
 //--------------------------------//

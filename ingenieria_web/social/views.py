@@ -196,7 +196,14 @@ def crear_grupo(request):
                 usergrupo.save()
                 return HttpResponseRedirect('/grupos/')
                 
+from django.http import JsonResponse
+from django.core import serializers
+
 def suscribirUsuario(request):
+        if request.method == 'GET':
+                suscripciones = Suscripcion.objects.all()
+                jsondata = serializers.serialize('json', suscripciones)
+                return JsonResponse(jsondata , safe=False)
         if request.method == 'POST':
                 grupoId = request.POST.get('id')
                 usuarioEmisor = request.user
