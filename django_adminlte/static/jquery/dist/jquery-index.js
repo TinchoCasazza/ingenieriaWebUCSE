@@ -188,13 +188,41 @@ function MostrarSuscripciones(){
         type: 'GET',
         url: '/api_v1/suscripcion/', //direccion a donde hace las requets
         success: function (data) {
-            console.log(data);
+            ArmarDesplegable(data);
         },
         error: function(data) {
         }
     });
 }
     
-setInterval(MostrarSuscripciones, 3000);
+function ArmarDesplegable(json){
+    var cantidad = 0;
+
+    for (var i in json) {
+        console.log(json[i]);
+        
+        cantidad++; 
+    }
+
+    cantidad++;
+    console.log($("#cSuscripciones"));
+    $("#cSuscripciones").html(cantidad);
+    
+    if (cantidad == 0){
+        $("#mensajeSuscripcion").html("No tiene solicitudes de Grupos")
+    }
+
+    if (cantidad == 1){
+        $("#mensajeSuscripcion").html("Tiene " + cantidad + " solicitud nueva de Grupos")
+    }
+
+    if (cantidad > 1){
+        $("#mensajeSuscripcion").html("Tiene " + cantidad + " solicitudes nuevas de Grupos")
+    }
+
+    console.log(cantidad);
+}
+
+setInterval(MostrarSuscripciones, 6000);
 
 //--------------------------------//
