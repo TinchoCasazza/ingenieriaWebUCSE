@@ -1,3 +1,10 @@
+// Funciones al Cargar el Dom
+
+$( document ).ready(function() {
+    MostrarSuscripciones();
+});
+
+
 // Token Ajax
 $.ajaxSetup({ 
     beforeSend: function(xhr, settings) {
@@ -198,31 +205,32 @@ function MostrarSuscripciones(){
 function ArmarDesplegable(json){
     var cantidad = 0;
 
+    console.log(json);
+
     for (var i in json) {
-        console.log(json[i]);
-        
+        var receptor = json.receptor;
+        var emisor = json[i].emisor;
+        var grupo = json[i].idGrupoSuscribio;
+
+        renglon = '<li><a href="#"><div class="pull-left"><img src="'+ emisor.avatar +'" class="img-circle" alt="User Image"></div><h4>'+ emisor.username +'<small><i class="fa fa-clock-o"></i>' + json[i].fecha_peticion + '</small></h4><p>Quiere formar parte del Grupo '+ grupo.NombreGrupo +'</p></a></li>';
+        $("#menuSuscripcion").html(renglon);  
         cantidad++; 
     }
 
-    cantidad++;
-    console.log($("#cSuscripciones"));
     $("#cSuscripciones").html(cantidad);
     
     if (cantidad == 0){
         $("#mensajeSuscripcion").html("No tiene solicitudes de Grupos")
     }
-
     if (cantidad == 1){
         $("#mensajeSuscripcion").html("Tiene " + cantidad + " solicitud nueva de Grupos")
     }
-
     if (cantidad > 1){
         $("#mensajeSuscripcion").html("Tiene " + cantidad + " solicitudes nuevas de Grupos")
     }
 
-    console.log(cantidad);
 }
 
-setInterval(MostrarSuscripciones, 6000);
+setInterval(MostrarSuscripciones, 60000);
 
 //--------------------------------//

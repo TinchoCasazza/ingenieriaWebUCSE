@@ -12,7 +12,8 @@ class GrupoSerializer(serializers.HyperlinkedModelSerializer):
         fields = ('idGrupo','NombreGrupo', 'Creador')
 
 
-class SuscripcionSerializer(serializers.HyperlinkedModelSerializer):
+class SuscripcionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Suscripcion
         fields = '__all__'
+        depth = 1
