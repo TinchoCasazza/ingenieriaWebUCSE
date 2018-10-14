@@ -97,7 +97,7 @@ def activate(request, uidb64, token):
         user.is_active = True
         instanciaSkin = Skin.objects.get(nombreSkin = 'skin-green')
         user.skinUser = instanciaSkin
-        user.avatar = "https://uploads.scratch.mit.edu/users/avatars/16527818.png"
+        user.avatar = "https://i.imgur.com/AjJYeL2.png"
         user.save()
         auth_login(request, user)
         return HttpResponseRedirect('/')
