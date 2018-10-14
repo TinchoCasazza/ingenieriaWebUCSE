@@ -65,8 +65,8 @@ urlpatterns = [
     #Skin
     url(r'^cambiarSkin/$', social_views.cambiarSkin, name="cambiarSkin_url"),  
 
-    #FotoPerfil
-    url(r'^fotoPerfil/$', social_views.simple_upload, name="fotoPerfil_url"),  
+   #FotoPerfil
+    url(r'^fotoPerfil/$', social_views.cambiarFotoPerfil, name="fotoPerfil_url"),  
     
     #Api
     url(r'ejemplo_api_v1/$', social_views.api_v1),

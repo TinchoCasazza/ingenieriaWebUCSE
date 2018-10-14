@@ -97,6 +97,7 @@ def activate(request, uidb64, token):
         user.is_active = True
         instanciaSkin = Skin.objects.get(nombreSkin = 'skin-green')
         user.skinUser = instanciaSkin
+        user.avatar = "https://uploads.scratch.mit.edu/users/avatars/16527818.png"
         user.save()
         auth_login(request, user)
         return HttpResponseRedirect('/')
@@ -230,11 +231,11 @@ def cambiarSkin(request):
         return render(request, 'adminlte/index.html')
 
 
-def simple_upload(request):
+def cambiarFotoPerfil(request):
     if request.method == 'POST':
         usuario = request.user
-        usuario.avatar = request.FILES.get('file')
-        
+        imagen = request.POST.get('imagen')
+        usuario.avatar = imagen
         usuario.save()
     return render(request, 'adminlte/index.html')
                 

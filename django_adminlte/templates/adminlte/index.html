@@ -44,7 +44,7 @@
                 <div class="box-header with-border">
                     <div class="user-block">
                         {% if avatar_url == empty %}
-                          <img class="img-circle" src="../static/{{ request.user.avatar }}" alt="User Image">
+                          <img class="img-circle" src="{{ request.user.avatar }}" alt="User Image">
                         {% endif %}
                         <span class="username"><a href="#">{{ publicacion.idUserPublico }}</a></span>
                         <span class="description">{{ publicacion.FechaPublicacion }}</span>
