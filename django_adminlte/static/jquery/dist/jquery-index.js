@@ -122,32 +122,6 @@ function CambiarSkin(skin){
 
 //--------------------------------//
 
-// Cambio de Avatar
-$("#iFoto").click(function () {
-    $("input[type='file']").trigger('click');
-  });
-  
-  $('input[type="file"]').on('change', function() {
-    var file = $(this)[0].files[0];
-    var formData = new FormData();
-    formData.append('file', $(this)[0].files[0]);
-  
-    console.log(formData);
-    $.ajax({
-        type: 'POST',
-        url: '/fotoPerfil/', //direccion a donde hace las requets
-        data: formData,
-        contentType: false,
-        processData: false,
-        success: function (data) {
-            console.log("Upload exitoso ");
-            window.location.reload();
-        },
-        error: function(data) {
-        }
-      });
-  })
-//--------------------------------//  
 
 // Crear Grupos
 function CrearGrupo(){
@@ -219,7 +193,6 @@ function ArmarDesplegable(json){
     }
     // Agrega todas las suscripciones 
     $("#menuSuscripcion").html(renglon);  
-
 
     $("#cSuscripciones").html(cantidad);
     
