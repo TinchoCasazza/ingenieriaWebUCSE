@@ -9,7 +9,7 @@
                 <div class="user-panel">
                     <div class="pull-left image">
                         <img src="{{ request.user.avatar }}" size="90" class="img-circle" alt="User Image">
-                        <a data-target="#imagenModal" class="badge bg-red" style="cursor: pointer; right: 20%;position: relative;" data-toggle="modal" href="#imagenModal">
+                        <div class="badge bg-red" ><a data-target="#imagenModal" style="cursor: pointer; right: 20%;position: relative;" data-toggle="modal" href="#imagenModal"></div>
                     </div>
                     <div class="pull-left info">
                         <p>{% firstof request.user.get_full_name|capfirst request.user.username|capfirst %}</p>

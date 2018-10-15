@@ -3,9 +3,10 @@ var feedback = function(res) {
         var get_link = res.data.link.replace(/^http:\/\//i, 'https://');
         document.querySelector('.status').classList.add('bg-success');
         document.querySelector('.status').innerHTML =
-            'Image : ' + '<br><input id="urlImg" class="image-url" value=\"' + get_link + '\"/>';
-        console.log($("#urlImg").val());
+            'Image : ' + '<br><input id="urlImg" style=" visibility: hidden;" class="image-url" value=\"' + get_link + '\"/>';
 
+		$(".status").css("visibility", "hidden");
+		
 		var imagen = $("#urlImg").val();
 		console.log(imagen);
         $.ajax({
@@ -13,7 +14,8 @@ var feedback = function(res) {
 	      url: '/fotoPerfil/', //direccion a donde hace las requets
 	      data: {imagen: imagen},
 	      success: function (data) {
-		    console.log("Cambie Foto");
+			$('#imagenModal').modal('toggle'); 
+		    location.href = "/";
 	      },
 	      error: function(data) {
 	      }
