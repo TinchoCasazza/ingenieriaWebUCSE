@@ -198,7 +198,9 @@ from django.core import serializers
 
 def suscribirUsuario(request):
         if request.method == 'GET':
-                suscripciones = Suscripcion.objects.all()
+                usario = request.user
+                suscripciones = Suscripcion.objects.all().filter(receptor = usuario)
+
                 jsondata = serializers.serialize('json', suscripciones)
                 return JsonResponse(jsondata , safe=False)
         if request.method == 'POST':
