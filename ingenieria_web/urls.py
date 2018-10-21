@@ -48,6 +48,8 @@ urlpatterns = [
     url(r'^publicar/borrar/$', social_views.borrarPublicacion, name="borrarPublicacion_url"),
     url(r'^publicar/guardar/$', social_views.guardarPublicacion, name="guardarPublicacion_url"),
     url(r'^publicar/comentar/$', social_views.comentarPublicacion, name="comentarPublicacion_url"),
+    url(r'^publicar/denunciar/$', social_views.denunciarPublicacion, name="denunciarPublicacion_url"),
+
 
     #Grupos
     url(r'^grupos/$', social_views.grupos, name="grupos_url"),   

@@ -211,3 +211,26 @@ function ArmarDesplegable(json){
 setInterval(MostrarSuscripciones, 60000);
 
 //--------------------------------//
+
+// Denunciar
+
+function denunciarPublicacion(comp){
+
+    var publicacionId = comp.id;
+    var id = publicacionId.substr(12);
+    console.log(id);
+
+    $.ajax({
+        type: 'POST',
+        url: '/publicar/denunciar/', //direccion a donde hace las requets
+        data: { id: id },
+        success: function (data) {
+              console.log(data);
+        },
+        error: function(data) {
+        }
+      });
+
+}
+
+//--------------------------------//

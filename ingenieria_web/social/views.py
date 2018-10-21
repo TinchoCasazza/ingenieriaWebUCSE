@@ -161,6 +161,20 @@ def comentarPublicacion(request):
         publicaciones = Publicacion.objects.all().order_by('-FechaPublicacion')
         return render(request, 'adminlte/index.html', {'listaPublicaciones' : publicaciones})
 
+def denunciarPublicacion(request):
+        if request.method == 'POST':
+                pkPublicacion = request.POST.get('id')
+                publicacion = Publicacion()
+                publicacion = Publicacion.objects.get(idPublicacion = pkPublicacion)
+                # publicacion.usuarioDenuncia.add(request.user) 
+                # validar cantidad de denuncias en la Publicacion
+
+                publicacion.save()
+
+                data = {
+                   'mensaje' : "Denuncia Exitosa"
+                } 
+        return JsonResponse(data)        
 
 def grupos(request, pk=None):
         if pk:
