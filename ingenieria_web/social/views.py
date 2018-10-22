@@ -217,6 +217,7 @@ def suscribirUsuario(request):
 
                 jsondata = serializers.serialize('json', suscripciones)
                 return JsonResponse(jsondata , safe=False)
+        
         if request.method == 'POST':
                 grupoId = request.POST.get('id')
                 usuarioEmisor = request.user

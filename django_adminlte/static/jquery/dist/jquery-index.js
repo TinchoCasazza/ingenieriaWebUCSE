@@ -167,7 +167,7 @@ function Suscribirse(comp){
 function MostrarSuscripciones(){
     $.ajax({
         type: 'GET',
-        url: '/api_v1/suscripcion/', //direccion a donde hace las requets
+        url: '/grupos/suscribirse/', //direccion a donde hace las requets
         success: function (data) {
             ArmarDesplegable(data);
         },
@@ -211,6 +211,109 @@ function ArmarDesplegable(json){
 setInterval(MostrarSuscripciones, 60000);
 
 //--------------------------------//
+
+// Publicaciones
+
+function Publicar(){
+    var contenidoPublicacion = $("#contenidoPublicacion").val();
+    console.log(contenidoPublicacion)
+    $.ajax({
+      type: 'POST',
+      url: '/publicar/', //direccion a donde hace las requets
+      data: {contenidoPublicacion: contenidoPublicacion},
+      success: function (data) {
+      },
+      error: function(data) {
+      }
+    });
+};
+
+function borrarPublicacion(comp){
+  // Recibe como "COMP" el ID de la publicacion a ELIMINAR
+  let publicacionId = comp.id;
+  var pkPublicacion = publicacionId.substr(9);
+  // Se parcea el ID , y se realiza el POST a la URL 
+  $.ajax({
+      type: 'POST',
+      url: '/publicar/borrar/', //direccion a donde hace las requets
+      data: {publicacionId: pkPublicacion},
+      success: function (data) {
+          console.log("Borrado exitosamente ");
+      },
+      error: function(data) {
+          console.log(data);
+          console.log("Accion no permitida ");
+      }
+  });
+}
+function modificarPublicacion(comp){
+  let publicacionId = comp.id;
+  var pkPublicacion = publicacionId.substr(12);
+  $("#" + publicacionId).hide();
+  var selector = "#publicacion" + pkPublicacion;
+  var contenidoPublicacion = $(selector).text();
+  $(selector).html('<textarea id="contenidoModifacion' + pkPublicacion + '" class="col-xs-12" cols="40" style="resize: none;"></textarea><div class="pull-right" style="margin-top:5px;"><button type="button" id="btnGuardar'+ pkPublicacion +'" class="btn btn-success btn-sm" onclick="guardarPublicacion(this)">Guardar</button></div>');
+  $("#contenidoModifacion" + pkPublicacion).val(contenidoPublicacion);
+};
+
+function guardarPublicacion(comp){
+  let publicacionId = comp.id;
+  var pkPublicacion = publicacionId.substr(10);
+  
+  console.log(publicacionId);
+  $("#btnModificar" + pkPublicacion).show();
+  var contenido = $("#contenidoModifacion" + pkPublicacion).val();
+  // Se parcea el ID , y se realiza el POST a la URL 
+  $.ajax({
+      type: 'POST',
+      url: '/publicar/guardar/', //direccion a donde hace las requets
+      data: {publicacionId: pkPublicacion , contenido: contenido},
+      success: function (data) {
+          var selector = "#publicacion" + pkPublicacion;
+          $(selector).html(contenido);
+          console.log("Modificado exitosamente ");
+      },
+      error: function(data) {
+          console.log("Accion no permitida ");
+      }
+  });
+}
+function validarEnter(e,pk){
+    if (e.keyCode === 13 && !e.shiftKey) {
+        e.preventDefault();
+        publicarComentario(pk);
+    }
+}
+function publicarComentario(pk){
+  
+  var contenido = $("#contenidoComentario" + pk).val();
+  // Se parcea el ID , y se realiza el POST a la URL 
+  $.ajax({
+      type: 'POST',
+      url: '/publicar/comentar/', //direccion a donde hace las requets
+      data: {publicacionId: pk , contenido: contenido},
+      success: function (data) {
+          console.log("Comentado exitosamente ");
+          $("#contenidoComentario" + pk).val("");
+      },
+      error: function(data) {
+          console.log("Accion no permitida ");
+      }
+  });
+}
+
+//--------------------------------//
+
+function CargarNotificaciones(){
+    $.ajax({
+      type: 'GET',
+      url: '//', //direccion a donde hace las requets
+      success: function (data) {
+      },
+      error: function(data) {
+      }
+    });
+};
 
 // Denunciar
 
