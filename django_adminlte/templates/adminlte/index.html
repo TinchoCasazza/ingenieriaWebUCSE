@@ -64,7 +64,8 @@
                     </ul>
                 </div>
                 
-              
+
+          {% if request.user.is_authenticated %}  
                         <!-- /.box-footer -->
           <div class="box-footer">
               <form action="#" method="post">
@@ -78,7 +79,7 @@
               </form>
             </div>
           </div>
-        
+          {% endif %}
             <!-- /.box-footer -->
               {% empty %}
               <div class="box box-default">

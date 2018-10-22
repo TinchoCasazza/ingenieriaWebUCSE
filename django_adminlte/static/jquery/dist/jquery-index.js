@@ -182,17 +182,19 @@ function ArmarDesplegable(json){
     console.log(json);
     $("#menuSuscripcion").html("");  
 
-    for (var i in json) {
-        var receptor = json.receptor;
-        var emisor = json[i].emisor;
-        var grupo = json[i].idGrupoSuscribio;
-
-        // Concatena las suscripciones 
-        renglon = '<li><a href="#"><div class="pull-left"><img src="'+ emisor.avatar +'" class="img-circle" alt="User Image"></div><h4>'+ emisor.username +'<small><i class="fa fa-clock-o"></i>' + json[i].fecha_peticion + '</small></h4><p>Quiere formar parte del Grupo '+ grupo.NombreGrupo +'</p></a></li>' + renglon;
-        cantidad++; 
+    if (json != '[]'){
+        for (var i in json) {
+            var receptor = json.receptor;
+            var emisor = json[i].emisor;
+            var grupo = json[i].idGrupoSuscribio;
+    
+            // Concatena las suscripciones 
+            renglon = '<li><a href="#"><div class="pull-left"><img src="'+ emisor.avatar +'" class="img-circle" alt="User Image"></div><h4>'+ emisor.username +'<small><i class="fa fa-clock-o"></i>' + json[i].fecha_peticion + '</small></h4><p>Quiere formar parte del Grupo '+ grupo.NombreGrupo +'</p></a></li>' + renglon;
+            cantidad++; 
+        }
+        // Agrega todas las suscripciones 
+        $("#menuSuscripcion").html(renglon);  
     }
-    // Agrega todas las suscripciones 
-    $("#menuSuscripcion").html(renglon);  
 
     $("#cSuscripciones").html(cantidad);
     
@@ -208,7 +210,7 @@ function ArmarDesplegable(json){
 
 }
 
-setInterval(MostrarSuscripciones, 60000);
+//setInterval(MostrarSuscripciones, 60000);
 
 //--------------------------------//
 

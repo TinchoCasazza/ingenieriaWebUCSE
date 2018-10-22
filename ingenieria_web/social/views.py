@@ -212,11 +212,11 @@ from django.core import serializers
 
 def suscribirUsuario(request):
         if request.method == 'GET':
-                usario = request.user
+                usuario = request.user
                 suscripciones = Suscripcion.objects.all().filter(receptor = usuario)
+                data = serializers.serialize('json', suscripciones)
 
-                jsondata = serializers.serialize('json', suscripciones)
-                return JsonResponse(jsondata , safe=False)
+                return JsonResponse(data, safe=False)
         
         if request.method == 'POST':
                 grupoId = request.POST.get('id')
