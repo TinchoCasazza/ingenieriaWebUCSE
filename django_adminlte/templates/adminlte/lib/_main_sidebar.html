@@ -6,18 +6,19 @@
         <!-- Sidebar user panel -->
         {% block user_panel %}
             {% if request.user.is_authenticated %}
-                <div class="user-panel">
-                    <div class="pull-left image">
-                        <img src="{{ request.user.avatar }}" size="90" class="img-circle" alt="User Image">
-                        <div class="badge bg-red" ><a data-target="#imagenModal" style="cursor: pointer; right: 20%;position: relative;" data-toggle="modal" href="#imagenModal"></div>
-                    </div>
-                    <div class="pull-left info">
-                        <p>{% firstof request.user.get_full_name|capfirst request.user.username|capfirst %}</p>
-                        <a>
-                            <i class="fa fa-circle text-success" ></i>Conectado
-                        </a>
-                    </div>
+            <div class="user-panel">
+                <div class="pull-left image">
+                    <a data-target="#imagenModal" data-toggle="modal" href="#imagenModal">
+                        <img src="{{ request.user.avatar }}" size="10" class="img-circle" alt="User Image" width="45px" height="45px">
+                    </a>
                 </div>
+                <div class="pull-left info">
+                    <p>{% firstof request.user.get_full_name|capfirst request.user.username|capfirst %}</p>
+                    <a>
+                        <i class="fa fa-circle text-success" ></i>Conectado
+                    </a>
+                </div>
+            </div>
             {% endif %}
         {% endblock %}
 
