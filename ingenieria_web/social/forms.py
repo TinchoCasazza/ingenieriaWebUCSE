@@ -5,7 +5,7 @@ from django.contrib.auth import get_user_model
 
 User = get_user_model()
 
-from .models import Grupo
+from .models import Grupo, Publicacion
 
 class SignupForm(UserCreationForm):
     email = forms.EmailField(max_length=200, help_text='Required')
@@ -13,6 +13,10 @@ class SignupForm(UserCreationForm):
         model = User
         fields = ('username', 'email', 'password1', 'password2')
 
+class PublicacionForm(ModelForm):
+    class Meta:
+        model = Publicacion
+        exclude = ['Publicado','Borrador','Eliminado','Destacar','Eliminado','idUserPublico','idGrupoPu' ]
 
 class NuevoGrupo(ModelForm):
     class Meta:

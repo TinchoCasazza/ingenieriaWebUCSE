@@ -17,7 +17,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import (
     BaseUserManager, AbstractBaseUser
 )
-from .forms import NuevoGrupo
+from .forms import NuevoGrupo, PublicacionForm
 from django.core.files.storage import FileSystemStorage
 
 from django.contrib.auth import authenticate, login
@@ -195,6 +195,10 @@ def grupos(request, pk=None):
                     lista_grupos.append(grupo)
 
         return render(request, 'adminlte/grupos.html', {'lista_grupos' : lista_grupos})
+
+def grupo_publicacion(request, pk=None):
+        formNuevaPublicacion = PublicacionForm()
+        return render(request, 'adminlte/publicacion_grupo.html', {'formNuevaPublicacion':formNuevaPublicacion})
 
 def crear_grupo(request):
         if request.method == 'POST':

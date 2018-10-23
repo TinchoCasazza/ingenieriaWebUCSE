@@ -14,7 +14,7 @@
 
               <h3 class="box-title">{{ grupo.NombreGrupo }}</h3>
               <div class="box-tools pull-right">
-                  <button type="button" class="btn btn-success pull-right btn-sm"><i class="fa fa-plus"></i> Nuevo</button>
+                  <a type="button" class="btn btn-success pull-right btn-sm" href="{% url 'nueva_publicacion_with_pk' pk=grupo.idGrupo %}"><i class="fa fa-plus"></i> Nuevo</a>
                 </div>
             </div>
             <!-- /.box-header -->

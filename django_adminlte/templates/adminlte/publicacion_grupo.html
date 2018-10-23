@@ -1,0 +1,10 @@
+{% extends 'adminlte/base.html' %}
+
+{% block content %}
+    <div class="row">    
+        <div class="col 6">        
+            {% csrf_token %}
+            {{ formNuevaPublicacion.as_p }}
+        </div>
+    </div>
+{% endblock %}
