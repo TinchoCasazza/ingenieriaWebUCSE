@@ -206,6 +206,10 @@ def crear_grupo(request):
                 usergrupo.Permisos = Permisos.objects.get(NombrePerm = 'Administrador')
                 usergrupo.save()
                 return HttpResponseRedirect('/grupos/')
+
+def grupos_tema(request):
+        if request.method == 'GET':
+                return render(request, 'adminlte/grupo_tema.html')
                 
 from django.http import JsonResponse
 from django.core import serializers
