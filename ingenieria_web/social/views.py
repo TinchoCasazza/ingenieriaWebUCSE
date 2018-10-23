@@ -184,7 +184,8 @@ def grupos(request, pk=None):
                    miembros_grupos.append(miembro_grupo.idUser)
                 User = get_user_model()
                 miembros = User.objects.filter(username__in = miembros_grupos)
-                return render(request, 'adminlte/grupo_tema.html', {'grupo' : grupo, 'miembros' : miembros })
+                publicaciones = Publicacion.objects.filter(idGrupoPu = pk)
+                return render(request, 'adminlte/grupo_tema.html', {'grupo' : grupo, 'miembros' : miembros, 'publicaciones':publicaciones })
         lista_gruposuser = UserGrupos.objects.all().filter(idUser=request.user)
         lista_Grupos = Grupo.objects.all().order_by('NombreGrupo')
         lista_grupos = []
