@@ -178,8 +178,13 @@ def denunciarPublicacion(request):
 
 def grupos(request, pk=None):
         if pk:
+                miembros_grupos = []
                 grupo = Grupo.objects.filter(idGrupo=pk)[0]
-                return render(request, 'adminlte/grupo_tema.html', {'grupo' : grupo})
+                for miembro_grupo in UserGrupos.objects.all():
+                   miembros_grupos.append(miembro_grupo.idUser)
+                User = get_user_model()
+                miembros = User.objects.filter(username__in = miembros_grupos)
+                return render(request, 'adminlte/grupo_tema.html', {'grupo' : grupo, 'miembros' : miembros })
         lista_gruposuser = UserGrupos.objects.all().filter(idUser=request.user)
         lista_Grupos = Grupo.objects.all().order_by('NombreGrupo')
         lista_grupos = []
