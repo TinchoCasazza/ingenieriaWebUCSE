@@ -140,6 +140,7 @@ function CrearGrupo(){
       }
     });
 };
+
 //--------------------------------//
 
 // Suscribirse
@@ -331,6 +332,7 @@ function denunciarPublicacion(comp){
         data: { id: id },
         success: function (data) {
               console.log(data);
+              $("#divPublicacion").load(" #divPublicacion"); 
         },
         error: function(data) {
         }

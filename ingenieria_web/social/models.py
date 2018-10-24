@@ -76,6 +76,7 @@ class UserGrupos(models.Model):
 
 
 
+
 class Publicacion(models.Model):
     idPublicacion = models.AutoField(primary_key= True)
     idUserPublico = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
@@ -90,6 +91,9 @@ class Publicacion(models.Model):
     FechaBajaPublicacion = models.DateField(default= None, editable = False,null = True)
     FechaModiPublicacion = models.DateField(default = None, editable = False, null = True)
 
+class DenunciaUsuarios(models.Model):
+    idUsuario =  models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    idPublicacion = models.ForeignKey(Publicacion, on_delete=models.CASCADE) 
 
 class Comentario(models.Model):
     idComentario = models.AutoField(primary_key = True)

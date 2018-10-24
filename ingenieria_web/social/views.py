@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.contrib import messages
 from django.http import HttpResponseRedirect
 from django.template import context
-from .models import Publicacion, Grupo, Comentario, Skin, PrivacidadGrupo,UserGrupos, Permisos, Suscripcion
+from .models import Publicacion, Grupo, Comentario, Skin, PrivacidadGrupo,UserGrupos, Permisos, Suscripcion, DenunciaUsuarios
 
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
@@ -30,7 +30,7 @@ User = get_user_model()
 # Create your views here.
 
 def inicio(request):
-    listaPublicaciones = Publicacion.objects.all().order_by('-FechaPublicacion')
+    listaPublicaciones = Publicacion.objects.filter(Eliminado = False).order_by('-FechaPublicacion')
     listaGrupos = Grupo.objects.all().order_by('NombreGrupo')
     formNuevoGrupo = NuevoGrupo()
     return render(request, 'adminlte/index.html',{'listaPublicaciones' : listaPublicaciones ,'listaGrupos': listaGrupos, 'formNuevoGrupo': formNuevoGrupo})
@@ -118,7 +118,7 @@ def publicar(request):
                 publicacion.save()
                 return HttpResponseRedirect('inicio/')
         else:
-                publicaciones = Publicacion.objects.all().order_by('-FechaPublicacion')
+                publicaciones = Publicacion.objects.filter(Eliminado = False).order_by('-FechaPublicacion')
                 return render(request, 'adminlte/index.html', {listaPublicaciones : publicaciones})
 
 def borrarPublicacion(request):
@@ -130,7 +130,7 @@ def borrarPublicacion(request):
                 if request.user == publicacion.idUserPublico:
                         publicacion.Estado = estado
                         publicacion.save()
-        publicaciones = Publicacion.objects.all().order_by('-FechaPublicacion')
+        publicaciones = Publicacion.objects.filter(Eliminado = False).order_by('-FechaPublicacion')
         return render(request, 'adminlte/index.html', {'listaPublicaciones' : publicaciones})        
 
 
@@ -158,7 +158,7 @@ def comentarPublicacion(request):
                 comentario.idUserComento = request.user
                 comentario.ContenidoComentario = contenido
                 comentario.save()
-        publicaciones = Publicacion.objects.all().order_by('-FechaPublicacion')
+        publicaciones = Publicacion.objects.filter(Eliminado = False).order_by('-FechaPublicacion')
         return render(request, 'adminlte/index.html', {'listaPublicaciones' : publicaciones})
 
 def denunciarPublicacion(request):
@@ -166,9 +166,17 @@ def denunciarPublicacion(request):
                 pkPublicacion = request.POST.get('id')
                 publicacion = Publicacion()
                 publicacion = Publicacion.objects.get(idPublicacion = pkPublicacion)
-                # publicacion.usuarioDenuncia.add(request.user) 
-                # validar cantidad de denuncias en la Publicacion
+               
+                denunciaUsuario = DenunciaUsuarios()
+                denunciaUsuario.idUsuario = request.user
+                denunciaUsuario.idPublicacion = publicacion
+                denunciaUsuario.save()
 
+                
+                denuncias = DenunciaUsuarios.objects.filter(idPublicacion = pkPublicacion).count()
+                if denuncias > 3:
+                        publicacion.Eliminado = True
+                
                 publicacion.save()
 
                 data = {

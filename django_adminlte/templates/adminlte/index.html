@@ -13,7 +13,7 @@
     <div class="col-md-12">
        <!-- Si el usuario esta logeado y tiene permisos para publicar  -->
       {% if request.user.is_authenticated %}
-         <div class="box">
+        <div class="box">
             <div class="box-header">
               <h3 class="box-title">Publicar
                 <small></small>
@@ -36,9 +36,10 @@
                     </div>
                   </form>
                 </div>
-              </div>
+          </div>
               {% endif %}
         <!-- Box Comment -->
+        <div id="divPublicacion">
         {% for publicacion in listaPublicaciones %}
              <div class="box box-default">
                 <div class="box-header with-border">
@@ -89,7 +90,7 @@
               </div>
           
         {% endfor %}
-
+        </div>
        
 </div>
 
