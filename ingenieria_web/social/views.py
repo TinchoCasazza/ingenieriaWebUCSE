@@ -164,20 +164,24 @@ def comentarPublicacion(request):
 def denunciarPublicacion(request):
         if request.method == 'POST':
                 pkPublicacion = request.POST.get('id')
-                publicacion = Publicacion()
-                publicacion = Publicacion.objects.get(idPublicacion = pkPublicacion)
-               
-                denunciaUsuario = DenunciaUsuarios()
-                denunciaUsuario.idUsuario = request.user
-                denunciaUsuario.idPublicacion = publicacion
-                denunciaUsuario.save()
-
+                cantidad = DenunciaUsuarios.objects.filter(idUsuario = request.user, idPublicacion = pkPublicacion).count()
                 
+                if cantidad < 1:
+                        publicacion = Publicacion()
+                        publicacion = Publicacion.objects.get(idPublicacion = pkPublicacion)
+                
+                        denunciaUsuario = DenunciaUsuarios()
+                        denunciaUsuario.idUsuario = request.user
+                        denunciaUsuario.idPublicacion = publicacion
+                        denunciaUsuario.save()
+
+                        
                 denuncias = DenunciaUsuarios.objects.filter(idPublicacion = pkPublicacion).count()
                 if denuncias > 3:
                         publicacion.Eliminado = True
-                
-                publicacion.save()
+                        
+                        publicacion.save()        
+                print(denuncias)
 
                 data = {
                    'mensaje' : "Denuncia Exitosa"
