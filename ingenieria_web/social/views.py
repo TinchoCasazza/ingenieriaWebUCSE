@@ -32,8 +32,10 @@ User = get_user_model()
 def inicio(request):
     listaPublicaciones = Publicacion.objects.filter(Eliminado = False).order_by('-FechaPublicacion')
     listaGrupos = Grupo.objects.all().order_by('NombreGrupo')
+    listaComentarios = Comentario.objects.all()
     formNuevoGrupo = NuevoGrupo()
-    return render(request, 'adminlte/index.html',{'listaPublicaciones' : listaPublicaciones ,'listaGrupos': listaGrupos, 'formNuevoGrupo': formNuevoGrupo})
+    
+    return render(request, 'adminlte/index.html',{'listaPublicaciones' : listaPublicaciones ,'listaGrupos': listaGrupos, 'formNuevoGrupo': formNuevoGrupo, 'listaComentarios': listaComentarios})
 
 
 CRITICAL = 50
@@ -164,6 +166,7 @@ def comentarPublicacion(request):
 def denunciarPublicacion(request):
         if request.method == 'POST':
                 pkPublicacion = request.POST.get('id')
+                denunciaUsuario = DenunciaUsuarios()
                 cantidad = DenunciaUsuarios.objects.filter(idUsuario = request.user, idPublicacion = pkPublicacion).count()
                 
                 if cantidad < 1:

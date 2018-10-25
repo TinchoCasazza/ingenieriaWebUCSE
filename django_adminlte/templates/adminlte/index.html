@@ -61,10 +61,30 @@
                     <p id="publicacion{{ publicacion.idPublicacion }}" >{{ publicacion.Contenido }}</p>
                     <ul class="list-inline">
                         <li><a href="#" class="link-black text-lg"><i class="fa fa-thumbs-up margin-r-5"></i>Me Gusta</a></li>
-                        <li><a id="btnDenunciar{{ publicacion.idPublicacion }}"  onclick="denunciarPublicacion(this)" class="link-black text-lg" style="cursor:pointer;"><i class="fa fa-ban margin-r-5"></i>Denunciar</a></li>
+                        <li><a id="btnComentario{{ publicacion.idPublicacion }}" data-toggle="collapse" class="link-black text-lg" data-target="#comentario{{ publicacion.idPublicacion }}" style="cursor:pointer"><i class="fa fa-comments margin-r-5"></i>Comentarios</a></li>
+                        <li><a id="btnDenunciar{{ publicacion.idPublicacion }}"  onclick="denunciarPublicacion(this)" class="link-black text-lg" style="cursor:pointer; text-align: right;"><i class="fa fa-ban margin-r-5 "></i>Denunciar</a></li>
                     </ul>
                 </div>
-                
+                <div class="box-footer box-comments collapse" id="comentario{{ publicacion.idPublicacion }}">
+                  {% for comentario in listaComentarios %}
+                     {% if publicacion == comentario.idPublicacionC %}   
+                      <div class="box-comment">
+                        <!-- User image -->
+                        <img class="img-circle img-sm" src={{ comentario.idUserComento.avatar }} alt="User Image">
+
+                        <div class="comment-text">
+                              <span class="username">
+                                {{ comentario.idUserComento }}
+                                <span class="text-muted pull-right">{{ comentario.FechaComentario|date:"SHORT_DATE_FORMAT" }}</span>
+                              </span><!-- /.username -->
+                          {{ comentario.ContenidoComentario }}
+                        </div>
+                        <!-- /.comment-text -->
+                      </div>
+                    
+                      {% endif %}
+                  {% endfor %}
+                  </div>
 
           {% if request.user.is_authenticated %}  
                         <!-- /.box-footer -->

@@ -298,12 +298,15 @@ function publicarComentario(pk){
       success: function (data) {
           console.log("Comentado exitosamente ");
           $("#contenidoComentario" + pk).val("");
+          location.reload(); 
+            
       },
       error: function(data) {
           console.log("Accion no permitida ");
       }
   });
 }
+
 
 //--------------------------------//
 
