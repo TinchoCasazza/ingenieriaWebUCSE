@@ -1,12 +1,10 @@
 <li class="dropdown messages-menu ">
     <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
         <i class="fa fa-bell-o"></i>
-        <span id="cSuscripciones" class="label label-success">  </span>
+        <span id="cSuscripciones" class="label label-success"></span>
     </a>
     <ul class="dropdown-menu">
-        <li id="mensajeSuscripcion" class="header"></li>
-        <li>
-            <!-- inner menu: contains the actual data -->
+                    <!-- inner menu: contains the actual data -->
             <ul id="menuSuscripcion" class="menu" id="menuNotificaciones">
                 {% for suscripcion in listaSuscripciones %}
                     {% if request.user == suscripcion.receptor %}
