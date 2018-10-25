@@ -1,7 +1,7 @@
 // Funciones al Cargar el Dom
 
 $( document ).ready(function() {
-    MostrarSuscripciones();
+    RecargarSuscripciones();
 });
 
 
@@ -165,53 +165,7 @@ function Suscribirse(comp){
 
 }
 
-function MostrarSuscripciones(){
-    $.ajax({
-        type: 'GET',
-        url: '/grupos/suscribirse/', //direccion a donde hace las requets
-        success: function (data) {
-            ArmarDesplegable(data);
-        },
-        error: function(data) {
-        }
-    });
-}
-    
-function ArmarDesplegable(json){
-    var cantidad = 0;
-    var renglon = "";
-    console.log(json);
-    $("#menuSuscripcion").html("");  
-
-    if (json != '[]'){
-        for (var i in json) {
-            var receptor = json.receptor;
-            var emisor = json[i].emisor;
-            var grupo = json[i].idGrupoSuscribio;
-    
-            // Concatena las suscripciones 
-            renglon = '<li><a href="#"><div class="pull-left"><img src="'+ emisor.avatar +'" class="img-circle" alt="User Image"></div><h4>'+ emisor.username +'<small><i class="fa fa-clock-o"></i>' + json[i].fecha_peticion + '</small></h4><p>Quiere formar parte del Grupo '+ grupo.NombreGrupo +'</p></a></li>' + renglon;
-            cantidad++; 
-        }
-        // Agrega todas las suscripciones 
-        $("#menuSuscripcion").html(renglon);  
-    }
-
-    $("#cSuscripciones").html(cantidad);
-    
-    if (cantidad == 0){
-        $("#mensajeSuscripcion").html("No tiene solicitudes de Grupos")
-    }
-    if (cantidad == 1){
-        $("#mensajeSuscripcion").html("Tiene " + cantidad + " solicitud nueva de Grupos")
-    }
-    if (cantidad > 1){
-        $("#mensajeSuscripcion").html("Tiene " + cantidad + " solicitudes nuevas de Grupos")
-    }
-
-}
-
-//setInterval(MostrarSuscripciones, 60000);
+setInterval(RecargarSuscripciones, 60000);
 
 //--------------------------------//
 
@@ -310,15 +264,8 @@ function publicarComentario(pk){
 
 //--------------------------------//
 
-function CargarNotificaciones(){
-    $.ajax({
-      type: 'GET',
-      url: '//', //direccion a donde hace las requets
-      success: function (data) {
-      },
-      error: function(data) {
-      }
-    });
+function RecargarSuscripciones(){
+    $("#mensajeSuscripcion").load(" #mensajeSuscripcion"); 
 };
 
 // Denunciar

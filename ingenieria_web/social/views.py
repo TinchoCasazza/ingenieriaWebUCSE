@@ -33,9 +33,10 @@ def inicio(request):
     listaPublicaciones = Publicacion.objects.filter(Eliminado = False).order_by('-FechaPublicacion')
     listaGrupos = Grupo.objects.all().order_by('NombreGrupo')
     listaComentarios = Comentario.objects.all()
+    listaSuscripciones = Suscripcion.objects.all()
     formNuevoGrupo = NuevoGrupo()
     
-    return render(request, 'adminlte/index.html',{'listaPublicaciones' : listaPublicaciones ,'listaGrupos': listaGrupos, 'formNuevoGrupo': formNuevoGrupo, 'listaComentarios': listaComentarios})
+    return render(request, 'adminlte/index.html',{'listaPublicaciones' : listaPublicaciones ,'listaGrupos': listaGrupos, 'formNuevoGrupo': formNuevoGrupo, 'listaComentarios': listaComentarios, 'listaSuscripciones': listaSuscripciones})
 
 
 CRITICAL = 50
