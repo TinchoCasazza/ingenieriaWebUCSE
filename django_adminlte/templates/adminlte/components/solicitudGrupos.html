@@ -4,7 +4,9 @@
         <span id="cSuscripciones" class="label label-success"></span>
     </a>
     <ul class="dropdown-menu">
-                    <!-- inner menu: contains the actual data -->
+        <li id="mensajeSuscripcion" class="header"></li>
+        <li>
+            <!-- inner menu: contains the actual data -->
             <ul id="menuSuscripcion" class="menu" id="menuNotificaciones">
                 {% for suscripcion in listaSuscripciones %}
                     {% if request.user == suscripcion.receptor %}
