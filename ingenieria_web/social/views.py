@@ -209,8 +209,8 @@ def grupos(request, pk=None):
             for grupouser in lista_gruposuser:
                 if grupo == grupouser.idGrupoUsuario:
                     lista_grupos.append(grupo)
-
-        return render(request, 'adminlte/grupos.html', {'lista_grupos' : lista_grupos})
+        publicaciones = Publicacion.objects.all()
+        return render(request, 'adminlte/grupos.html', {'lista_grupos' : lista_grupos,'publicaciones':publicaciones})
 
 def grupo_publicacion(request, pk=None):
         formNuevaPublicacion = PublicacionForm()
