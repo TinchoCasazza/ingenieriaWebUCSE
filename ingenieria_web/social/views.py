@@ -215,17 +215,17 @@ def grupos(request, pk=None):
         publicaciones = Publicacion.objects.all()
         return render(request, 'adminlte/grupos.html', {'lista_grupos' : lista_grupos,'publicaciones':publicaciones,'listaSuscripciones': listaSuscripciones, 'formNuevoGrupo': formNuevoGrupo})
 
+from django.urls import reverse
 def grupo_publicacion(request, pk=None):
-        formNuevaPublicacion = PublicacionForm()
         if request.method == 'POST':
-                form = NuevoGrupo(request.POST)
+                form = PublicacionForm(request.POST)
                 if form.is_valid():
                         publicacion = form.save(commit=False)
                         publicacion.idUserPublico = request.user
-                        publicacion.Contenido = form.Contenido 
+                        publicacion.idGrupoPu = Grupo.objects.filter(idGrupo = pk)[0]
                         publicacion.save()
                         print(publicacion)
-                return render(request, 'adminlte/publicacion_grupo.html', {'formNuevaPublicacion':formNuevaPublicacion})
+                return HttpResponseRedirect('/grupos/'+pk)
         if request.method == 'GET':
                 formNuevaPublicacion = PublicacionForm()
                 return render(request, 'adminlte/publicacion_grupo.html', {'formNuevaPublicacion':formNuevaPublicacion})

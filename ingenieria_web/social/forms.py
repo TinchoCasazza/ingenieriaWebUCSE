@@ -16,7 +16,7 @@ class SignupForm(UserCreationForm):
 class PublicacionForm(ModelForm):
     class Meta:
         model = Publicacion
-        exclude = ['Publicado','Borrador','Eliminado','Destacar','Eliminado','idUserPublico','idGrupoPu' ]
+        exclude = ['Publicado','Borrador','Estado','Destacar','idUserPublico','idGrupoPu' ]
 
 class NuevoGrupo(ModelForm):
     class Meta:
