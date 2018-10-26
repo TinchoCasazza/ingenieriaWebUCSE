@@ -217,7 +217,18 @@ def grupos(request, pk=None):
 
 def grupo_publicacion(request, pk=None):
         formNuevaPublicacion = PublicacionForm()
-        return render(request, 'adminlte/publicacion_grupo.html', {'formNuevaPublicacion':formNuevaPublicacion})
+        if request.method == 'POST':
+                form = NuevoGrupo(request.POST)
+                if form.is_valid():
+                        publicacion = form.save(commit=False)
+                        publicacion.idUserPublico = request.user
+                        publicacion.Contenido = form.Contenido 
+                        publicacion.save()
+                        print(publicacion)
+                return render(request, 'adminlte/publicacion_grupo.html', {'formNuevaPublicacion':formNuevaPublicacion})
+        if request.method == 'GET':
+                formNuevaPublicacion = PublicacionForm()
+                return render(request, 'adminlte/publicacion_grupo.html', {'formNuevaPublicacion':formNuevaPublicacion})
 
 def crear_grupo(request):
         if request.method == 'POST':
