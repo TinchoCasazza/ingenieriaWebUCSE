@@ -33,7 +33,7 @@ def inicio(request):
     listaPublicaciones = Publicacion.objects.filter(Estado = 1).order_by('-FechaPublicacion')
     listaGrupos = Grupo.objects.all().order_by('NombreGrupo')
     listaComentarios = Comentario.objects.all()
-    listaSuscripciones = Suscripcion.objects.all()
+    listaSuscripciones = Suscripcion.objects.all().order_by('-fecha_peticion')
     formNuevoGrupo = NuevoGrupo()
     
     return render(request, 'adminlte/index.html',{'listaPublicaciones' : listaPublicaciones ,'listaGrupos': listaGrupos, 'formNuevoGrupo': formNuevoGrupo, 'listaComentarios': listaComentarios, 'listaSuscripciones': listaSuscripciones})
@@ -121,7 +121,7 @@ def publicar(request):
                 publicacion.save()
                 return HttpResponseRedirect('inicio/')
         else:
-                publicaciones = Publicacion.objects.filter(Eliminado = False).order_by('-FechaPublicacion')
+                publicaciones = Publicacion.objects.filter(Estado = 1).order_by('-FechaPublicacion')
                 return render(request, 'adminlte/index.html', {listaPublicaciones : publicaciones})
 
 def borrarPublicacion(request):
@@ -129,11 +129,10 @@ def borrarPublicacion(request):
                 pkPublicacion = request.POST.get('publicacionId')
                 publicacion = Publicacion()
                 publicacion = Publicacion.objects.get(idPublicacion = pkPublicacion)
-                estado = EstadoPublicacion.objects.get(NombreEstado = 'Eliminado')
                 if request.user == publicacion.idUserPublico:
-                        publicacion.Estado = estado
+                        publicacion.Estado = 2
                         publicacion.save()
-        publicaciones = Publicacion.objects.filter(Eliminado = False).order_by('-FechaPublicacion')
+        publicaciones = Publicacion.objects.filter(Estado = 1).order_by('-FechaPublicacion')
         return render(request, 'adminlte/index.html', {'listaPublicaciones' : publicaciones})        
 
 
@@ -146,7 +145,7 @@ def guardarPublicacion(request):
                 if request.user == publicacion.idUserPublico:
                         publicacion.Contenido = contenido
                         publicacion.save()
-        publicaciones = Publicacion.objects.all().order_by('-FechaPublicacion')
+        publicaciones = Publicacion.objects.filter(Estado = 1).order_by('-FechaPublicacion')
         return render(request, 'adminlte/index.html', {'listaPublicaciones' : publicaciones})
 
 
@@ -161,7 +160,7 @@ def comentarPublicacion(request):
                 comentario.idUserComento = request.user
                 comentario.ContenidoComentario = contenido
                 comentario.save()
-        publicaciones = Publicacion.objects.filter(Eliminado = False).order_by('-FechaPublicacion')
+        publicaciones = Publicacion.objects.filter(Estado = 1).order_by('-FechaPublicacion')
         return render(request, 'adminlte/index.html', {'listaPublicaciones' : publicaciones})
 
 def denunciarPublicacion(request):
@@ -184,7 +183,7 @@ def denunciarPublicacion(request):
                         
                 denuncias = DenunciaUsuarios.objects.filter(idPublicacion = pkPublicacion).count()
                 if denuncias > 3:
-                        publicacion.Eliminado = True
+                        publicacion.Estado = 2
                         
                         publicacion.save()        
                 print(denuncias)
