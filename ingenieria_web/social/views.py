@@ -30,7 +30,7 @@ User = get_user_model()
 # Create your views here.
 
 def inicio(request):
-    listaPublicaciones = Publicacion.objects.filter(Eliminado = False).order_by('-FechaPublicacion')
+    listaPublicaciones = Publicacion.objects.filter(Estado = 1).order_by('-FechaPublicacion')
     listaGrupos = Grupo.objects.all().order_by('NombreGrupo')
     listaComentarios = Comentario.objects.all()
     listaSuscripciones = Suscripcion.objects.all()
