@@ -74,9 +74,6 @@ class UserGrupos(models.Model):
     idGrupoUsuario = models.ForeignKey(Grupo, on_delete=models.CASCADE)
     Permisos = models.ForeignKey(Permisos, on_delete=models.CASCADE)
 
-
-
-
 class Publicacion(models.Model):
     idPublicacion = models.AutoField(primary_key= True)
     idUserPublico = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
@@ -94,6 +91,7 @@ class Publicacion(models.Model):
 class DenunciaUsuarios(models.Model):
     idUsuario =  models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     idPublicacion = models.ForeignKey(Publicacion, on_delete=models.CASCADE) 
+    Contenido = models.TextField(blank=False, max_length = 150)
 
 class Comentario(models.Model):
     idComentario = models.AutoField(primary_key = True)

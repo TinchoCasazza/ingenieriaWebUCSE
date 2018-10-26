@@ -167,6 +167,7 @@ def comentarPublicacion(request):
 def denunciarPublicacion(request):
         if request.method == 'POST':
                 pkPublicacion = request.POST.get('id')
+                contenido = request.POST.get('contenido')
                 denunciaUsuario = DenunciaUsuarios()
                 cantidad = DenunciaUsuarios.objects.filter(idUsuario = request.user, idPublicacion = pkPublicacion).count()
                 
@@ -177,6 +178,7 @@ def denunciarPublicacion(request):
                         denunciaUsuario = DenunciaUsuarios()
                         denunciaUsuario.idUsuario = request.user
                         denunciaUsuario.idPublicacion = publicacion
+                        denunciaUsuario.Contenido = contenido
                         denunciaUsuario.save()
 
                         

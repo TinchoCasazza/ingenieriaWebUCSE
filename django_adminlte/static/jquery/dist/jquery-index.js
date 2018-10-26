@@ -2,6 +2,16 @@
 
 $( document ).ready(function() {
     RecargarSuscripciones();
+
+    $("#contenidoDenuncia").on("keyup", function() {
+        if ($('#contenidoDenuncia').val().length < 10) {
+            $("#btnConfirmarDenuncia").attr("disabled", true);
+            
+        }
+        else {
+            $("#btnConfirmarDenuncia").attr("disabled", false);
+        }
+    });
 });
 
 
@@ -241,6 +251,9 @@ function validarEnter(e,pk){
         publicarComentario(pk);
     }
 }
+
+
+
 function publicarComentario(pk){
   
   var contenido = $("#contenidoComentario" + pk).val();
@@ -269,19 +282,27 @@ function RecargarSuscripciones(){
 };
 
 // Denunciar
+function idButtonModal(comp){
+   $("#btnConfirmarDenuncia").attr('name',comp.id);
+}
+
+
 
 function denunciarPublicacion(comp){
 
-    var publicacionId = comp.id;
+    var publicacionId = comp.name;
     var id = publicacionId.substr(12);
     console.log(id);
+    var contenido = $("#contenidoDenuncia").val();
+    console.log(contenido);
 
     $.ajax({
         type: 'POST',
         url: '/publicar/denunciar/', //direccion a donde hace las requets
-        data: { id: id },
+        data: { id: id, contenido: contenido },
         success: function (data) {
               console.log(data);
+              $("#contenidoDenuncia").val('');
               $("#divPublicacion").load(" #divPublicacion"); 
         },
         error: function(data) {

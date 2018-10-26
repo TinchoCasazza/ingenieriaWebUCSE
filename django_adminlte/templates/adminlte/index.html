@@ -62,7 +62,7 @@
                     <ul class="list-inline">
                         <li><a href="#" class="link-black text-lg"><i class="fa fa-thumbs-up margin-r-5"></i>Me Gusta</a></li>
                         <li><a id="btnComentario{{ publicacion.idPublicacion }}" data-toggle="collapse" class="link-black text-lg" data-target="#comentario{{ publicacion.idPublicacion }}" style="cursor:pointer"><i class="fa fa-comments margin-r-5"></i>Comentarios</a></li>
-                        <li><a id="btnDenunciar{{ publicacion.idPublicacion }}"  onclick="denunciarPublicacion(this)" class="link-black text-lg" style="cursor:pointer; text-align: right;"><i class="fa fa-ban margin-r-5 "></i>Denunciar</a></li>
+                        <li><a id="btnDenunciar{{ publicacion.idPublicacion }}"  onclick="idButtonModal(this)" data-toggle="modal" data-target="#modalDenuncia"  class="link-black text-lg" style="cursor:pointer; text-align: right;"><i class="fa fa-ban margin-r-5 "></i>Denunciar</a></li>
                     </ul>
                 </div>
                 <div class="box-footer box-comments collapse" id="comentario{{ publicacion.idPublicacion }}">
@@ -113,6 +113,7 @@
         </div>
        
 </div>
+{% include 'adminlte/components/modalDenuncia.html' %}
 
 
 </div>
