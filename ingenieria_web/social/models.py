@@ -64,6 +64,7 @@ class Permisos(models.Model):
     EliminarPublicacion = models.BooleanField(default = False)
     EditarGrupo = models.BooleanField(default = False)
     EliminarGrupo = models.BooleanField(default = False)
+    
 
     def __str__(self):
         return (self.NombrePerm)
@@ -74,14 +75,13 @@ class UserGrupos(models.Model):
     idGrupoUsuario = models.ForeignKey(Grupo, on_delete=models.CASCADE)
     Permisos = models.ForeignKey(Permisos, on_delete=models.CASCADE)
 
+from ingenieria_web.social.choices import *
 class Publicacion(models.Model):
     idPublicacion = models.AutoField(primary_key= True)
     idUserPublico = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     idGrupoPu = models.ForeignKey(Grupo, on_delete=models.CASCADE, null = True)
-    Destacar = models.BooleanField(default = False)
-    Publicado = models.BooleanField(default = False, null=True)
-    Borrador = models.BooleanField(default = False, null=True)
-    Eliminado = models.BooleanField(default = False, null=True)
+    Destacar = models.IntegerField(choices=RELEVANCE_CHOICES, default=1)
+    Estado = models.IntegerField(choices=STATUS_CHOICES, default=1)
     Titulo = models.CharField(blank=False, max_length = 30)
     Contenido = models.TextField(blank=False)
     FechaPublicacion = models.DateField(("Date"), auto_now=True, editable = False)

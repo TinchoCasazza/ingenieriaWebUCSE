@@ -30,7 +30,7 @@ User = get_user_model()
 # Create your views here.
 
 def inicio(request):
-    listaPublicaciones = Publicacion.objects.filter(Eliminado = False).order_by('-FechaPublicacion')
+    listaPublicaciones = Publicacion.objects.filter(Estado = 1).order_by('-FechaPublicacion')
     listaGrupos = Grupo.objects.all().order_by('NombreGrupo')
     listaComentarios = Comentario.objects.all()
     listaSuscripciones = Suscripcion.objects.all()
@@ -195,6 +195,8 @@ def denunciarPublicacion(request):
         return JsonResponse(data)        
 
 def grupos(request, pk=None):
+        listaSuscripciones = Suscripcion.objects.all()
+        formNuevoGrupo = NuevoGrupo()
         if pk:
                 miembros_grupos = []
                 grupo = Grupo.objects.filter(idGrupo=pk)[0]
@@ -203,7 +205,7 @@ def grupos(request, pk=None):
                 User = get_user_model()
                 miembros = User.objects.filter(username__in = miembros_grupos)
                 publicaciones = Publicacion.objects.filter(idGrupoPu = pk)
-                return render(request, 'adminlte/grupo_tema.html', {'grupo' : grupo, 'miembros' : miembros, 'publicaciones':publicaciones })
+                return render(request, 'adminlte/grupo_tema.html', {'grupo' : grupo, 'miembros' : miembros, 'publicaciones':publicaciones,'listaSuscripciones': listaSuscripciones, 'formNuevoGrupo': formNuevoGrupo })
         lista_gruposuser = UserGrupos.objects.all().filter(idUser=request.user)
         lista_Grupos = Grupo.objects.all().order_by('NombreGrupo')
         lista_grupos = []
@@ -212,7 +214,7 @@ def grupos(request, pk=None):
                 if grupo == grupouser.idGrupoUsuario:
                     lista_grupos.append(grupo)
         publicaciones = Publicacion.objects.all()
-        return render(request, 'adminlte/grupos.html', {'lista_grupos' : lista_grupos,'publicaciones':publicaciones})
+        return render(request, 'adminlte/grupos.html', {'lista_grupos' : lista_grupos,'publicaciones':publicaciones,'listaSuscripciones': listaSuscripciones, 'formNuevoGrupo': formNuevoGrupo})
 
 def grupo_publicacion(request, pk=None):
         formNuevaPublicacion = PublicacionForm()
