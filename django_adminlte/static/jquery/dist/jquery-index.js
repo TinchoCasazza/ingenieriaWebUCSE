@@ -12,6 +12,8 @@ $( document ).ready(function() {
             $("#btnConfirmarDenuncia").attr("disabled", false);
         }
     });
+
+    $("#id_Contenido").css("resize", "none");
 });
 
 
