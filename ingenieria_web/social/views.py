@@ -215,6 +215,8 @@ def grupos(request, pk=None):
         publicaciones = Publicacion.objects.all()
         return render(request, 'adminlte/grupos.html', {'lista_grupos' : lista_grupos,'publicaciones':publicaciones,'listaSuscripciones': listaSuscripciones, 'formNuevoGrupo': formNuevoGrupo})
 
+def publicaciones(request, pk=None):
+        return HttpResponse("Publicacion"+ pk)
 from django.urls import reverse
 def grupo_publicacion(request, pk=None):
         if request.method == 'POST':

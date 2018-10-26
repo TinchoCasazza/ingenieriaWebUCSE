@@ -49,7 +49,7 @@ urlpatterns = [
     url(r'^publicar/guardar/$', social_views.guardarPublicacion, name="guardarPublicacion_url"),
     url(r'^publicar/comentar/$', social_views.comentarPublicacion, name="comentarPublicacion_url"),
     url(r'^publicar/denunciar/$', social_views.denunciarPublicacion, name="denunciarPublicacion_url"),
-
+    url(r'^publicacion/(?P<pk>\d+)/$', social_views.publicaciones, name="publicacion_url_with_pk"),
 
     #Grupos
     url(r'^grupos/$', social_views.grupos, name="grupos_url"),   
