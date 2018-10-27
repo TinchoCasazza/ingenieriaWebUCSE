@@ -30,6 +30,7 @@
 
         {% block nav_sidebar %}
             {% include 'adminlte/lib/_main_sidebar.html' %}
+            {% include 'adminlte/components/modalAcepSuscripcion.html' %}
         {% endblock %}
 
         {% block content_wrapper %}
@@ -80,7 +81,6 @@
 {% endblock body %}
 {% include 'adminlte/components/plan_estudio.html' %}
 {% include 'adminlte/components/cargar_imagen.html' %}
-
 
 {% block javascript %}
 {% include 'adminlte/lib/_scripts.html' %}

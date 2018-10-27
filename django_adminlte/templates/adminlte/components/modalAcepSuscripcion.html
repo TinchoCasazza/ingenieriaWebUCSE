@@ -1,0 +1,19 @@
+<div class="modal fade" id="modalAceptarSuscrip" tabindex="-1" role="dialog" aria-labelledby="modalAceptarSuscrip" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+        <h4 class="modal-title" id="modalAceptarSuscrip">Confirmación</h4>
+      </div>
+      <div class="modal-body">
+        <h5>¿{{request.user.username|capfirst}} desea confirmar la suscripción? </h5>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        <button id="btnConfirmarSuscripcion" onclick="AgregarMiembro(this)"  data-dismiss="modal" type="button" class="btn btn-danger">Confirmar</button>
+      </div>
+    </div>
+  </div>
+</div>
