@@ -291,11 +291,14 @@ def suscribirUsuario(request):
 
                 suscripcion = Suscripcion()
 
-                suscripcion.emisor = usuarioEmisor
-                suscripcion.idGrupoSuscribio = grupo
-                suscripcion.receptor = grupo.Creador
+                exist = Suscripcion.objects.filter(emisor = usuarioEmisor, idGrupoSuscribio = grupo )
+                
+                if len(exist) < 0:
+                        suscripcion.emisor = usuarioEmisor
+                        suscripcion.idGrupoSuscribio = grupo
+                        suscripcion.receptor = grupo.Creador
+                        suscripcion.save()
 
-                suscripcion.save()
         return render(request, 'adminlte/grupos.html')
 
 

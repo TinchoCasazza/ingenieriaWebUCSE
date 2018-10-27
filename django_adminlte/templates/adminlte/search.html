@@ -1,13 +1,8 @@
 
 {% extends 'adminlte/base.html' %}
-{% block content_header %}
-    <section class="content-header">
-      <h1>
-        Resultados de busqueda:
-      </h1>
-    </section>
-    {% endblock %}
+
 {% block content %}
+    <h3>Resultados de busqueda:</h3>
     <!-- Default box -->
     <div class="row">
         <!-- /.box-header -->
@@ -27,7 +22,7 @@
                                 Suscribirse
                             </button>
                         {% else %}
-                            <button type="button" id="grupo{{ grupo.idGrupo }}" class="btn btn-block btn-danger btn-sm" data-widget="collapse" data-toggle="tooltip">
+                            <button type="button" id="grupo{{ grupo.idGrupo }}" class="btn btn-block btn-danger btn-sm" disabled="true" data-widget="collapse" data-toggle="tooltip">
                                 Miembro
                             </button>
                         {% endif %}
