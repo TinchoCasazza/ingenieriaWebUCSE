@@ -1,4 +1,63 @@
-{{ publicacion.Titulo }}
-    {% for comentario in comentarios %}
-        {{ comentario.ContenidoComentario }}
-    {% endfor %}
+{% extends 'adminlte/base.html' %}
+
+{% block content %}
+    <!-- Default box -->
+    <section class="invoice">
+      <!-- title row -->
+      <div class="row">
+        <div class="col-xs-12">
+          <h2 class="page-header">
+            <img src="{{ publicacion.idUserPublico.avatar }}" size="10" class="img-circle" alt="User Image" width="45px" height="45px">
+            {{ publicacion.Titulo }}
+            <small class="pull-right">{{ publicacion.idUserPublico|capfirst }} / {{ publicacion.FechaPublicacion }}</small>
+          </h2>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12">
+          <p class="text-muted well well-sm no-shadow" style="margin-top: 10px;">
+            {{ publicacion.Contenido }}
+          </p>
+        </div>
+      </div>
+      <div class="row no-print">
+      </div>
+      <div class="box">
+        <div class="box-footer">
+            <textarea id="id_Contenido" class="col-xs-12" style="resize: none;"></textarea>
+        </div>
+    </div>
+    </section>
+    
+    <!-- /.box -->
+
+          <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
+          <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script> 
+          <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script> 
+
+
+            <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/codemirror/3.20.0/codemirror.css">
+            <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/codemirror/3.20.0/theme/monokai.css">
+            <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/codemirror/3.20.0/codemirror.js"></script>
+            <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/codemirror/3.20.0/mode/xml/xml.js"></script>
+            <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/codemirror/2.36.0/formatting.js"></script>
+            
+            <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.css" rel="stylesheet">
+            <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.js"></script>
+            <script>
+              $(document).ready(function() {
+                  $('#id_Contenido').summernote({
+                    height: 200,
+                    width: 900, 
+                    fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New']
+                    }
+                  );
+                  $('.dropdown-toggle').dropdown()
+              });
+              
+            </script>
+
+{% endblock %}
+
+
+

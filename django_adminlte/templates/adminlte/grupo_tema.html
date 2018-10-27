@@ -13,9 +13,11 @@
               <i class="ion ion-clipboard"></i>
 
               <h3 class="box-title">{{ grupo.NombreGrupo }}</h3>
-              <div class="box-tools pull-right">
+              {% if valido  %}
+                <div class="box-tools pull-right">
                   <a type="button" class="btn btn-success pull-right btn-sm" href="{% url 'nueva_publicacion_with_pk' pk=grupo.idGrupo %}"><i class="fa fa-plus"></i> Nuevo</a>
                 </div>
+              {% endif %} 
             </div>
             <!-- /.box-header -->
             <div class="box-body no-padding">

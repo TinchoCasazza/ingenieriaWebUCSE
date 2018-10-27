@@ -205,8 +205,12 @@ def grupos(request, pk=None):
                    miembros_grupos.append(miembro_grupo.idUser)
                 User = get_user_model()
                 miembros = User.objects.filter(username__in = miembros_grupos)
+                valido = False
+                if request.user in miembros:
+                        valido = True
+                        
                 publicaciones = Publicacion.objects.filter(idGrupoPu = pk)
-                return render(request, 'adminlte/grupo_tema.html', {'grupo' : grupo, 'miembros' : miembros, 'publicaciones':publicaciones,'listaSuscripciones': listaSuscripciones, 'formNuevoGrupo': formNuevoGrupo })
+                return render(request, 'adminlte/grupo_tema.html', {'grupo' : grupo, 'miembros' : miembros, 'publicaciones':publicaciones,'listaSuscripciones': listaSuscripciones, 'formNuevoGrupo': formNuevoGrupo, 'valido':valido })
         lista_gruposuser = UserGrupos.objects.all().filter(idUser=request.user)
         lista_Grupos = Grupo.objects.all().order_by('NombreGrupo')
         lista_grupos = []
