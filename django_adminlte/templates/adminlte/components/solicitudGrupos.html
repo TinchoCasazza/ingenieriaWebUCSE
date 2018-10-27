@@ -11,7 +11,7 @@
                     {% for suscripcion in listaSuscripciones %}
                         {% if request.user == suscripcion.receptor %}
                             <li><!-- start message -->
-                                <a id="suscripcion{{ suscripcion.idSuscripcion }}" onclick="AgregarMiembro(this);" >
+                                <a id="suscripcion{{ suscripcion.idSuscripcion }}" onclick="idButtonModalSuscripcion(this)" data-toggle="modal" data-target="#modalAceptarSuscrip" >
                                     <div class="pull-left">
                                         <img src={{ suscripcion.emisor.avatar }} class="img-circle" alt="User Image">
                                     </div>

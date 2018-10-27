@@ -177,10 +177,14 @@ function Suscribirse(comp){
 
 }
 
+function idButtonModalSuscripcion(comp){
+    $("#btnConfirmarSuscripcion").attr('name',comp.id);
+}
+
 setInterval(RecargarSuscripciones, 60000);
 
 function AgregarMiembro(comp){
-    var suscripcionId = comp.id;
+    var suscripcionId = comp.name;
     var id = suscripcionId.substr(11);
     console.log(id);
     
