@@ -74,6 +74,9 @@ class UserGrupos(models.Model):
     idUser = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     idGrupoUsuario = models.ForeignKey(Grupo, on_delete=models.CASCADE)
     Permisos = models.ForeignKey(Permisos, on_delete=models.CASCADE)
+    
+    def __str__(self):
+        return (self.idUser,self.idGrupoUsuario,self.Permisos)
 
 from ingenieria_web.social.choices import *
 class Publicacion(models.Model):
