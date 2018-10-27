@@ -6,6 +6,7 @@ from django.contrib.auth import get_user_model
 User = get_user_model()
 
 from .models import Grupo, Publicacion
+from django_summernote.widgets import SummernoteWidget, SummernoteInplaceWidget
 
 class SignupForm(UserCreationForm):
     email = forms.EmailField(max_length=200, help_text='Required')
@@ -16,6 +17,10 @@ class SignupForm(UserCreationForm):
 class PublicacionForm(ModelForm):
     class Meta:
         model = Publicacion
+        widgets = {
+            'foo': SummernoteWidget(),
+            'bar': SummernoteInplaceWidget(),
+        }
         exclude = ['Publicado','Borrador','Estado','Destacar','idUserPublico','idGrupoPu' ]
 
 class NuevoGrupo(ModelForm):

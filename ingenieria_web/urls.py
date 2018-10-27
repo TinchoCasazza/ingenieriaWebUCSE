@@ -59,6 +59,7 @@ urlpatterns = [
     url(r'^grupos/tema/$', social_views.grupos_tema, name="grupos_url_tema"),     
     url(r'^grupos/(?P<pk>\d+)/nuevaPublicacion$', social_views.grupo_publicacion, name="nueva_publicacion_with_pk"),
 
+    url(r'^summernote/', include('django_summernote.urls')),
 
     #Busqueda
     url(r'^busqueda/$', search_views.search, name="search_url"),  
@@ -92,3 +93,9 @@ if settings.DEBUG:
     urlpatterns += [
         url(r'^__debug__/', include(debug_toolbar.urls)),
     ]
+
+
+from django.conf.urls.static import static
+ 
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

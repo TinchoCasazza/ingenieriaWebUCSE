@@ -32,6 +32,7 @@ INSTALLED_APPS = [
     'django.contrib.auth',
     'ingenieria_web.social',
     'ingenieria_web.search',
+    'django_summernote',
     'django_adminlte',
     'django_adminlte_theme',
     'django_elasticsearch_dsl',
@@ -44,6 +45,7 @@ INSTALLED_APPS = [
     'elasticsearch',
     'widget_tweaks',
     'rest_framework',
+    
 ] 
 
 AUTH_USER_MODEL = 'social.UserManager'
@@ -145,5 +147,6 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(STATIC_ROOT, "images")]
 MEDIA_URL = '/django_adminlte/static/avatars/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'django_adminlte/static/')
+
 
 django_heroku.settings(locals())
