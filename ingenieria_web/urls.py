@@ -44,21 +44,21 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
 
     #Publicaciones
-    url(r'^publicar/$', social_views.publicar, name="publicar_url"),
-    url(r'^publicar/borrar/$', social_views.borrarPublicacion, name="borrarPublicacion_url"),
-    url(r'^publicar/guardar/$', social_views.guardarPublicacion, name="guardarPublicacion_url"),
-    url(r'^publicar/comentar/$', social_views.comentarPublicacion, name="comentarPublicacion_url"),
-    url(r'^publicar/denunciar/$', social_views.denunciarPublicacion, name="denunciarPublicacion_url"),
-    url(r'^publicacion/(?P<pk>\d+)/$', social_views.publicaciones, name="publicacion_url_with_pk"),
+    url(r'^publicar/$', login_required(social_views.publicar), name="publicar_url"),
+    url(r'^publicar/borrar/$', login_required(social_views.borrarPublicacion), name="borrarPublicacion_url"),
+    url(r'^publicar/guardar/$', login_required(social_views.guardarPublicacion), name="guardarPublicacion_url"),
+    url(r'^publicar/comentar/$', login_required(social_views.comentarPublicacion), name="comentarPublicacion_url"),
+    url(r'^publicar/denunciar/$', login_required(social_views.denunciarPublicacion), name="denunciarPublicacion_url"),
+    url(r'^publicacion/(?P<pk>\d+)/$', login_required(social_views.publicaciones), name="publicacion_url_with_pk"),
 
     #Grupos
-    url(r'^grupos/$', social_views.grupos, name="grupos_url"),   
-    url(r'^grupos/(?P<pk>\d+)/$', social_views.grupos, name="grupos_url_with_pk"),
-    url(r'^grupos/crear_grupo/$', social_views.crear_grupo, name="grupos_url_create"),     
-    url(r'^grupos/suscribirse/$', social_views.suscribirUsuario, name="grupos_url_suscripcion"),     
-    url(r'^grupos/tema/$', social_views.grupos_tema, name="grupos_url_tema"),     
-    url(r'^grupos/(?P<pk>\d+)/nuevaPublicacion$', social_views.grupo_publicacion, name="nueva_publicacion_with_pk"),
-    url(r'^grupos/agregar_miembro/$', social_views.agregar_miembro_grupo, name="grupos_agregar_miembro"),
+    url(r'^grupos/$', login_required(social_views.grupos), name="grupos_url"),   
+    url(r'^grupos/(?P<pk>\d+)/$', login_required(social_views.grupos), name="grupos_url_with_pk"),
+    url(r'^grupos/crear_grupo/$', login_required(social_views.crear_grupo), name="grupos_url_create"),     
+    url(r'^grupos/suscribirse/$', login_required(social_views.suscribirUsuario), name="grupos_url_suscripcion"),     
+    url(r'^grupos/tema/$', login_required(social_views.grupos_tema), name="grupos_url_tema"),     
+    url(r'^grupos/(?P<pk>\d+)/nuevaPublicacion$', login_required(social_views.grupo_publicacion), name="nueva_publicacion_with_pk"),
+    url(r'^grupos/agregar_miembro/$', login_required(social_views.agregar_miembro_grupo), name="grupos_agregar_miembro"),
 
 
     url(r'^summernote/', include('django_summernote.urls')),
