@@ -167,14 +167,14 @@ h6,
 }
 /* General Links */
 a {
-  color: #3c8dbc;
+  color: black;
 }
 a:hover,
 a:active,
 a:focus {
   outline: none;
   text-decoration: none;
-  color: #72afd2;
+  color: grey;
 }
 .a-register {
   color: #ffffff;
@@ -365,7 +365,7 @@ a:focus {
     top: 0;
     right: 0;
     float: none;
-    background: #d2d6de;
+    background: #ecf0f5;
     padding-left: 10px;
   }
   .content-header > .breadcrumb li:before {

@@ -227,6 +227,7 @@ def publicaciones(request, pk=None):
         return render(request, 'adminlte/publicacion.html', {'publicacion': publicacion, 'comentarios':comentarios} )
 from django.urls import reverse
 def grupo_publicacion(request, pk=None):
+        grupo = Grupo.objects.filter(idGrupo = pk)[0]
         if request.method == 'POST':
                 form = PublicacionForm(request.POST)
                 if form.is_valid():
@@ -238,7 +239,7 @@ def grupo_publicacion(request, pk=None):
                 return HttpResponseRedirect('/grupos/'+pk)
         if request.method == 'GET':
                 formNuevaPublicacion = PublicacionForm()
-                return render(request, 'adminlte/publicacion_grupo.html', {'formNuevaPublicacion':formNuevaPublicacion})
+                return render(request, 'adminlte/publicacion_grupo.html', {'formNuevaPublicacion':formNuevaPublicacion,'grupo':grupo})
 
 def crear_grupo(request):
         if request.method == 'POST':

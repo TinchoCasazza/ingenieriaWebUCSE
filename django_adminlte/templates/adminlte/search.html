@@ -4,7 +4,18 @@
     <section class="content-header">
         <h1>Resultados de busqueda:</h1>
     </section>
-    {% endblock %}
+
+
+    {% block breadcrumbs %}
+    <ol class="breadcrumb" style="background-color:#ecf0f5;" >
+        <li><a href="/inicio"><i class="fa fa fa-home"></i> Inicio</a></li>
+        <li class="active"><a href="/busqueda"><i class="fa fa-search"></i> Busqueda Grupos</a></li>
+      </ol>
+      {% endblock %}
+{% endblock %}
+
+
+
 {% block content %}
     
     <!-- Default box -->
