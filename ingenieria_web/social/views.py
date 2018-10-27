@@ -196,10 +196,12 @@ def denunciarPublicacion(request):
 def grupos(request, pk=None):
         listaSuscripciones = Suscripcion.objects.filter(Estado = 1).order_by('-fecha_peticion')
         formNuevoGrupo = NuevoGrupo()
+        
         if pk:
+                
                 miembros_grupos = []
                 grupo = Grupo.objects.filter(idGrupo=pk)[0]
-                for miembro_grupo in UserGrupos.objects.all():
+                for miembro_grupo in UserGrupos.objects.filter(idGrupoUsuario = grupo):
                    miembros_grupos.append(miembro_grupo.idUser)
                 User = get_user_model()
                 miembros = User.objects.filter(username__in = miembros_grupos)
@@ -215,6 +217,8 @@ def grupos(request, pk=None):
         publicaciones = Publicacion.objects.all()
         return render(request, 'adminlte/grupos.html', {'lista_grupos' : lista_grupos,'publicaciones':publicaciones,'listaSuscripciones': listaSuscripciones, 'formNuevoGrupo': formNuevoGrupo})
 
+def publicaciones(request, pk=None):
+        return HttpResponse("Publicacion"+ pk)
 from django.urls import reverse
 def grupo_publicacion(request, pk=None):
         if request.method == 'POST':
@@ -242,9 +246,11 @@ def crear_grupo(request):
                 grupo.NivelAcceso = privacidad
                 grupo.Creador = request.user
                 grupo.save()
+               
                 usergrupo.idGrupoUsuario = grupo
                 usergrupo.idUser = grupo.Creador
                 usergrupo.Permisos = Permisos.objects.get(NombrePerm = 'Administrador')
+               
                 usergrupo.save()
                 return HttpResponseRedirect('/grupos/')
 

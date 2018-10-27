@@ -9,3 +9,4 @@ django-widget-tweaks
 djangorestframework
 django_filter
 Pillow
+django-summernote

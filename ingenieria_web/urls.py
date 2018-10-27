@@ -49,7 +49,7 @@ urlpatterns = [
     url(r'^publicar/guardar/$', social_views.guardarPublicacion, name="guardarPublicacion_url"),
     url(r'^publicar/comentar/$', social_views.comentarPublicacion, name="comentarPublicacion_url"),
     url(r'^publicar/denunciar/$', social_views.denunciarPublicacion, name="denunciarPublicacion_url"),
-
+    url(r'^publicacion/(?P<pk>\d+)/$', social_views.publicaciones, name="publicacion_url_with_pk"),
 
     #Grupos
     url(r'^grupos/$', social_views.grupos, name="grupos_url"),   
@@ -61,6 +61,7 @@ urlpatterns = [
     url(r'^grupos/agregar_miembro/$', social_views.agregar_miembro_grupo, name="grupos_agregar_miembro"),
 
 
+    url(r'^summernote/', include('django_summernote.urls')),
 
     #Busqueda
     url(r'^busqueda/$', search_views.search, name="search_url"),  
@@ -94,3 +95,9 @@ if settings.DEBUG:
     urlpatterns += [
         url(r'^__debug__/', include(debug_toolbar.urls)),
     ]
+
+
+from django.conf.urls.static import static
+ 
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
