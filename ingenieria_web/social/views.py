@@ -33,7 +33,7 @@ def inicio(request):
     listaPublicaciones = Publicacion.objects.filter(Estado = 1).order_by('-FechaPublicacion')
     listaGrupos = Grupo.objects.all().order_by('NombreGrupo')
     listaComentarios = Comentario.objects.all()
-    listaSuscripciones = Suscripcion.objects.all().order_by('-fecha_peticion')
+    listaSuscripciones = Suscripcion.objects.filter(Estado = 1).order_by('-fecha_peticion')
     formNuevoGrupo = NuevoGrupo()
     
     return render(request, 'adminlte/index.html',{'listaPublicaciones' : listaPublicaciones ,'listaGrupos': listaGrupos, 'formNuevoGrupo': formNuevoGrupo, 'listaComentarios': listaComentarios, 'listaSuscripciones': listaSuscripciones})
@@ -194,7 +194,7 @@ def denunciarPublicacion(request):
         return JsonResponse(data)        
 
 def grupos(request, pk=None):
-        listaSuscripciones = Suscripcion.objects.all()
+        listaSuscripciones = Suscripcion.objects.filter(Estado = 1).order_by('-fecha_peticion')
         formNuevoGrupo = NuevoGrupo()
         if pk:
                 miembros_grupos = []
@@ -251,18 +251,30 @@ def crear_grupo(request):
 def grupos_tema(request):
         if request.method == 'GET':
                 return render(request, 'adminlte/grupo_tema.html')
-                
+
+def agregar_miembro_grupo(request):
+        if request.method == 'POST':
+                pk = request.POST.get('id')
+                suscripcion = Suscripcion.objects.get(idSuscripcion = pk)
+                userGrupos = UserGrupos()
+                userGrupos.idGrupoUsuario = suscripcion.idGrupoSuscribio
+                userGrupos.idUser = suscripcion.emisor
+                permiso = Permisos()
+                permiso.NombrePerm = "usuario"
+                permiso.save()
+                userGrupos.Permisos = permiso
+                userGrupos.save()
+                data = {
+                        'mensaje' : "Agregado Correctamente"
+                        }
+                suscripcion.Estado = 2
+                suscripcion.save()
+        return JsonResponse(data)  
+
 from django.http import JsonResponse
 from django.core import serializers
 
 def suscribirUsuario(request):
-        if request.method == 'GET':
-                usuario = request.user
-                suscripciones = Suscripcion.objects.all().filter(receptor = usuario)
-                data = serializers.serialize('json', suscripciones)
-
-                return JsonResponse(data, safe=False)
-        
         if request.method == 'POST':
                 grupoId = request.POST.get('id')
                 usuarioEmisor = request.user

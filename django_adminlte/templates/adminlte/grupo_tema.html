@@ -31,6 +31,9 @@
                             <td class="mailbox-subject"><a href="#"><b>{{ publicacion.Titulo }}</b></a> </td>
                             <td class="mailbox-attachment"></td>
                             <td class="mailbox-date">{{ publicacion.FechaPublicacion }}</td>
+                            <td> 
+                              <a id="publicacion{{ publicacion.idPublicacion }}"><i class="fa fa-trash-o"></i></a>
+                            </td>
                           </tr>
                         {% endfor %}
                     </tbody>
@@ -40,6 +43,7 @@
                 </div>
                 <!-- /.mail-box-messages -->
             <!-- /.box-body -->
+            
             <div class="box-footer clearfix no-border">
                 <div class="box-tools pull-right">
                 <ul class="pagination pagination-sm inline">

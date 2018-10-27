@@ -179,6 +179,27 @@ function Suscribirse(comp){
 
 setInterval(RecargarSuscripciones, 60000);
 
+function AgregarMiembro(comp){
+    var suscripcionId = comp.id;
+    var id = suscripcionId.substr(11);
+    console.log(id);
+    
+    $.ajax({
+        type: 'POST',
+        url: '/grupos/agregar_miembro/', //direccion a donde hace las requets
+        data: { id: id },
+        success: function (data) {
+            $("#mensajeSuscripcion").load(" #mensajeSuscripcion"); 
+            console.log(data);
+            location.href ="/";
+        },
+        error: function(data) {
+        }
+      });
+
+}
+
+
 //--------------------------------//
 
 // Publicaciones

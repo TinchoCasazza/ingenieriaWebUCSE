@@ -9,7 +9,7 @@
         <div class="col-md-12">
         
             {% for grupo in grupos %}
-            
+                
             <div class="box collapsed-box" style="border-radius:8px">
                 <div class="box-header with-border">
                     
@@ -17,9 +17,15 @@
                         <h3 class="box-title">{{ grupo.NombreGrupo }}</h3>
                     </a>
                     <div class="box-tools pull-right">
-                        <button type="button" id="grupo{{ grupo.idGrupo }}" onclick="Suscribirse(this)" class="btn btn-block btn-success btn-sm" data-widget="collapse" data-toggle="tooltip">
-                            Suscribirse
-                        </button>
+                        {% if grupo.idGrupo not in misGrupos %}
+                            <button type="button" id="grupo{{ grupo.idGrupo }}" onclick="Suscribirse(this)" class="btn btn-block btn-success btn-sm" data-widget="collapse" data-toggle="tooltip">
+                                Suscribirse
+                            </button>
+                        {% else %}
+                            <button type="button" id="grupo{{ grupo.idGrupo }}" class="btn btn-block btn-danger btn-sm" data-widget="collapse" data-toggle="tooltip">
+                                Miembro
+                            </button>
+                        {% endif %}
                     </div>
                 </div>
 

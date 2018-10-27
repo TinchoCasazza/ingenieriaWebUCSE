@@ -108,3 +108,5 @@ class Suscripcion(models.Model):
     receptor = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='receptor')
     idGrupoSuscribio = models.ForeignKey(Grupo, on_delete=models.CASCADE, null = True)
     fecha_peticion = models.DateField(auto_now=True)
+    Estado = models.IntegerField(choices=STATUS_CHOICES, default=1)
+

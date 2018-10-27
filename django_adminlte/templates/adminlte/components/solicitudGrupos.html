@@ -1,35 +1,35 @@
-<li class="dropdown messages-menu ">
-    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
-        <i class="fa fa-bell-o"></i>
-        <span id="cSuscripciones" class="label label-success"></span>
-    </a>
-    <ul class="dropdown-menu">
-        <li id="mensajeSuscripcion" class="header"></li>
-        <li>
-            <!-- inner menu: contains the actual data -->
-            <ul id="menuSuscripcion" class="menu" id="menuNotificaciones">
-                {% for suscripcion in listaSuscripciones %}
-                    {% if request.user == suscripcion.receptor %}
+    <li class="dropdown messages-menu ">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+            <i class="fa fa-bell-o"></i>
+            <span id="cSuscripciones" class="label label-success"></span>
+        </a>
+        <ul class="dropdown-menu">
+            <li id="mensajeSuscripcion" class="header"></li>
+            <li>
+                <!-- inner menu: contains the actual data -->
+                <ul id="menuSuscripcion" class="menu" id="menuNotificaciones">
+                    {% for suscripcion in listaSuscripciones %}
+                        {% if request.user == suscripcion.receptor %}
+                            <li><!-- start message -->
+                                <a id="suscripcion{{ suscripcion.idSuscripcion }}" onclick="AgregarMiembro(this);" >
+                                    <div class="pull-left">
+                                        <img src={{ suscripcion.emisor.avatar }} class="img-circle" alt="User Image">
+                                    </div>
+                                    <h4>
+                                    Suscripción
+                                        <small><i class="fa fa-clock-o"></i>  {{ suscripcion.fecha_peticion|date:"SHORT_DATE_FORMAT"}} </small>
+                                    </h4>
+                                    <p> {{ suscripcion.emisor.username|capfirst }} quiere ingresar a {{ suscripcion.idGrupoSuscribio.NombreGrupo|capfirst }}   </p>
+                                </a>
+                            </li>
+                        {% endif %}
+                    {% empty %}
                         <li><!-- start message -->
-                            <a href="#">
-                                <div class="pull-left">
-                                    <img src={{ suscripcion.emisor.avatar }} class="img-circle" alt="User Image">
-                                </div>
-                                <h4>
-                                Suscripción
-                                    <small><i class="fa fa-clock-o"></i>  {{ suscripcion.fecha_peticion|date:"SHORT_DATE_FORMAT"}} </small>
-                                </h4>
-                                <p> {{ suscripcion.emisor.username|capfirst }} quiere ingresar a {{ suscripcion.idGrupoSuscribio.NombreGrupo|capfirst }}   </p>
-                            </a>
+                            <a><p>     No tienes notificaciones {{ request.user.username|capfirst }}   </p></a>
                         </li>
-                    {% endif %}
-                {% empty %}
-                    <li><!-- start message -->
-                        <p> No tienes notificaciones {{ request.user.username|capfirst }}   </p>
-                    </li>
-                {% endfor %}
-            </ul>
-        </li>
-        <li class="footer"><a href="#">Ver todas las notificaciones</a></li>
-    </ul>
-</li>
+                    {% endfor %}
+                </ul>
+            </li>
+            <li class="footer"></li>
+        </ul>
+    </li>
