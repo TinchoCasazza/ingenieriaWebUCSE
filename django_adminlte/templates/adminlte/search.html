@@ -1,8 +1,23 @@
 
 {% extends 'adminlte/base.html' %}
+{% block content_header %}
+    <section class="content-header">
+        <h1>Resultados de busqueda:</h1>
+    </section>
+
+
+    {% block breadcrumbs %}
+    <ol class="breadcrumb" style="background-color:#ecf0f5;" >
+        <li><a href="/inicio"><i class="fa fa fa-home"></i> Inicio</a></li>
+        <li class="active"><a href="/busqueda"><i class="fa fa-search"></i> Busqueda Grupos</a></li>
+      </ol>
+      {% endblock %}
+{% endblock %}
+
+
 
 {% block content %}
-    <h3>Resultados de busqueda:</h3>
+    
     <!-- Default box -->
     <div class="row">
         <!-- /.box-header -->

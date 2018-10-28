@@ -22,7 +22,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
         </a>
-
+        
         {% block nav_custom_menu %}
         
         <div class="navbar-custom-menu">
@@ -67,8 +67,16 @@
                     {% else %}  
                         <li class="dropdown user user-menu">
                             <div class="pull-right">
-                                <a  href="/login/" class="btn bg-navy margin" style="padding:4px 10px">Ingresar</a>
+                                        <a  href="/signup/" class="btn bg-navy margin" style="padding:4px 10px">
+                                            <i class="fa fa-pencil"></i>
+                                            Registrese!</a>
                             </div>
+                            <div class="pull-right">
+                                <a  href="/login/" class="btn bg-navy margin" style="padding:4px 10px">
+                                    <i class="fa fa-sign-in"></i>
+                                    Ingresar</a>
+                            </div>
+
                         </li>   
 
                     {% endif %}

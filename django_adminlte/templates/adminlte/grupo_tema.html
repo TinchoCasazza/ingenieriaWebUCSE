@@ -3,7 +3,20 @@
 {% block title_outer %}
        <title>{% block title %} Sarasa | Grupo {% endblock %}</title>
 {% endblock %}
-
+{% block content_header %}
+    <section class="content-header">
+      <h1>
+        Mis Grupos
+      </h1>
+    </section>
+    {% block breadcrumbs %}
+    <ol class="breadcrumb" style="background-color:#ecf0f5;" >
+        <li><a href="/inicio"><i class="fa fa fa-home"></i> Inicio</a></li>
+        <li><a href="/grupos/"><i class="fa fa-group "></i> Mis Grupos</a></li>
+        <li class="active"><a href="{% url 'grupos_url_with_pk' pk=grupo.idGrupo %}"><i class="fa fa-user "></i>  {{ grupo.NombreGrupo }}</a></li>
+      </ol>
+      {% endblock %}
+{% endblock %}
 {% block content %}
     <div class="row">
         

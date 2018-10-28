@@ -15,7 +15,6 @@ def search(request):
     else:
         grupos = ''
 
-    
 
     misGrupos = UserGrupos.objects.filter(idUser = request.user).values_list('idGrupoUsuario', flat=True)
     return render(request, 'adminlte/search.html', {'grupos':grupos, 'formNuevoGrupo': formNuevoGrupo,'listaSuscripciones':listaSuscripciones, 'misGrupos':misGrupos})

@@ -9,7 +9,13 @@
         Mis Grupos
       </h1>
     </section>
-    {% endblock %}
+    {% block breadcrumbs %}
+    <ol class="breadcrumb" style="background-color:#ecf0f5;" >
+        <li><a href="/inicio"><i class="fa fa fa-home"></i> Inicio</a></li>
+        <li class="active"><a href="/grupos/"><i class="fa fa-group "></i> Mis Grupos</a></li>
+      </ol>
+      {% endblock %}
+{% endblock %}
 
 {% block content %}
     <!-- Default box -->

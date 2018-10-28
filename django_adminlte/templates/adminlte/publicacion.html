@@ -1,5 +1,9 @@
 {% extends 'adminlte/base.html' %}
-
+{% block content_header %}
+    <section class="content-header">
+        <h1>{{ publicacion.Titulo }}</h1>
+    </section>
+    {% endblock %}
 {% block content %}
     <!-- Default box -->
     <section class="invoice">
@@ -8,15 +12,15 @@
         <div class="col-xs-12">
           <h2 class="page-header">
             <img src="{{ publicacion.idUserPublico.avatar }}" size="10" class="img-circle" alt="User Image" width="45px" height="45px">
-            {{ publicacion.Titulo }}
-            <small class="pull-right">{{ publicacion.idUserPublico|capfirst }} / {{ publicacion.FechaPublicacion }}</small>
+            {{ publicacion.idUserPublico|capfirst }} 
+            <small class="pull-right"> {{ publicacion.FechaPublicacion }}</small>
           </h2>
         </div>
       </div>
       <div class="row">
         <div class="col-xs-12">
           <p class="text-muted well well-sm no-shadow" style="margin-top: 10px;">
-            {{ publicacion.Contenido }}
+            {{ publicacion.Contenido|safe }}
           </p>
         </div>
       </div>

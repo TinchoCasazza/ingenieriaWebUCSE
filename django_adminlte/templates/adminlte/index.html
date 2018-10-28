@@ -5,8 +5,18 @@
        <title>{% block title %} Sarasa | Inicio {% endblock %}</title>
 {% endblock %}
 
+{% block content_header %}
 
+    {% block breadcrumbs %}
+    <ol class="breadcrumb" style="background-color:#ecf0f5;" >
+        <li class="active"><a href="/inicio"><i class="fa fa fa-home"></i> Inicio</a></li>
+      </ol>
+    {% endblock %}
+
+
+{% endblock %}
 {% block content %}
+
 <div class="row">
   <!-- /.box-header -->
 
@@ -125,5 +135,5 @@
 <script src="path/to/bootstrap.js"></script>
 <script src="path/to/bootstrap-confirmation.js"></script>
 
-  
+
 {% endblock %}
