@@ -308,7 +308,8 @@ def suscribirUsuario(request):
 
 
 def perfil(request):
-        return render(request, 'adminlte/perfil.html')
+        listaPublicaciones = Publicacion.objects.filter( idUserPublico = request.user)
+        return render(request, 'adminlte/perfil.html',{'listaPublicaciones' : listaPublicaciones})
 
 
 def cambiarSkin(request):
