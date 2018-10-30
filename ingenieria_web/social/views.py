@@ -309,7 +309,7 @@ def suscribirUsuario(request):
 
                 exist = Suscripcion.objects.filter(emisor = usuarioEmisor, idGrupoSuscribio = grupo )
                 
-                if len(exist) < 0:
+                if len(exist) < 1:
                         suscripcion.emisor = usuarioEmisor
                         suscripcion.idGrupoSuscribio = grupo
                         suscripcion.receptor = grupo.Creador
@@ -319,7 +319,8 @@ def suscribirUsuario(request):
 
 
 def perfil(request):
-        return render(request, 'adminlte/perfil.html')
+        listaPublicaciones = Publicacion.objects.filter( idUserPublico = request.user)
+        return render(request, 'adminlte/perfil.html',{'listaPublicaciones' : listaPublicaciones})
 
 
 def cambiarSkin(request):
