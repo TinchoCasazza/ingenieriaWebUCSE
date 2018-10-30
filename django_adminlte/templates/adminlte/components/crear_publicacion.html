@@ -1,0 +1,53 @@
+
+
+    <!-- /.box-header -->
+    <!-- form start -->
+    <form role="form" action="{% url 'publicar_url' %}" method="post">
+      {% csrf_token %}
+      
+      {% load widget_tweaks %}
+      <div class="box-body">
+        <div class="form-group">
+          <label for="exampleInputEmail1">Titulo</label>
+          {{ formNuevaPublicacion.Titulo|add_class:"form-control"|append_attr:"placeholder:Titulo"}}       
+        </div>
+
+        <div class="form-group">
+          
+          <label for="exampleInputPassword1">Contenido</label>
+          {{ foobar|safe }}
+          {{ formNuevaPublicacion.Contenido }}
+        </div>
+      </div>
+      <!-- /.box-body -->
+
+      <div class="box-footer">
+        <button type="submit" class="btn btn-info pull-right">Publicar</button>
+      </div>
+    </form>
+
+
+  <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script> 
+  <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script> 
+
+
+    <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/codemirror/3.20.0/codemirror.css">
+    <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/codemirror/3.20.0/theme/monokai.css">
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/codemirror/3.20.0/codemirror.js"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/codemirror/3.20.0/mode/xml/xml.js"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/codemirror/2.36.0/formatting.js"></script>
+    
+    <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.css" rel="stylesheet">
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.js"></script>
+    <script>
+      $(document).ready(function() {
+          $('#id_Contenido').summernote({
+            height: 100, 
+            fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New']
+            }
+          );
+          $('.dropdown-toggle').dropdown()
+      });
+      
+    </script>
