@@ -5,7 +5,7 @@ from django.contrib.auth import get_user_model
 
 User = get_user_model()
 
-from .models import Grupo, Publicacion
+from .models import Grupo, Publicacion, Comentario
 from django_summernote.widgets import SummernoteWidget, SummernoteInplaceWidget
 
 class SignupForm(UserCreationForm):
@@ -32,3 +32,11 @@ class NuevoGrupo(ModelForm):
         self.instance.Creador = self.request.user
         return super().save(commit=commit)
     
+class ComentarioForm(ModelForm):
+    class Meta:
+        model = Comentario
+        widgets = {
+            'foo': SummernoteWidget(),
+            'bar': SummernoteInplaceWidget(),
+        }
+        fields = ['ContenidoComentario']

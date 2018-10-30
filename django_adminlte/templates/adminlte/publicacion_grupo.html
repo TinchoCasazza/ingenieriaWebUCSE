@@ -23,13 +23,13 @@
               {% load widget_tweaks %}
               <div class="box-body">
                 <div class="form-group">
-                  <label for="exampleInputEmail1">Titulo</label>
+                  <label for="TituloPublicacion">Titulo</label>
                   {{ formNuevaPublicacion.Titulo|add_class:"form-control"|append_attr:"placeholder:Titulo"}}       
                 </div>
 
                 <div class="form-group">
                   
-                  <label for="exampleInputPassword1">Contenido</label>
+                  <label for="ContenidoPublicacion">Contenido</label>
                   {{ foobar|safe }}
                   {{ formNuevaPublicacion.Contenido }}
                 </div>
@@ -37,7 +37,7 @@
               <!-- /.box-body -->
 
               <div class="box-footer">
-                <button type="submit" class="btn btn-default">Cancelar</button>
+                <a href="{% url 'grupos_url_with_pk' pk=grupo.idGrupo %}" class="btn btn-default">Volver Atras</a>
                 <button type="submit" class="btn btn-info pull-right">Crear</button>
               </div>
             </form>

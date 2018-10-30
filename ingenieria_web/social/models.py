@@ -91,6 +91,9 @@ class Publicacion(models.Model):
     FechaBajaPublicacion = models.DateField(default= None, editable = False,null = True)
     FechaModiPublicacion = models.DateField(default = None, editable = False, null = True)
 
+    def __str__(self):
+        return (self.Titulo)
+
 class DenunciaUsuarios(models.Model):
     idUsuario =  models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     idPublicacion = models.ForeignKey(Publicacion, on_delete=models.CASCADE) 

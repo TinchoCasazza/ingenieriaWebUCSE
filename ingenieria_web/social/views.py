@@ -30,13 +30,13 @@ User = get_user_model()
 # Create your views here.
 
 def inicio(request):
-    listaPublicaciones = Publicacion.objects.filter(Estado = 1).order_by('-FechaPublicacion')
+    listaPublicaciones = Publicacion.objects.filter(Estado = 4).order_by('-FechaPublicacion')
     listaGrupos = Grupo.objects.all().order_by('NombreGrupo')
     listaComentarios = Comentario.objects.all()
     listaSuscripciones = Suscripcion.objects.filter(Estado = 1).order_by('-fecha_peticion')
     formNuevoGrupo = NuevoGrupo()
-    
-    return render(request, 'adminlte/index.html',{'listaPublicaciones' : listaPublicaciones ,'listaGrupos': listaGrupos, 'formNuevoGrupo': formNuevoGrupo, 'listaComentarios': listaComentarios, 'listaSuscripciones': listaSuscripciones})
+    formNuevaPublicacion = PublicacionForm()
+    return render(request, 'adminlte/index.html',{'listaPublicaciones' : listaPublicaciones ,'listaGrupos': listaGrupos, 'formNuevoGrupo': formNuevoGrupo, 'listaComentarios': listaComentarios, 'listaSuscripciones': listaSuscripciones,'formNuevaPublicacion':formNuevaPublicacion})
 
 
 CRITICAL = 50
@@ -110,16 +110,16 @@ def activate(request, uidb64, token):
 
 
 def publicar(request):
-
         if request.method == 'POST':
-                contenido = request.POST.get('contenidoPublicacion')
-                publicacion = Publicacion()
-
-                publicacion.idUserPublico = request.user
-                publicacion.Titulo = "Prueba"
-                publicacion.Contenido = contenido
-                publicacion.save()
-                return HttpResponseRedirect('inicio/')
+                form = PublicacionForm(request.POST)
+                
+                if form.is_valid():
+                        
+                        publicacion = form.save(commit=False)
+                        publicacion.Estado = 4
+                        publicacion.idUserPublico = request.user
+                        publicacion.save()
+                return HttpResponseRedirect('/inicio/')
         else:
                 publicaciones = Publicacion.objects.filter(Estado = 1).order_by('-FechaPublicacion')
                 return render(request, 'adminlte/index.html', {listaPublicaciones : publicaciones})
@@ -220,11 +220,21 @@ def grupos(request, pk=None):
                     lista_grupos.append(grupo)
         publicaciones = Publicacion.objects.all()
         return render(request, 'adminlte/grupos.html', {'lista_grupos' : lista_grupos,'publicaciones':publicaciones,'listaSuscripciones': listaSuscripciones, 'formNuevoGrupo': formNuevoGrupo})
-
+from .forms import ComentarioForm
 def publicaciones(request, pk=None):
         publicacion = Publicacion.objects.get(idPublicacion = pk)
         comentarios = Comentario.objects.filter(idPublicacionC = publicacion.idPublicacion)
-        return render(request, 'adminlte/publicacion.html', {'publicacion': publicacion, 'comentarios':comentarios} )
+        if request.method == 'POST':
+                form = ComentarioForm(request.POST)
+                if form.is_valid():
+                        comentario = form.save(commit=False)
+                        comentario.idUserComento = request.user
+                        comentario.idPublicacionC = publicacion
+                        comentario.save()
+        FormComentario = ComentarioForm()
+        listaSuscripciones = Suscripcion.objects.filter(Estado = 1).order_by('-fecha_peticion')
+        formNuevoGrupo = NuevoGrupo()        
+        return render(request, 'adminlte/publicacion.html', {'listaSuscripciones':listaSuscripciones,'formNuevoGrupo':formNuevoGrupo,'publicacion': publicacion, 'comentarios':comentarios, 'FormComentario': FormComentario} )
 from django.urls import reverse
 def grupo_publicacion(request, pk=None):
         grupo = Grupo.objects.filter(idGrupo = pk)[0]
@@ -235,11 +245,12 @@ def grupo_publicacion(request, pk=None):
                         publicacion.idUserPublico = request.user
                         publicacion.idGrupoPu = Grupo.objects.filter(idGrupo = pk)[0]
                         publicacion.save()
-                        print(publicacion)
                 return HttpResponseRedirect('/grupos/'+pk)
         if request.method == 'GET':
                 formNuevaPublicacion = PublicacionForm()
-                return render(request, 'adminlte/publicacion_grupo.html', {'formNuevaPublicacion':formNuevaPublicacion,'grupo':grupo})
+                listaSuscripciones = Suscripcion.objects.filter(Estado = 1).order_by('-fecha_peticion')
+                formNuevoGrupo = NuevoGrupo()
+                return render(request, 'adminlte/publicacion_grupo.html', {'listaSuscripciones':listaSuscripciones,'formNuevoGrupo':formNuevoGrupo,'formNuevaPublicacion':formNuevaPublicacion,'grupo':grupo})
 
 def crear_grupo(request):
         if request.method == 'POST':

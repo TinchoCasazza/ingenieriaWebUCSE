@@ -19,20 +19,37 @@
       </div>
       <div class="row">
         <div class="col-xs-12">
-          <p class="text-muted well well-sm no-shadow" style="margin-top: 10px;">
+          <div class="text-muted well well-sm no-shadow" style="margin-top: 10px;">
             {{ publicacion.Contenido|safe }}
-          </p>
+          </div>
         </div>
       </div>
       <div class="row no-print">
       </div>
-      <div class="box">
-        <div class="box-footer">
-            <textarea id="id_Contenido" class="col-xs-12" style="resize: none;"></textarea>
-        </div>
-    </div>
+
     </section>
-    
+    <div class="box box-primary">
+    <form role="form" method="post">
+      {% csrf_token %}
+      
+      {% load widget_tweaks %}
+      <div class="box-body">
+        <div class="form-group">
+          
+          <label for="comentario">Comentario</label>
+          {{ foobar|safe }}
+          {{ FormComentario.ContenidoComentario }}
+        </div>
+      </div>
+        <div class="box-footer">
+          <button type="submit" class="btn btn-info pull-right">Comentar</button>
+        </div>
+     </form>
+    </div>
+    {% for comentario in comentarios %}
+      {{ comentario.idUserComento }}
+      {{ comentario.ContenidoComentario }}
+    {% endfor %}
     <!-- /.box -->
 
           <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
@@ -50,11 +67,10 @@
             <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.js"></script>
             <script>
               $(document).ready(function() {
-                  $('#id_Contenido').summernote({
+                  $('#id_ContenidoComentario').summernote({
                     height: 200,
-                    width: 900, 
-                    fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New']
-                    }
+                    width: 900,
+                  }
                   );
                   $('.dropdown-toggle').dropdown()
               });

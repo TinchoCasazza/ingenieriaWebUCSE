@@ -37,14 +37,7 @@
             </div>
               <!-- /.box-header -->
                 <div class="box-body pad">
-                  <form method="POST" >
-                    {% csrf_token %}
-                    <textarea id="contenidoPublicacion" placeholder="¿En que estas pensando {{ request.user.get_username|capfirst }} ?" class="col-xs-12" rows="4" cols="40" style="resize: none;"></textarea>
-                    <div class="col-xs-12" style="margin-top: 15px; text-align: right;">
-                      <button type="submit" class="btn btn-default btn-sm" id="btnSubirImagen">Adjuntar imagen</button>    
-                      <button type="submit" class="btn btn-success btn-sm" id="btnPublicar" onclick="Publicar()">Subir</button>
-                    </div>
-                  </form>
+                  {% include 'adminlte/components/crear_publicacion.html' %}
                 </div>
           </div>
               {% endif %}
