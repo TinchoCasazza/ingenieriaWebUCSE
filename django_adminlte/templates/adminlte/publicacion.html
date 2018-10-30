@@ -6,6 +6,7 @@
     {% endblock %}
 {% block content %}
     <!-- Default box -->
+    <div class="box box-success">
     <section class="invoice">
       <!-- title row -->
       <div class="row">
@@ -26,30 +27,39 @@
       </div>
       <div class="row no-print">
       </div>
-
     </section>
-    <div class="box box-primary">
-    <form role="form" method="post">
-      {% csrf_token %}
-      
-      {% load widget_tweaks %}
-      <div class="box-body">
-        <div class="form-group">
-          
-          <label for="comentario">Comentario</label>
-          {{ foobar|safe }}
-          {{ FormComentario.ContenidoComentario }}
-        </div>
-      </div>
-        <div class="box-footer">
-          <button type="submit" class="btn btn-info pull-right">Comentar</button>
-        </div>
-     </form>
-    </div>
+    </br>
     {% for comentario in comentarios %}
-      {{ comentario.idUserComento }}
-      {{ comentario.ContenidoComentario }}
+      <div class="box-body no-padding">
+        <div class="mailbox-read-info">
+          <h3></h3>
+          <h5>{{ comentario.idUserComento }}
+          <span class="mailbox-read-time pull-right">{{ comentario.FechaComentario|date:"SHORT_DATE_FORMAT" }}</span></h5>
+        </div>
+              
+        <div class="mailbox-read-message">
+          {{ comentario.ContenidoComentario }}
+        </div>
+        <!-- /.mailbox-read-message -->
+      </div>
     {% endfor %}
+    </div>
+
+    <form role="form" method="post">
+        {% csrf_token %}
+        
+        {% load widget_tweaks %}
+        <div class="box-body">
+          <div class="form-group">
+            
+            <label for="comentario">Comentario</label>
+            {{ foobar|safe }}
+            {{ FormComentario.ContenidoComentario }}
+            <button type="submit" class="btn btn-info pull-right">Comentar</button>
+
+          </div>
+        </div>
+    </form>
     <!-- /.box -->
 
           <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
@@ -69,7 +79,6 @@
               $(document).ready(function() {
                   $('#id_ContenidoComentario').summernote({
                     height: 200,
-                    width: 900,
                   }
                   );
                   $('.dropdown-toggle').dropdown()
