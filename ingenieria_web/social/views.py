@@ -307,8 +307,11 @@ def suscribirUsuario(request):
         return render(request, 'adminlte/grupos.html')
 
 
-def perfil(request):
-        listaPublicaciones = Publicacion.objects.filter( idUserPublico = request.user)
+def perfil(request, pk=None):
+        if pk:
+                print(pk)
+                user = User.objects.get(username =pk)
+                listaPublicaciones = Publicacion.objects.filter( idUserPublico = user)
         return render(request, 'adminlte/perfil.html',{'listaPublicaciones' : listaPublicaciones})
 
 

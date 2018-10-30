@@ -7,9 +7,9 @@
           <!-- Profile Image -->
           <div class="box box-primary">
             <div class="box-body box-profile">
-              <img class="profile-user-img img-responsive img-circle" src={{ request.user.avatar }}  alt="User profile picture">
+              <img class="profile-user-img img-responsive img-circle" src={{ publicacion.idUserPublico.avatar }}  alt="User profile picture">
 
-              <h3 class="profile-username text-center"> {{ request.user.username|capfirst }} </h3>
+              <h3 class="profile-username text-center"> {{ publicacion.idUserPublico|capfirst }} </h3>
 
               <p class="text-muted text-center">Software Engineer</p>
 
@@ -80,7 +80,7 @@
                 {% for publicacion in listaPublicaciones %}
                 <div class="post">
                   <div class="user-block">
-                    <img class="img-circle img-bordered-sm" src={{ request.user.avatar }} alt="user image">
+                    <img class="img-circle img-bordered-sm" src={{ publicacion.idUserPublico.avatar }} alt="user image">
                         <span class="username">
                           <a href="#"> {{ publicacion.idUserPublico.username|capfirst }} </a>
                           <a href="#" class="pull-right btn-box-tool"><i class="fa fa-times"></i>  </a>
@@ -95,6 +95,17 @@
                   </ul>
                 </div>
                 <!-- /.post -->
+                {% empty %}
+                  <div class="post">
+                    <div class="user-block">
+                    </div>
+                    <!-- /.user-block -->
+                    <p>
+                      No tiene actividad reciente 
+                    </p>
+                    <ul class="list-inline">
+                    </ul>
+                  </div>
                 {% endfor %}
                 
               </div>
