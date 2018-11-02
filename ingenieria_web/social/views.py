@@ -350,7 +350,7 @@ from django_filters.rest_framework import DjangoFilterBackend
 
 from .serializers import GrupoSerializer
 from .serializers import UserSerializer
-from .serializers import SuscripcionSerializer
+from .serializers import SuscripcionSerializer,PublicacionSerializer
 from django.contrib.auth import get_user_model
 
 def api_v1(request):
@@ -361,7 +361,8 @@ def api_cantidad_grupos(request):
         'cantidad_grupos': Grupo.objects.count()
     }
     return JsonResponse(data)
-
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.permissions import IsAuthenticated
 class GrupoViewSet(viewsets.ModelViewSet):
     queryset = Grupo.objects.all().order_by('NombreGrupo')
     serializer_class = GrupoSerializer
@@ -377,3 +378,25 @@ class SuscripcionViewSet(viewsets.ModelViewSet):
         queryset = Suscripcion.objects.all()
         serializer_class = SuscripcionSerializer
         filter_backends = (OrderingFilter, DjangoFilterBackend)
+
+class PublicacionViewSet(viewsets.ModelViewSet):
+        queryset = Publicacion.objects.all()
+        serializer_class = PublicacionSerializer
+        filter_backends = (OrderingFilter, DjangoFilterBackend)
+        permission_classes = (IsAuthenticated, )
+        authentication_classes = (TokenAuthentication, )
+
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+from rest_framework.authtoken.models import Token
+
+@receiver(post_save, sender=get_user_model())
+def create_auth_token(sender, instance=None, created=False, **kwargs):
+    if created:
+        Token.objects.create(user=instance)
+
+
+User = get_user_model()
+for user in User.objects.all():
+    Token.objects.get_or_create(user=user)
+

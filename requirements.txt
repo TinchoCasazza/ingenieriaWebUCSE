@@ -10,3 +10,4 @@ djangorestframework
 django_filter
 Pillow
 django-summernote
+django-rest-auth

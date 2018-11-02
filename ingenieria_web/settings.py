@@ -45,6 +45,8 @@ INSTALLED_APPS = [
     'elasticsearch',
     'widget_tweaks',
     'rest_framework',
+    'rest_framework.authtoken',
+    'rest_auth',
     
 ] 
 
@@ -89,6 +91,8 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'ingenieria_web.wsgi.application'
 
+
+APPEND_SLASH=False
 
 # Database
 # https://docs.djangoproject.com/en/1.10/ref/settings/#databases

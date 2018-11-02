@@ -22,12 +22,12 @@ from ingenieria_web.search import views as search_views
 from django.contrib.auth import views as auth_views
 from django.contrib.auth.views import LoginView, login_required
 from rest_framework import routers
-
+from rest_framework.authtoken import views
 router = routers.DefaultRouter()
 router.register('grupos', social_views.GrupoViewSet)
 router.register('usuarios', social_views.UserViewSet)
 router.register('suscripcion', social_views.SuscripcionViewSet)
-
+router.register('publicacion', social_views.PublicacionViewSet)
 
 urlpatterns = [
 
@@ -79,6 +79,7 @@ urlpatterns = [
     url(r'ejemplo_api_v1/$', social_views.api_v1),
     url(r'api_v1/cantidad_grupos/$', social_views.api_cantidad_grupos),
     url(r'api_v1/', include(router.urls)),
+    url(r'ApiToken_auth/$', views.obtain_auth_token, name="ApiToken_auth"),
 
     #Recuperar Contraseña
     url(r'^password_reset/$', auth_views.PasswordResetView.as_view(template_name ='adminlte/registration/password_reset_form.html'), name='password_reset'),
