@@ -67,7 +67,7 @@ urlpatterns = [
     url(r'^busqueda/$', search_views.search, name="search_url"),  
 
     #Perfil
-    url(r'^perfil/$', social_views.perfil, name="perfil_url"),  
+    url(r'^perfil/(?P<pk>[\w\-]+)/$', social_views.perfil, name="perfil_url_pk"),  
 
     #Skin
     url(r'^cambiarSkin/$', social_views.cambiarSkin, name="cambiarSkin_url"),  
