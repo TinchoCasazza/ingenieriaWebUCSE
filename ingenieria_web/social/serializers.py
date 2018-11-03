@@ -9,7 +9,7 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
 class GrupoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Grupo
-        fields = ('idGrupo','NombreGrupo', 'Creador')
+        fields = ('idGrupo','NombreGrupo', 'Creador','NivelAcceso')
 
 
 class SuscripcionSerializer(serializers.ModelSerializer):
