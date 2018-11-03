@@ -4,7 +4,7 @@ from .models import Grupo, UserManager, Suscripcion, Publicacion
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = UserManager
-        fields = ('username','email',)
+        fields = ('id','username')
 
 class GrupoSerializer(serializers.ModelSerializer):
     class Meta:
