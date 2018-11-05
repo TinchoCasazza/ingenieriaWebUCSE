@@ -40,6 +40,7 @@ def inicio(request):
 
 
 CRITICAL = 50
+
 def login(request):
         if request.user.is_authenticated:
                 return HttpResponseRedirect('/inicio/')
@@ -50,6 +51,7 @@ def login(request):
                         user = authenticate(request, username=username, password=password)
                         if user is not None:
                                 auth_login(request , user)
+                                token, _ = Token.objects.get_or_create(user=user)
                                 return HttpResponseRedirect('/inicio/')
                         else:
                                 messages.warning(request, u'Usuario o Contrase\xf1a incorrectos.') 
@@ -402,4 +404,3 @@ def create_auth_token(sender, instance=None, created=False, **kwargs):
 User = get_user_model()
 for user in User.objects.all():
     Token.objects.get_or_create(user=user)
-
