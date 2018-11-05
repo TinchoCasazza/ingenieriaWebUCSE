@@ -5,6 +5,6 @@ STATUS_CHOICES = (
     (4, ("MURO"))
 )
 RELEVANCE_CHOICES = (
-    (1, ("Destacado")),
-    (2, ("No destacado")),
+    (1, ("No destacado")),
+    (2, ("Destacado")),
 )
