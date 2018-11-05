@@ -3,7 +3,7 @@ from django.contrib import messages
 from django.http import HttpResponseRedirect
 from django.template import context
 from .models import Publicacion, Grupo, Comentario, Skin, PrivacidadGrupo,UserGrupos, Permisos, Suscripcion, DenunciaUsuarios
-
+from rest_framework.authtoken.models import Token
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from .forms import SignupForm
@@ -353,7 +353,7 @@ from django_filters.rest_framework import DjangoFilterBackend
 
 from .serializers import GrupoSerializer
 from .serializers import UserSerializer
-from .serializers import SuscripcionSerializer,PublicacionSerializer
+from .serializers import SuscripcionSerializer,PublicacionSerializer, TokenSerializer
 from django.contrib.auth import get_user_model
 
 def api_v1(request):
@@ -388,6 +388,15 @@ class PublicacionViewSet(viewsets.ModelViewSet):
         filter_backends = (OrderingFilter, DjangoFilterBackend)
         permission_classes = (IsAuthenticated, )
         authentication_classes = (TokenAuthentication, )
+
+
+class TokensViewSet(viewsets.ModelViewSet):
+        queryset = Token.objects.all()
+        serializer_class = TokenSerializer
+        filter_backends = (OrderingFilter, DjangoFilterBackend)
+        permission_classes = (IsAuthenticated, )
+        authentication_classes = (TokenAuthentication, )
+       
 
 from django.db.models.signals import post_save
 from django.dispatch import receiver
