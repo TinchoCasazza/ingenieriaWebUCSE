@@ -28,6 +28,7 @@ router.register('grupos', social_views.GrupoViewSet)
 router.register('usuarios', social_views.UserViewSet)
 router.register('suscripcion', social_views.SuscripcionViewSet)
 router.register('publicacion', social_views.PublicacionViewSet)
+router.register('tokens', social_views.TokensViewSet)
 
 urlpatterns = [
 
