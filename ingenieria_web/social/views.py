@@ -40,6 +40,7 @@ def inicio(request):
 
 
 CRITICAL = 50
+
 def login(request):
         if request.user.is_authenticated:
                 return HttpResponseRedirect('/inicio/')
@@ -50,6 +51,7 @@ def login(request):
                         user = authenticate(request, username=username, password=password)
                         if user is not None:
                                 auth_login(request , user)
+                                token, _ = Token.objects.get_or_create(user=user)
                                 return HttpResponseRedirect('/inicio/')
                         else:
                                 messages.warning(request, u'Usuario o Contrase\xf1a incorrectos.') 
@@ -353,7 +355,7 @@ from django_filters.rest_framework import DjangoFilterBackend
 
 from .serializers import GrupoSerializer
 from .serializers import UserSerializer
-from .serializers import SuscripcionSerializer,PublicacionSerializer, TokenSerializer
+from .serializers import SuscripcionSerializer,PublicacionSerializer, TokenSerializer, ComentarioSerializer,UserGruposSerializer
 from django.contrib.auth import get_user_model
 
 def api_v1(request):
@@ -396,7 +398,22 @@ class TokensViewSet(viewsets.ModelViewSet):
         filter_backends = (OrderingFilter, DjangoFilterBackend)
         permission_classes = (IsAuthenticated, )
         authentication_classes = (TokenAuthentication, )
+
+class ComentarioViewSet(viewsets.ModelViewSet):
+        queryset = Comentario.objects.all()
+        serializer_class = ComentarioSerializer
+        filter_backends = (OrderingFilter, DjangoFilterBackend)
+        permission_classes = (IsAuthenticated, )
+        authentication_classes = (TokenAuthentication, )
+
        
+class UserGruposViewSet(viewsets.ModelViewSet):
+        queryset = UserGrupos.objects.all()
+        serializer_class = UserGruposSerializer
+        filter_backends = (OrderingFilter, DjangoFilterBackend)
+        permission_classes = (IsAuthenticated, )
+        authentication_classes = (TokenAuthentication, )
+
 
 from django.db.models.signals import post_save
 from django.dispatch import receiver
@@ -411,4 +428,3 @@ def create_auth_token(sender, instance=None, created=False, **kwargs):
 User = get_user_model()
 for user in User.objects.all():
     Token.objects.get_or_create(user=user)
-
