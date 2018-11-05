@@ -355,7 +355,7 @@ from django_filters.rest_framework import DjangoFilterBackend
 
 from .serializers import GrupoSerializer
 from .serializers import UserSerializer
-from .serializers import SuscripcionSerializer,PublicacionSerializer, TokenSerializer
+from .serializers import SuscripcionSerializer,PublicacionSerializer, TokenSerializer, ComentarioSerializer,UserGruposSerializer
 from django.contrib.auth import get_user_model
 
 def api_v1(request):
@@ -398,7 +398,22 @@ class TokensViewSet(viewsets.ModelViewSet):
         filter_backends = (OrderingFilter, DjangoFilterBackend)
         permission_classes = (IsAuthenticated, )
         authentication_classes = (TokenAuthentication, )
+
+class ComentarioViewSet(viewsets.ModelViewSet):
+        queryset = Comentario.objects.all()
+        serializer_class = ComentarioSerializer
+        filter_backends = (OrderingFilter, DjangoFilterBackend)
+        permission_classes = (IsAuthenticated, )
+        authentication_classes = (TokenAuthentication, )
+
        
+class UserGruposViewSet(viewsets.ModelViewSet):
+        queryset = UserGrupos.objects.all()
+        serializer_class = UserGruposSerializer
+        filter_backends = (OrderingFilter, DjangoFilterBackend)
+        permission_classes = (IsAuthenticated, )
+        authentication_classes = (TokenAuthentication, )
+
 
 from django.db.models.signals import post_save
 from django.dispatch import receiver

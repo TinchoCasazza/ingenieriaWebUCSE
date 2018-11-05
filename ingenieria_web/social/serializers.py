@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Grupo, UserManager, Suscripcion, Publicacion
+from .models import Grupo, UserManager, Suscripcion, Publicacion, UserGrupos, Comentario
 from rest_framework.authtoken.models import Token
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
@@ -29,4 +29,12 @@ class TokenSerializer(serializers.ModelSerializer):
         model = Token
         fields = '__all__'
 
+class UserGruposSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UserGrupos
+        fields = '__all__'
 
+class ComentarioSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Comentario
+        fields = '__all__'
