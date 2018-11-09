@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.contrib import messages
 from django.http import HttpResponseRedirect
 from django.template import context
-from .models import Publicacion, Grupo, Comentario, Skin, PrivacidadGrupo,UserGrupos, Permisos, Suscripcion, DenunciaUsuarios
+from .models import Publicacion, Grupo, Comentario, Skin, PrivacidadGrupo,UserGrupos, Suscripcion, DenunciaUsuarios
 from rest_framework.authtoken.models import Token
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
@@ -275,7 +275,7 @@ def crear_grupo(request):
                
                 usergrupo.idGrupoUsuario = grupo
                 usergrupo.idUser = grupo.Creador
-                usergrupo.Permisos = Permisos.objects.get(NombrePerm = 'Administrador')
+                usergrupo.Rango = 3
                
                 usergrupo.save()
                 return HttpResponseRedirect('/grupos/')
@@ -291,10 +291,10 @@ def agregar_miembro_grupo(request):
                 userGrupos = UserGrupos()
                 userGrupos.idGrupoUsuario = suscripcion.idGrupoSuscribio
                 userGrupos.idUser = suscripcion.emisor
-                permiso = Permisos()
-                permiso.NombrePerm = "usuario"
-                permiso.save()
-                userGrupos.Permisos = permiso
+                
+                
+                
+                userGrupos.Rango = 1
                 userGrupos.save()
                 data = {
                         'mensaje' : "Agregado Correctamente"

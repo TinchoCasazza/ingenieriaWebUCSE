@@ -6,6 +6,7 @@ import datetime
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.conf import settings
+from ingenieria_web.social.choices import *
 # Create your models here.
 
 
@@ -22,18 +23,11 @@ class Skin(models.Model):
     
 
 class UserManager(AbstractUser):
+    
     carrera = models.ForeignKey(Carrera, on_delete=models.CASCADE, null=True)
     skinUser = models.ForeignKey(Skin, on_delete=models.CASCADE, null=True)
     avatar = models.CharField(blank = True, null=True, max_length=40)
 
-
-
-class CategoriaUsuario(models.Model):
-    idCategoriaU = models.AutoField(primary_key=True)
-    NombreCategoriaU = models.CharField(blank=False, max_length=50)
-
-    def __str__(self):
-        return (self.NombreCategoriaU)
 
 class PrivacidadGrupo(models.Model):
     idPrivacidadG = models.AutoField(primary_key=True)
@@ -55,30 +49,14 @@ class Grupo(models.Model):
         return (self.NombreGrupo)
 
 
-class Permisos(models.Model):
-    idPermisos = models.AutoField(primary_key = True)
-    NombrePerm = models.CharField(max_length = 30, blank = False)
-    EditarComentarios = models.BooleanField(default = False)
-    EliminarComentarios = models.BooleanField(default = False)
-    EditarPublicacion = models.BooleanField(default = False)
-    EliminarPublicacion = models.BooleanField(default = False)
-    EditarGrupo = models.BooleanField(default = False)
-    EliminarGrupo = models.BooleanField(default = False)
-    
-
-    def __str__(self):
-        return (self.NombrePerm)
-
 
 class UserGrupos(models.Model):
     idUser = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     idGrupoUsuario = models.ForeignKey(Grupo, on_delete=models.CASCADE)
-    Permisos = models.ForeignKey(Permisos, on_delete=models.CASCADE)
-    
-    def __str__(self):
-        return (self.idUser,self.idGrupoUsuario,self.Permisos)
+    Rango = models.IntegerField(choices=RANK_CHOICES, default=1)
 
-from ingenieria_web.social.choices import *
+
+
 class Publicacion(models.Model):
     idPublicacion = models.AutoField(primary_key= True)
     idUserPublico = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
