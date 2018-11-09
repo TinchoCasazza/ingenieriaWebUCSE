@@ -74,13 +74,14 @@ $.ajaxSetup({
 //--------------------------------//
 
 // Modal Plan de Estudio
-var doc = new jsPDF();
+
 var specialElementHandlers = {
   '#exampleModal': function (element, renderer) {
       return true;
   }
 };
 $('#generarPDF').click(function () {   
+    var doc = new jsPDF();
     // Carga los elementos del PDF
     var contenido = window.document.getElementById("modalBody");
     var imgData =  new Image();
