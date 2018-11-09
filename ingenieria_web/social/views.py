@@ -244,6 +244,9 @@ def grupo_publicacion(request, pk=None):
                 form = PublicacionForm(request.POST)
                 if form.is_valid():
                         publicacion = form.save(commit=False)
+                        gruposuser = UserGrupos.objects.filter(idUser = request.user)
+                        if pk not in gruposuser:
+                                return  render(request,'adminlte/errorPublicar.html')
                         publicacion.idUserPublico = request.user
                         publicacion.idGrupoPu = Grupo.objects.filter(idGrupo = pk)[0]
                         publicacion.save()
@@ -298,8 +301,7 @@ def agregar_miembro_grupo(request):
         return JsonResponse(data)  
 
 from django.http import JsonResponse
-from django.core import serializers
-
+from django.core import serializers                   
 def suscribirUsuario(request):
         if request.method == 'POST':
                 grupoId = request.POST.get('id')

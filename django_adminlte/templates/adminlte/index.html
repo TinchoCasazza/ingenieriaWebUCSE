@@ -50,6 +50,7 @@
                         {% if avatar_url == empty %}
                           <img class="img-circle" src="{{ publicacion.idUserPublico.avatar }}" alt="User Image">
                         {% endif %}
+                        <span class="title pull-right">{{ publicacion.Titulo }}</span>
                         <span class="username"><a href="{% url 'perfil_url_pk' pk=publicacion.idUserPublico %}">{{ publicacion.idUserPublico }}</a></span>
                         <span class="description">{{ publicacion.FechaPublicacion }}</span>
                       </div>
@@ -120,6 +121,7 @@
 
 
 </div>
+
 
 <script src="bootstrap-modal-carousel.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script> 

@@ -13,7 +13,7 @@
         <div class="col-xs-12">
           <h2 class="page-header">
             <img src="{{ publicacion.idUserPublico.avatar }}" size="10" class="img-circle" alt="User Image" width="45px" height="45px">
-            {{ publicacion.idUserPublico|capfirst }} 
+            <a href="{% url 'perfil_url_pk' pk=publicacion.idUserPublico %}">{{ publicacion.idUserPublico }}</a>
             <small class="pull-right"> {{ publicacion.FechaPublicacion }}</small>
           </h2>
         </div>
@@ -33,12 +33,12 @@
       <div class="box-body no-padding">
         <div class="mailbox-read-info">
           <h3></h3>
-          <h5>{{ comentario.idUserComento }}
+          <h5><a href="{% url 'perfil_url_pk' pk=comentario.idUserComento %}">{{ comentario.idUserComento }}</a>
           <span class="mailbox-read-time pull-right">{{ comentario.FechaComentario|date:"SHORT_DATE_FORMAT" }}</span></h5>
         </div>
               
         <div class="mailbox-read-message">
-          {{ comentario.ContenidoComentario }}
+          {{ comentario.ContenidoComentario|safe }}
         </div>
         <!-- /.mailbox-read-message -->
       </div>

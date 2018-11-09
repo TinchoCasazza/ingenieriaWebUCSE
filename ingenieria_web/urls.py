@@ -56,7 +56,7 @@ urlpatterns = [
 
     #Grupos
     url(r'^grupos/$', login_required(social_views.grupos), name="grupos_url"),   
-    url(r'^grupos/(?P<pk>\d+)/$', login_required(social_views.grupos), name="grupos_url_with_pk"),
+    url(r'^grupos/(?P<pk>\d+)$', login_required(social_views.grupos), name="grupos_url_with_pk"),
     url(r'^grupos/crear_grupo/$', login_required(social_views.crear_grupo), name="grupos_url_create"),     
     url(r'^grupos/suscribirse/$', login_required(social_views.suscribirUsuario), name="grupos_url_suscripcion"),     
     url(r'^grupos/tema/$', login_required(social_views.grupos_tema), name="grupos_url_tema"),     
