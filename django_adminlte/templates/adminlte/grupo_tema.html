@@ -56,8 +56,7 @@
                   <!-- /.table -->
                 </div>
                 </div>
-                <!-- /.mail-box-messages -->
-            <!-- /.box-body -->
+
             
             <div class="box-footer clearfix no-border">
                 <div class="box-tools pull-right">
@@ -73,10 +72,45 @@
             </div>
           </div>
     
-       
+
         
 
         <div class="col-md-4">
+            <div class="box box-primary">
+                <div class="box-header ui-sortable-handle" style="cursor: move;">
+                    <i class="ion ion-clipboard"></i>
+      
+                    <h3 class="box-title">Eventos</h3>
+                  </div>
+            <div class="box-body no-padding">
+                <!-- /.pull-right -->
+              <div class="table-responsive mailbox-messages">
+                <table class="table table-hover table-striped">
+                  <tbody>
+                    {% for evento in eventos %}
+                      <tr>
+                          <td class="mailbox-subject"><b>{{ evento.NombreEvento }}</b></td>
+                          <td class="mailbox-name">Creador: <b>{{ evento.CreadorEvento }}</b></td>
+                          <td> 
+                              <a id="evento{{ evento.idEvento }}"><i class="fa fa-trash-o"></i></a>
+                            </td>
+                        </tr>
+                        <tr>
+                            
+                            <td class="mailbox-date">{{ evento.FechaEvento|date:"D d M Y" }} - {{ evento.Hora }}</td>
+                        </tr>
+                      {% endfor %}
+                  </tbody>
+                </table>
+                <!-- /.table -->
+              </div>
+              </div>
+              </div>
+          
+          
+          <!-- FIN EVENTO-->
+           
+              
               <!-- USERS LIST -->
               <div class="box box-danger">
                 <div class="box-header with-border">
@@ -106,6 +140,48 @@
                 </div>
                 <!-- /.box-footer -->
               </div>
+
+              <div class="box box-primary">
+                  <div class="box-header with-border">
+                      <h3 class="box-title">Nuevo Evento</h3>
+                  </div>
+                  <div class="box-body">
+                      {% block register_errors %}
+                      {% if nuevoEventoForm.errors %}
+                          {% for field in nuevoEventoForm %}
+                              {% for error in field.errors %}
+                                  <p class="alert alert-danger">
+                                      {{ error }}
+                                  </p>
+                              {% endfor %}
+                          {% endfor %}
+                      {% endif %}
+                      {% endblock %}
+                  
+                   
+                  <form action="{% url 'nuevo_evento_with_pk' pk=grupo.idGrupo %}" method="POST">
+                        {% csrf_token %}
+                        {% load widget_tweaks %}
+                      <div class="form-group">
+                        {{ nuevoEventoForm.NombreEvento|add_class:"form-control"|append_attr:"placeholder:Nombre del Evento" }}
+                    </div> 
+                    <div class="form-group">
+                        {{ nuevoEventoForm.FechaEvento|add_class:"form-control" }}
+                      </div> 
+                      <div class="form-group">
+                          {{ nuevoEventoForm.Hora|add_class:"form-control" }}
+                        </div> 
+                  </div>
+                    <div class="box-footer">       
+                        <div class="col-xs-4"></div>  
+                        <div class="col-xs-4"></div>        
+                      <div class="col-xs-4">
+                        <button type="submit" class="btn btn-primary btn-block btn-flat pull-right" style="border-radius: 50px">Guardar</button>
+                      </div>
+                    </form>
+                </div>
+  
+              
               <!--/.box -->
             </div>       
     </div>

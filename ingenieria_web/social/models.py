@@ -116,3 +116,11 @@ class Suscripcion(models.Model):
     fecha_peticion = models.DateField(auto_now=True)
     Estado = models.IntegerField(choices=STATUS_CHOICES, default=1)
 
+from django.utils.timezone import now
+class Evento(models.Model):
+    idEvento = models.AutoField(primary_key = True)
+    idGrupoEvento = models.ForeignKey(Grupo, on_delete=models.CASCADE, null = True)
+    NombreEvento = models.CharField(blank=False, max_length = 30)
+    CreadorEvento = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='CreadorEvento')
+    FechaEvento = models.DateTimeField(blank= False, default = now)
+    Hora = models.TimeField(blank= False)

@@ -194,7 +194,8 @@ def denunciarPublicacion(request):
                    'mensaje' : "Denuncia Exitosa"
                 } 
         return JsonResponse(data)        
-
+from .forms import EventoForm
+from .models import Evento
 def grupos(request, pk=None):
         listaSuscripciones = Suscripcion.objects.filter(Estado = 1).order_by('-fecha_peticion')
         formNuevoGrupo = NuevoGrupo()
@@ -212,7 +213,9 @@ def grupos(request, pk=None):
                         valido = True
                         
                 publicaciones = Publicacion.objects.filter(idGrupoPu = pk)
-                return render(request, 'adminlte/grupo_tema.html', {'grupo' : grupo, 'miembros' : miembros, 'publicaciones':publicaciones,'listaSuscripciones': listaSuscripciones, 'formNuevoGrupo': formNuevoGrupo, 'valido':valido })
+                nuevoEventoForm = EventoForm()
+                eventos = Evento.objects.filter(idGrupoEvento = pk)
+                return render(request, 'adminlte/grupo_tema.html', {'grupo' : grupo, 'miembros' : miembros, 'publicaciones':publicaciones,'listaSuscripciones': listaSuscripciones, 'formNuevoGrupo': formNuevoGrupo, 'valido':valido, 'nuevoEventoForm':nuevoEventoForm, 'eventos': eventos })
         lista_gruposuser = UserGrupos.objects.all().filter(idUser=request.user)
         lista_Grupos = Grupo.objects.all().order_by('NombreGrupo')
         lista_grupos = []
@@ -245,7 +248,7 @@ def grupo_publicacion(request, pk=None):
                 if form.is_valid():
                         publicacion = form.save(commit=False)
                         gruposuser = UserGrupos.objects.filter(idUser = request.user)
-                        if pk not in gruposuser:
+                        if pk in gruposuser:
                                 return  render(request,'adminlte/errorPublicar.html')
                         publicacion.idUserPublico = request.user
                         publicacion.idGrupoPu = Grupo.objects.filter(idGrupo = pk)[0]
@@ -347,7 +350,20 @@ def cambiarFotoPerfil(request):
         usuario.avatar = imagen
         usuario.save()
     return render(request, 'adminlte/index.html')
-                
+
+def CrearEvento(request, pk=None):
+        if pk:
+                form = EventoForm(request.POST)
+                if form.is_valid():
+                        evento = form.save(commit=False)
+                        gruposuser = UserGrupos.objects.filter(idUser = request.user)
+
+                        if pk in gruposuser:
+                                return  render(request,'adminlte/errorPublicar.html')
+                        evento.CreadorEvento = request.user
+                        evento.idGrupoEvento = Grupo.objects.filter(idGrupo = pk)[0]
+                        evento.save()
+                return HttpResponseRedirect('/grupos/'+pk)
 #Api
 from django.http import JsonResponse
 from rest_framework import viewsets

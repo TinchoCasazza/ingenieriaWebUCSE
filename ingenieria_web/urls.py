@@ -63,6 +63,8 @@ urlpatterns = [
     url(r'^grupos/(?P<pk>\d+)/nuevaPublicacion$', login_required(social_views.grupo_publicacion), name="nueva_publicacion_with_pk"),
     url(r'^grupos/agregar_miembro/$', login_required(social_views.agregar_miembro_grupo), name="grupos_agregar_miembro"),
 
+    #Eventos
+    url(r'^grupos/(?P<pk>\d+)/nuevoEvento$', login_required(social_views.CrearEvento), name="nuevo_evento_with_pk"),
 
     url(r'^summernote/', include('django_summernote.urls')),
 
