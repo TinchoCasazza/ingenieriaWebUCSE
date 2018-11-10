@@ -29,20 +29,23 @@
       </div>
     </section>
     </br>
-    {% for comentario in comentarios %}
-      <div class="box-body no-padding">
-        <div class="mailbox-read-info">
-          <h3></h3>
-          <h5><a href="{% url 'perfil_url_pk' pk=comentario.idUserComento %}">{{ comentario.idUserComento }}</a>
-          <span class="mailbox-read-time pull-right">{{ comentario.FechaComentario|date:"SHORT_DATE_FORMAT" }}</span></h5>
+    
+    </div>
+
+    <div class="box box-success">
+      {% for comentario in comentarios %}
+        <div class="box-body no-padding">
+          <div class="mailbox-read-info">
+            <h5><a href="{% url 'perfil_url_pk' pk=comentario.idUserComento %}">{{ comentario.idUserComento }}</a><img src="{{ publicacion.idUserComento.avatar }}" size="15" class="img-circle" alt="User Image" width="45px" height="45px">
+            <span class="mailbox-read-time pull-right">{{ comentario.FechaComentario|date:"SHORT_DATE_FORMAT" }}</span></h5>
+          </div>
+                
+          <div class="mailbox-read-message">
+            {{ comentario.ContenidoComentario|safe }}
+          </div>
+          <!-- /.mailbox-read-message -->
         </div>
-              
-        <div class="mailbox-read-message">
-          {{ comentario.ContenidoComentario|safe }}
-        </div>
-        <!-- /.mailbox-read-message -->
-      </div>
-    {% endfor %}
+      {% endfor %}
     </div>
 
     <form role="form" method="post">
