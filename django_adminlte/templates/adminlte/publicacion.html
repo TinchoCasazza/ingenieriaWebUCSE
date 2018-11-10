@@ -32,8 +32,9 @@
     
     </div>
 
-    <div class="box box-success">
-      {% for comentario in comentarios %}
+    
+    {% for comentario in comentarios %}
+      <div class="box box-success" style="border-radius: 10px">
         <div class="box-body no-padding">
           <div class="mailbox-read-info">
             <h5><a href="{% url 'perfil_url_pk' pk=comentario.idUserComento %}">{{ comentario.idUserComento }}</a><img src="{{ publicacion.idUserComento.avatar }}" size="15" class="img-circle" alt="User Image" width="45px" height="45px">
@@ -45,24 +46,29 @@
           </div>
           <!-- /.mailbox-read-message -->
         </div>
-      {% endfor %}
-    </div>
+      </div>
+    {% endfor %}
+    
 
-    <form role="form" method="post">
-        {% csrf_token %}
-        
-        {% load widget_tweaks %}
-        <div class="box-body">
-          <div class="form-group">
+    <div class="box box-success" style="border-radius: 10px">
+      <div class="box-header with-border">
+        <form role="form" method="post">
+            {% csrf_token %}
             
-            <label for="comentario">Comentario</label>
-            {{ foobar|safe }}
-            {{ FormComentario.ContenidoComentario }}
-            <button type="submit" class="btn btn-info pull-right">Comentar</button>
+            {% load widget_tweaks %}
+            <div class="box-body">
+              <div class="form-group">
+                
+                <label for="comentario">Comentario</label>
+                {{ foobar|safe }}
+                {{ FormComentario.ContenidoComentario }}
+                <button type="submit" class="btn btn-info pull-right">Comentar</button>
 
-          </div>
-        </div>
-    </form>
+              </div>
+            </div>
+        </form>
+      </div>
+    </div>
     <!-- /.box -->
 
           <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
