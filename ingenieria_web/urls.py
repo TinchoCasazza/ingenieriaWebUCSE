@@ -66,6 +66,11 @@ urlpatterns = [
     url(r'^grupos/(?P<pk>\d+)/admin$', login_required(social_views.administrarGrupo), name="admin_grupo"),
     url(r'^grupos/(?P<pkGrupo>\d+)/admin/(?P<pkUser>\d+)/$', login_required(social_views.banearUsuario), name="banear_Usuario"),
 
+
+    #Denuncias
+    url(r'^denuncias/$', login_required(social_views.denuncias), name="denuncias_url"),
+    url(r'^denuncias/(?P<pk>\d+)/eliminar$', login_required(social_views.moderarDenuncia), name="moderar_denuncia_pk"),
+
     #Eventos
     url(r'^grupos/(?P<pk>\d+)/nuevoEvento$', login_required(social_views.CrearEvento), name="nuevo_evento_with_pk"),
 
@@ -80,7 +85,7 @@ urlpatterns = [
     #Skin
     url(r'^cambiarSkin/$', social_views.cambiarSkin, name="cambiarSkin_url"),  
 
-   #FotoPerfil
+    #FotoPerfil
     url(r'^fotoPerfil/$', social_views.cambiarFotoPerfil, name="fotoPerfil_url"),  
     
     #Api

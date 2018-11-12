@@ -7,7 +7,6 @@
                 <option selected > 
                     {% if request.user.is_authenticated %}
                         {{ user.carrera }}
-                        Carrera del Usuario
                     {% else %}
                         {{ listaCarreras.first }}
                     {% endif %}
