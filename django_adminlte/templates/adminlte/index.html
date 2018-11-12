@@ -64,7 +64,6 @@
                 <div class="box-body">
                     <p id="publicacion{{ publicacion.idPublicacion }}" >{{ publicacion.Contenido|safe }}</p> 
                     <ul class="list-inline">
-                        <li><a href="#" class="link-black text-lg"><i class="fa fa-thumbs-up margin-r-5"></i>Me Gusta</a></li>
                         <li><a id="btnComentario{{ publicacion.idPublicacion }}" data-toggle="collapse" class="link-black text-lg" data-target="#comentario{{ publicacion.idPublicacion }}" style="cursor:pointer"><i class="fa fa-comments margin-r-5"></i>Comentarios</a></li>
                         <li><a id="btnDenunciar{{ publicacion.idPublicacion }}"  onclick="idButtonModal(this)" data-toggle="modal" data-target="#modalDenuncia"  class="link-black text-lg" style="cursor:pointer; text-align: right;"><i class="fa fa-ban margin-r-5 "></i>Denunciar</a></li>
                     </ul>

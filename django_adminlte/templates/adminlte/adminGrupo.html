@@ -31,6 +31,9 @@
                     <tr>
                         <td>{{ miembro.idUser }}</td>
                         <td>{{ miembro.Rango }}</td> 
+                        <td> 
+                            <a href="{% url 'banear_Usuario' pkGrupo=miembro.idGrupoUsuario.idGrupo pkUser=miembro.idUser.id %}"><i class="fa fa-remove"></i></a>
+                        </td>
                     </tr>
                 {% endfor %}
               </table>
