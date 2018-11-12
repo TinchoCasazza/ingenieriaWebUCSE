@@ -212,7 +212,7 @@ def grupos(request, pk=None):
                 if request.user in miembros:
                         valido = True
                         
-                publicaciones = Publicacion.objects.filter(idGrupoPu = pk)
+                publicaciones = Publicacion.objects.filter(idGrupoPu = pk).order_by('-Destacar')
                 nuevoEventoForm = EventoForm()
                 eventos = Evento.objects.filter(idGrupoEvento = pk)
                 return render(request, 'adminlte/grupo_tema.html', {'grupo' : grupo, 'miembros' : miembros, 'publicaciones':publicaciones,'listaSuscripciones': listaSuscripciones, 'formNuevoGrupo': formNuevoGrupo, 'valido':valido, 'nuevoEventoForm':nuevoEventoForm, 'eventos': eventos })
@@ -364,6 +364,30 @@ def CrearEvento(request, pk=None):
                         evento.idGrupoEvento = Grupo.objects.filter(idGrupo = pk)[0]
                         evento.save()
                 return HttpResponseRedirect('/grupos/'+pk)
+
+def destacarPublicacion(request, pk=None):
+        if pk:
+                publicacion = Publicacion.objects.get(idPublicacion=pk)
+                grupo = publicacion.idGrupoPu
+                
+                miembros_grupos = []
+                for miembro_grupo in UserGrupos.objects.filter(idGrupoUsuario = grupo):
+                   miembros_grupos.append(miembro_grupo.idUser)
+                User = get_user_model()
+                miembros = User.objects.filter(username__in = miembros_grupos)
+                valido = False
+                if request.user in miembros:
+                        valido = True
+                if valido == True:
+                        if publicacion.Destacar == 2:
+                                publicacion.Destacar = 1
+                        else:
+                                publicacion.Destacar = 2
+                        publicacion.save()
+                        pk_grupo = str(grupo.idGrupo)
+                        return HttpResponseRedirect('/grupos/'+pk_grupo)
+                
+
 #Api
 from django.http import JsonResponse
 from rest_framework import viewsets
