@@ -212,10 +212,11 @@ def grupos(request, pk=None):
                 if request.user in miembros:
                         valido = True
                         
-                publicaciones = Publicacion.objects.filter(idGrupoPu = pk).order_by('-Destacar')
+                publicaciones = Publicacion.objects.filter(idGrupoPu = pk, Estado = 1).order_by('-Destacar')
                 nuevoEventoForm = EventoForm()
                 eventos = Evento.objects.filter(idGrupoEvento = pk)
-                return render(request, 'adminlte/grupo_tema.html', {'grupo' : grupo, 'miembros' : miembros, 'publicaciones':publicaciones,'listaSuscripciones': listaSuscripciones, 'formNuevoGrupo': formNuevoGrupo, 'valido':valido, 'nuevoEventoForm':nuevoEventoForm, 'eventos': eventos })
+                miembroGrupo = UserGrupos.objects.filter(idUser = request.user, idGrupoUsuario = pk)[0]
+                return render(request, 'adminlte/grupo_tema.html', {'grupo' : grupo, 'miembros' : miembros, 'publicaciones':publicaciones,'listaSuscripciones': listaSuscripciones, 'formNuevoGrupo': formNuevoGrupo, 'valido':valido, 'nuevoEventoForm':nuevoEventoForm, 'eventos': eventos, 'miembroGrupo':miembroGrupo })
         lista_gruposuser = UserGrupos.objects.all().filter(idUser=request.user)
         lista_Grupos = Grupo.objects.all().order_by('NombreGrupo')
         lista_grupos = []
@@ -386,6 +387,29 @@ def destacarPublicacion(request, pk=None):
                                 publicacion.Destacar = 1
                         else:
                                 publicacion.Destacar = 2
+                        publicacion.save()
+                pk_grupo = str(grupo.idGrupo)
+                return HttpResponseRedirect('/grupos/'+pk_grupo)
+
+
+def eliminarPublicacion(request, pk=None):
+        if pk:
+                publicacion = Publicacion.objects.get(idPublicacion=pk)
+                grupo = publicacion.idGrupoPu
+                
+                miembros_grupos = []
+                for miembro_grupo in UserGrupos.objects.filter(idGrupoUsuario = grupo):
+                   miembros_grupos.append(miembro_grupo.idUser)
+                User = get_user_model()
+                miembros = User.objects.filter(username__in = miembros_grupos)
+                valido = False
+                for miembro in miembros:
+                        if request.user == miembro:
+                                aux = UserGrupos.objects.filter(idUser=miembro,idGrupoUsuario=grupo)[0]
+                                if aux.Rango > 1:
+                                        valido = True
+                if valido == True:
+                        publicacion.Estado = 2
                         publicacion.save()
                 pk_grupo = str(grupo.idGrupo)
                 return HttpResponseRedirect('/grupos/'+pk_grupo)

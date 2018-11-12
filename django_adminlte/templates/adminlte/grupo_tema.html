@@ -50,8 +50,13 @@
                             <td class="mailbox-subject"><a href="{% url 'publicacion_url_with_pk' pk=publicacion.idPublicacion %}"><b>{{ publicacion.Titulo }}</b></a> </td>
                             <td class="mailbox-attachment"></td>
                             <td class="mailbox-date">{{ publicacion.FechaPublicacion }}</td>
+                            {% if miembroGrupo.Rango > 1 %}
+                                <td> 
+                                  <a href="{% url 'eliminar_publicacion_pk' pk=publicacion.idPublicacion %}"><i class="fa fa-trash-o"></i></a>
+                                </td>
+                            {% endif %}
                             <td> 
-                              <a id="publicacion{{ publicacion.idPublicacion }}"><i class="fa fa-trash-o"></i></a>
+                              <a id="publicacion{{ publicacion.idPublicacion }}"><i class="fa fa-ban margin-r-5"></i></a>
                             </td>
                           </tr>
                         {% endfor %}
