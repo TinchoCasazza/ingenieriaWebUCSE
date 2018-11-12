@@ -193,7 +193,12 @@ def denunciarPublicacion(request):
                 data = {
                    'mensaje' : "Denuncia Exitosa"
                 } 
-        return JsonResponse(data)        
+                return JsonResponse(data)
+        else:
+                listaDenuncias = DenunciaUsuarios.objects.all()
+                return render(request, 'adminlte/denuncias.html', {'listaDenuncias' : listaDenuncias})
+
+
 from .forms import EventoForm
 from .models import Evento
 def grupos(request, pk=None):

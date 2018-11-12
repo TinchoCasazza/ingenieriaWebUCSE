@@ -77,10 +77,16 @@
                 {% endif %}
                 {% if request.user.is_staff %}
                 <li>
+                    <a href="/denuncias/">
+                        <i class="fa fa-ban"></i> <span>Denuncias</span>
+                    </a>
+                </li>
+                <li>
                     <a href="/admin/">
                         <i class="fa fa-laptop"></i> <span>Admin</span>
                     </a>
                 </li>
+                
                 {% endif %}
                 {% endblock nav_links %}
             {% endblock nav_links_outer %}
