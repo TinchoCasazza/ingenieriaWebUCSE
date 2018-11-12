@@ -67,7 +67,8 @@ urlpatterns = [
 
 
     #Denuncias
-    url(r'^denuncias/$', login_required(social_views.denunciarPublicacion), name="denuncias_url"),   
+    url(r'^denuncias/$', login_required(social_views.denuncias), name="denuncias_url"),
+    url(r'^denuncias/(?P<pk>\d+)/eliminar$', login_required(social_views.moderarDenuncia), name="moderar_denuncia_pk"),
 
     #Eventos
     url(r'^grupos/(?P<pk>\d+)/nuevoEvento$', login_required(social_views.CrearEvento), name="nuevo_evento_with_pk"),

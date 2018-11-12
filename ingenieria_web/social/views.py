@@ -182,22 +182,27 @@ def denunciarPublicacion(request):
                         denunciaUsuario.Contenido = contenido
                         denunciaUsuario.save()
 
-                        
-                denuncias = DenunciaUsuarios.objects.filter(idPublicacion = pkPublicacion).count()
-                if denuncias > 3:
-                        publicacion.Estado = 2
-                        
-                        publicacion.save()        
-                print(denuncias)
-
                 data = {
                    'mensaje' : "Denuncia Exitosa"
                 } 
-                return JsonResponse(data)
-        else:
-                listaDenuncias = DenunciaUsuarios.objects.all()
-                return render(request, 'adminlte/denuncias.html', {'listaDenuncias' : listaDenuncias})
+        return JsonResponse(data)
+                
+def denuncias(request):
+        listaDenuncias = DenunciaUsuarios.objects.all()
+        return render(request, 'adminlte/denuncias.html', {'listaDenuncias' : listaDenuncias})
 
+def moderarDenuncia(request, pk=None):
+        if pk:
+                publicacion = Publicacion()
+                publicacion = Publicacion.objects.get(idPublicacion = pk)
+                publicacion.Estado = 2 
+                publicacion.save()
+
+                DenunciaUsuarios.objects.filter(idPublicacion = pk).delete()
+                
+        
+        listaDenuncias = DenunciaUsuarios.objects.all()
+        return render(request, 'adminlte/denuncias.html', {'listaDenuncias' : listaDenuncias})  
 
 from .forms import EventoForm
 from .models import Evento
