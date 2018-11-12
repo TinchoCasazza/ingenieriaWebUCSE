@@ -217,10 +217,11 @@ def grupos(request, pk=None):
                 if request.user in miembros:
                         valido = True
                         
-                publicaciones = Publicacion.objects.filter(idGrupoPu = pk).order_by('-Destacar')
+                publicaciones = Publicacion.objects.filter(idGrupoPu = pk, Estado = 1).order_by('-Destacar')
                 nuevoEventoForm = EventoForm()
                 eventos = Evento.objects.filter(idGrupoEvento = pk)
-                return render(request, 'adminlte/grupo_tema.html', {'grupo' : grupo, 'miembros' : miembros, 'publicaciones':publicaciones,'listaSuscripciones': listaSuscripciones, 'formNuevoGrupo': formNuevoGrupo, 'valido':valido, 'nuevoEventoForm':nuevoEventoForm, 'eventos': eventos })
+                miembroGrupo = UserGrupos.objects.filter(idUser = request.user, idGrupoUsuario = pk)[0]
+                return render(request, 'adminlte/grupo_tema.html', {'grupo' : grupo, 'miembros' : miembros, 'publicaciones':publicaciones,'listaSuscripciones': listaSuscripciones, 'formNuevoGrupo': formNuevoGrupo, 'valido':valido, 'nuevoEventoForm':nuevoEventoForm, 'eventos': eventos, 'miembroGrupo':miembroGrupo })
         lista_gruposuser = UserGrupos.objects.all().filter(idUser=request.user)
         lista_Grupos = Grupo.objects.all().order_by('NombreGrupo')
         lista_grupos = []
@@ -254,7 +255,7 @@ def grupo_publicacion(request, pk=None):
                         publicacion = form.save(commit=False)
                         gruposuser = UserGrupos.objects.filter(idUser = request.user)
                         if pk in gruposuser:
-                                return  render(request,'adminlte/errorPublicar.html')
+                                return  render(request,'adminlte/errores/errorPublicar.html')
                         publicacion.idUserPublico = request.user
                         publicacion.idGrupoPu = Grupo.objects.filter(idGrupo = pk)[0]
                         publicacion.save()
@@ -364,7 +365,7 @@ def CrearEvento(request, pk=None):
                         gruposuser = UserGrupos.objects.filter(idUser = request.user)
 
                         if pk in gruposuser:
-                                return  render(request,'adminlte/errorPublicar.html')
+                                return  render(request,'adminlte/errores/errorPublicar.html')
                         evento.CreadorEvento = request.user
                         evento.idGrupoEvento = Grupo.objects.filter(idGrupo = pk)[0]
                         evento.save()
@@ -394,10 +395,55 @@ def destacarPublicacion(request, pk=None):
                         publicacion.save()
                 pk_grupo = str(grupo.idGrupo)
                 return HttpResponseRedirect('/grupos/'+pk_grupo)
-                
 
-                
 
+def eliminarPublicacion(request, pk=None):
+        if pk:
+                publicacion = Publicacion.objects.get(idPublicacion=pk)
+                grupo = publicacion.idGrupoPu
+                
+                miembros_grupos = []
+                for miembro_grupo in UserGrupos.objects.filter(idGrupoUsuario = grupo):
+                   miembros_grupos.append(miembro_grupo.idUser)
+                User = get_user_model()
+                miembros = User.objects.filter(username__in = miembros_grupos)
+                valido = False
+                for miembro in miembros:
+                        if request.user == miembro:
+                                aux = UserGrupos.objects.filter(idUser=miembro,idGrupoUsuario=grupo)[0]
+                                if aux.Rango > 1:
+                                        valido = True
+                if valido == True:
+                        publicacion.Estado = 2
+                        publicacion.save()
+                pk_grupo = str(grupo.idGrupo)
+                return HttpResponseRedirect('/grupos/'+pk_grupo)
+
+from .forms import AdminGrupoForm            
+def administrarGrupo(request, pk=None):
+        grupo = Grupo.objects.get(idGrupo = pk)
+        miembrosGrupos = UserGrupos.objects.filter(idGrupoUsuario = pk)
+        if request.method == "GET":
+                formAdministrarGrupo = AdminGrupoForm()
+                miembros_grupos = []
+                for miembro_grupo in UserGrupos.objects.filter(idGrupoUsuario = pk):
+                   miembros_grupos.append(miembro_grupo.idUser)
+                User = get_user_model()
+                miembros = User.objects.filter(username__in = miembros_grupos)
+                formAdministrarGrupo.fields['idUser'].queryset = miembros
+                miembro = UserGrupos.objects.filter(idUser=request.user,idGrupoUsuario=pk)[0]
+                if miembro.Rango == 3:
+                        return render(request, 'adminlte/adminGrupo.html', {'formAdministrarGrupo':formAdministrarGrupo, 'grupo':grupo, 'miembros':miembrosGrupos})
+                else:
+                        return render(request, 'adminlte/errores/errorAdmin.html', { 'GrupoPk': pk})
+        if request.method == "POST":
+                form = AdminGrupoForm(request.POST)
+                if form.is_valid():
+                        miembro = UserGrupos.objects.get(idUser=form.cleaned_data.get('idUser'),idGrupoUsuario=pk)
+                        miembro.Rango = form.cleaned_data.get('Rango')
+                        miembro.save()
+                formAdministrarGrupo = AdminGrupoForm()
+                return render(request, 'adminlte/adminGrupo.html', {'formAdministrarGrupo':formAdministrarGrupo, 'grupo': grupo, 'miembros': miembrosGrupos})
 #Api
 from django.http import JsonResponse
 from rest_framework import viewsets

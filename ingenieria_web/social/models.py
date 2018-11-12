@@ -54,6 +54,7 @@ class UserGrupos(models.Model):
     idUser = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     idGrupoUsuario = models.ForeignKey(Grupo, on_delete=models.CASCADE)
     Rango = models.IntegerField(choices=RANK_CHOICES, default=1)
+    
 
 
 

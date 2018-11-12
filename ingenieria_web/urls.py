@@ -54,6 +54,7 @@ urlpatterns = [
     url(r'^publicar/denunciar/$', login_required(social_views.denunciarPublicacion), name="denunciarPublicacion_url"),
     url(r'^publicacion/(?P<pk>\d+)/$', login_required(social_views.publicaciones), name="publicacion_url_with_pk"),
     url(r'^publicacion/(?P<pk>\d+)/destacar$', login_required(social_views.destacarPublicacion), name="destacar_publicacion_pk"),
+    url(r'^publicacion/(?P<pk>\d+)/eliminar$', login_required(social_views.eliminarPublicacion), name="eliminar_publicacion_pk"),
     #Grupos
     url(r'^grupos/$', login_required(social_views.grupos), name="grupos_url"),   
     url(r'^grupos/(?P<pk>\d+)$', login_required(social_views.grupos), name="grupos_url_with_pk"),
@@ -62,6 +63,7 @@ urlpatterns = [
     url(r'^grupos/tema/$', login_required(social_views.grupos_tema), name="grupos_url_tema"),     
     url(r'^grupos/(?P<pk>\d+)/nuevaPublicacion$', login_required(social_views.grupo_publicacion), name="nueva_publicacion_with_pk"),
     url(r'^grupos/agregar_miembro/$', login_required(social_views.agregar_miembro_grupo), name="grupos_agregar_miembro"),
+     url(r'^grupos/(?P<pk>\d+)/admin$', login_required(social_views.administrarGrupo), name="admin_grupo"),
 
 
     #Denuncias
