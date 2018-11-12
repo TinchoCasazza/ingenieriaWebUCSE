@@ -37,7 +37,7 @@
       <div class="box box-success" style="border-radius: 10px">
         <div class="box-body no-padding">
           <div class="mailbox-read-info">
-            <h5><a href="{% url 'perfil_url_pk' pk=comentario.idUserComento %}">{{ comentario.idUserComento }}</a><img src="{{ comentario.idUserComento.avatar }}" size="15" class="img-circle" alt="User Image" width="45px" height="45px">
+            <h5><img src="{{ comentario.idUserComento.avatar }}" size="15" class="img-circle" alt="User Image" width="45px" height="45px"><a href="{% url 'perfil_url_pk' pk=comentario.idUserComento %}">{{   comentario.idUserComento|capfirst }}</a>
             <span class="mailbox-read-time pull-right">{{ comentario.FechaComentario|date:"SHORT_DATE_FORMAT" }}</span></h5>
           </div>
                 
