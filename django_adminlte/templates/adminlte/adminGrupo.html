@@ -1,0 +1,37 @@
+{% extends 'adminlte/base.html' %}
+{% block content_header %}
+    <section class="content-header">
+      <h1>
+        Administrar {{ grupo.NombreGrupo }}
+      </h1>
+    </section>
+    {% block breadcrumbs %}
+    <ol class="breadcrumb" style="background-color:#ecf0f5;" >
+        <li><a href="/inicio"><i class="fa fa fa-home"></i> Inicio</a></li>
+        <li><a href="/grupos/"><i class="fa fa-group "></i> Mis Grupos</a></li>
+        <li><a href="{% url 'grupos_url_with_pk' pk=grupo.idGrupo %}"><i class="fa fa-user "></i>  {{ grupo.NombreGrupo }}</a></li>
+        <li class="active"><a href="{% url 'admin_grupo' pk=grupo.idGrupo %}"><i class="fa fa-cogs "></i> Administrador de {{ grupo.NombreGrupo }}</a></li>
+    </ol>
+      {% endblock %}
+{% endblock %}
+{% block content %}
+    {% csrf_token %}
+    <form method="POST" class="post-form">
+        {% csrf_token %}
+            {{ formAdministrarGrupo.as_p }}
+            <button type="submit">Cambiar Rango</button>
+        </form>
+    
+        <table style="width:100%">
+                <tr>
+                  <th>Usuario</th>
+                  <th>Rango</th> 
+                </tr>
+                {% for miembro in miembros %}
+                    <tr>
+                        <td>{{ miembro.idUser }}</td>
+                        <td>{{ miembro.Rango }}</td> 
+                    </tr>
+                {% endfor %}
+              </table>
+{% endblock %}
