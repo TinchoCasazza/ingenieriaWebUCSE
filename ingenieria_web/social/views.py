@@ -439,6 +439,12 @@ def administrarGrupo(request, pk=None):
                         miembro.save()
                 formAdministrarGrupo = AdminGrupoForm()
                 return render(request, 'adminlte/adminGrupo.html', {'formAdministrarGrupo':formAdministrarGrupo, 'grupo': grupo, 'miembros': miembrosGrupos})
+
+def banearUsuario(resquest, pkGrupo=None, pkUser=None):
+        miembro = UserGrupos.objects.filter(idUser=request.user,idGrupoUsuario=pk)[0]
+        if miembro.Rango == 3:
+                UserGrupos.objects.filter(idUser=pkUser,idGrupoUsuario=pkGrupo).delete()
+        return HttpResponseRedirect("/grupos/"+pkGrupo+"/admin")
 #Api
 from django.http import JsonResponse
 from rest_framework import viewsets
