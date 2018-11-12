@@ -376,16 +376,21 @@ def destacarPublicacion(request, pk=None):
                 User = get_user_model()
                 miembros = User.objects.filter(username__in = miembros_grupos)
                 valido = False
-                if request.user in miembros:
-                        valido = True
+                for miembro in miembros:
+                        if request.user == miembro:
+                                aux = UserGrupos.objects.filter(idUser=miembro,idGrupoUsuario=grupo)[0]
+                                if aux.Rango > 1:
+                                        valido = True
                 if valido == True:
                         if publicacion.Destacar == 2:
                                 publicacion.Destacar = 1
                         else:
                                 publicacion.Destacar = 2
                         publicacion.save()
-                        pk_grupo = str(grupo.idGrupo)
-                        return HttpResponseRedirect('/grupos/'+pk_grupo)
+                pk_grupo = str(grupo.idGrupo)
+                return HttpResponseRedirect('/grupos/'+pk_grupo)
+                
+
                 
 
 #Api
