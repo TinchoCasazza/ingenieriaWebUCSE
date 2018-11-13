@@ -54,6 +54,35 @@
     </div>
     
     <div class="col-md-6">
+        <div class="box box-primary">
+                <div class="box-header with-border">
+                
+                    {% if grupo.NivelAcceso == 2 %}
+                        <h3 class="box-title">Privacidad Actual: Privado</h3>
+                    {% else %}
+                        <h3 class="box-title">Privacidad Actual: Publico</h3>
+                    {% endif %}
+                </div>
+                <!-- /.box-header -->
+            <form method="POST" action="{% url 'cambiar_privacidad' pk=grupo.idGrupo %}" class="form-horizontal">
+                {% csrf_token %}
+                
+                {% load widget_tweaks %}
+                <div class="box-body">
+                    <div class="form-group">
+                        <label for="idUser" class="col-sm-2 control-label">Privacidad</label>
+                        <div class="col-sm-10">
+                            {{ formPrivacidadGrupo.NivelAcceso|add_class:"form-control"}}
+                        </div>
+                    </div>
+                </div>
+                <div class="box-footer">
+                    <button type="submit" class="btn btn-info pull-right">Cambiar Privacidad</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="col-md-6">
         <div class="box box-info">
                 <div class="box-header with-border">
                 <h3 class="box-title">Usuarios</h3>

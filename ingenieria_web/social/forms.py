@@ -37,6 +37,10 @@ class AdminGrupoForm(ModelForm):
         model = UserGrupos
         exclude = ['idGrupoUsuario',]
 
+class PrivacidadGrupoForm(ModelForm):
+    class Meta:
+        model = Grupo
+        fields = ['NivelAcceso']
 
 class ComentarioForm(ModelForm):
     class Meta:
