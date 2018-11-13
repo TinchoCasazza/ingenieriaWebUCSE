@@ -230,7 +230,7 @@ def grupos(request, pk=None):
                         publicaciones = Publicacion.objects.filter(idGrupoPu = pk, Estado = 1).order_by('-Destacar')
                         nuevoEventoForm = EventoForm()
                         eventos = Evento.objects.filter(idGrupoEvento = pk)
-                        miembroGrupo = UserGrupos.objects.filter(idUser = request.user, idGrupoUsuario = pk)[0]
+                        miembroGrupo = UserGrupos.objects.get(idUser = request.user, idGrupoUsuario = pk)
                         return render(request, 'adminlte/grupo_tema.html', {'grupo' : grupo, 'miembros' : miembros, 'publicaciones':publicaciones,'listaSuscripciones': listaSuscripciones, 'formNuevoGrupo': formNuevoGrupo, 'valido':valido, 'nuevoEventoForm':nuevoEventoForm, 'eventos': eventos, 'miembroGrupo':miembroGrupo })
         lista_gruposuser = UserGrupos.objects.all().filter(idUser=request.user)
         lista_Grupos = Grupo.objects.all().order_by('NombreGrupo')
@@ -436,11 +436,12 @@ def eliminarPublicacion(request, pk=None):
                 pk_grupo = str(grupo.idGrupo)
                 return HttpResponseRedirect('/grupos/'+pk_grupo)
 
-from .forms import AdminGrupoForm            
+from .forms import AdminGrupoForm, PrivacidadGrupoForm        
 def administrarGrupo(request, pk=None):
         grupo = Grupo.objects.get(idGrupo = pk)
         miembrosGrupos = UserGrupos.objects.filter(idGrupoUsuario = pk)
         if request.method == "GET":
+                formPrivacidadGrupo = PrivacidadGrupoForm()
                 formAdministrarGrupo = AdminGrupoForm()
                 miembros_grupos = []
                 for miembro_grupo in UserGrupos.objects.filter(idGrupoUsuario = pk):
@@ -448,9 +449,9 @@ def administrarGrupo(request, pk=None):
                 User = get_user_model()
                 miembros = User.objects.filter(username__in = miembros_grupos)
                 formAdministrarGrupo.fields['idUser'].queryset = miembros
-                miembro = UserGrupos.objects.filter(idUser=request.user,idGrupoUsuario=pk)[0]
+                miembro = UserGrupos.objects.get(idUser=request.user,idGrupoUsuario=pk)
                 if miembro.Rango == 3:
-                        return render(request, 'adminlte/adminGrupo.html', {'formAdministrarGrupo':formAdministrarGrupo, 'grupo':grupo, 'miembros':miembrosGrupos})
+                        return render(request, 'adminlte/adminGrupo.html', {'formAdministrarGrupo':formAdministrarGrupo, 'grupo':grupo, 'miembros':miembrosGrupos,'formPrivacidadGrupo':formPrivacidadGrupo})
                 else:
                         return render(request, 'adminlte/errores/errorAdmin.html', { 'GrupoPk': pk})
         if request.method == "POST":
@@ -460,13 +461,25 @@ def administrarGrupo(request, pk=None):
                         miembro.Rango = form.cleaned_data.get('Rango')
                         miembro.save()
                 formAdministrarGrupo = AdminGrupoForm()
-                return render(request, 'adminlte/adminGrupo.html', {'formAdministrarGrupo':formAdministrarGrupo, 'grupo': grupo, 'miembros': miembrosGrupos})
+                formPrivacidadGrupo = PrivacidadGrupoForm()
+                return render(request, 'adminlte/adminGrupo.html', {'formAdministrarGrupo':formAdministrarGrupo, 'grupo': grupo, 'miembros': miembrosGrupos,'formPrivacidadGrupo':formPrivacidadGrupo})
 
-def banearUsuario(resquest, pkGrupo=None, pkUser=None):
+def banearUsuario(request, pkGrupo=None, pkUser=None):
         miembro = UserGrupos.objects.filter(idUser=request.user,idGrupoUsuario=pk)[0]
         if miembro.Rango == 3:
                 UserGrupos.objects.filter(idUser=pkUser,idGrupoUsuario=pkGrupo).delete()
         return HttpResponseRedirect("/grupos/"+pkGrupo+"/admin")
+
+def cambiarPrivacidadGrupo(request, pk=None):
+        if pk:
+                grupo = Grupo.objects.get(idGrupo = pk)
+                form = PrivacidadGrupoForm(request.POST)
+                if form.is_valid():
+                        nivelAcceso = form.cleaned_data['NivelAcceso']
+                        grupo.NivelAcceso = nivelAcceso
+                        grupo.NivelAcceso = nivelAcceso
+                        grupo.save()
+        return HttpResponseRedirect("/grupos/"+pk+"/admin")
 #Api
 from django.http import JsonResponse
 from rest_framework import viewsets

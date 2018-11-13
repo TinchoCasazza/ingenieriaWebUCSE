@@ -29,8 +29,9 @@
               {% if valido  %}
                 <div class="box-tools pull-right">
                   <a type="button" class="btn btn-success pull-right btn-sm" href="{% url 'nueva_publicacion_with_pk' pk=grupo.idGrupo %}"><i class="fa fa-plus"></i> Nuevo</a>
-                  <a type="button" class="btn btn-warning pull-right btn-sm"  style="margin-right: 10px" href="{% url 'admin_grupo' pk=grupo.idGrupo %}"><i class="fa fa-cogs "></i> Administrar</a>
-
+                  {% if miembroGrupo.Rango > 1 %}
+                    <a type="button" class="btn btn-warning pull-right btn-sm"  style="margin-right: 10px" href="{% url 'admin_grupo' pk=grupo.idGrupo %}"><i class="fa fa-cogs "></i> Administrar</a>
+                  {% endif %}
                 </div>
               {% endif %} 
             </div>
