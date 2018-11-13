@@ -32,6 +32,9 @@
                         <h3 class="box-title">{{ grupo.NombreGrupo }}</h3>
                     </a>
                     <div class="box-tools pull-right">
+                        {% if request.user == grupo.Creador %}
+                            <a href="{% url 'borrar_Grupo' pkGrupo=grupo.idGrupo %}"><i class="fa fa-trash-o"></i></a>
+                        {% endif %}
                         <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip">
                                 
                             <i class="fa fa-minus"></i></button>
@@ -70,14 +73,7 @@
                     <div class="mailbox-controls">
                         <!-- Check all button -->
                         <!-- /.btn-group -->
-                        <button type="button" class="btn btn-default btn-sm"><i class="fa fa-refresh"></i></button>
-                        <div class="pull-right">
-                        1-50/200
-                        <div class="btn-group">
-                            <button type="button" class="btn btn-default btn-sm"><i class="fa fa-chevron-left"></i></button>
-                            <button type="button" class="btn btn-default btn-sm"><i class="fa fa-chevron-right"></i></button>
-                        </div>
-                        </div>
+                        <button type="button" class="btn btn-default btn-sm" id="btnDenunciar{{ grupo.idGrupo }}"  onclick="idButtonModal(this)" data-toggle="modal" data-target="#modalDenuncia"  class="link-black text-lg" style="cursor:pointer;"><i class="fa fa-ban"></i></button>
                 </div>
                 <!-- /.box-footer-->
             </div>
@@ -85,4 +81,7 @@
         </div>
     </div>
     <!-- /.box -->
+
+{% include 'adminlte/components/modalDenuncia.html' %}
+
 {% endblock %}

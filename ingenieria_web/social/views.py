@@ -462,6 +462,11 @@ def administrarGrupo(request, pk=None):
                 formAdministrarGrupo = AdminGrupoForm()
                 return render(request, 'adminlte/adminGrupo.html', {'formAdministrarGrupo':formAdministrarGrupo, 'grupo': grupo, 'miembros': miembrosGrupos})
 
+def borrarGrupo(request,pkGrupo=None):
+        if pkGrupo:
+                Grupo.objects.filter(idGrupo=pkGrupo).delete()
+        return render(request, 'adminlte/grupos.html')
+
 def banearUsuario(resquest, pkGrupo=None, pkUser=None):
         miembro = UserGrupos.objects.filter(idUser=request.user,idGrupoUsuario=pk)[0]
         if miembro.Rango == 3:

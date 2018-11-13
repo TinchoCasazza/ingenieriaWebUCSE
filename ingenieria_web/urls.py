@@ -65,7 +65,7 @@ urlpatterns = [
     url(r'^grupos/agregar_miembro/$', login_required(social_views.agregar_miembro_grupo), name="grupos_agregar_miembro"),
     url(r'^grupos/(?P<pk>\d+)/admin$', login_required(social_views.administrarGrupo), name="admin_grupo"),
     url(r'^grupos/(?P<pkGrupo>\d+)/admin/(?P<pkUser>\d+)/$', login_required(social_views.banearUsuario), name="banear_Usuario"),
-
+    url(r'^grupos/(?P<pkGrupo>\d+)/eliminar$', login_required(social_views.borrarGrupo), name="borrar_Grupo"),
 
     #Denuncias
     url(r'^denuncias/$', login_required(social_views.denuncias), name="denuncias_url"),
