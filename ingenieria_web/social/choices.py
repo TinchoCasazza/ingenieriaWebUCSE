@@ -13,3 +13,7 @@ RANK_CHOICES = (
     (2, ("Moderador")),
     (3, ("Administrador")),
 )
+PRIVACITY_CHOICES = (
+    (1, ("Publico")),
+    (2, ("Privado")),
+)

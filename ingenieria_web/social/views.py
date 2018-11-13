@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.contrib import messages
 from django.http import HttpResponseRedirect
 from django.template import context
-from .models import Publicacion, Grupo, Comentario, Skin, PrivacidadGrupo,UserGrupos, Suscripcion, DenunciaUsuarios
+from .models import Publicacion, Grupo, Comentario, Skin, UserGrupos, Suscripcion, DenunciaUsuarios
 from rest_framework.authtoken.models import Token
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
@@ -171,7 +171,7 @@ def denunciarPublicacion(request):
                 contenido = request.POST.get('contenido')
                 denunciaUsuario = DenunciaUsuarios()
                 cantidad = DenunciaUsuarios.objects.filter(idUsuario = request.user, idPublicacion = pkPublicacion).count()
-                
+                PrivacidadGrupo, 
                 if cantidad < 1:
                         publicacion = Publicacion()
                         publicacion = Publicacion.objects.get(idPublicacion = pkPublicacion)
@@ -206,27 +206,32 @@ def moderarDenuncia(request, pk=None):
 
 from .forms import EventoForm
 from .models import Evento
+def ValidarAcceso(request, pkGrupo):
+        if UserGrupos.objects.filter(idUser = request.user, idGrupoUsuario = pkGrupo).exists():
+                return True
+        else:
+                return False        
+
 def grupos(request, pk=None):
         listaSuscripciones = Suscripcion.objects.filter(Estado = 1).order_by('-fecha_peticion')
         formNuevoGrupo = NuevoGrupo()
-        
         if pk:
-                
-                miembros_grupos = []
-                grupo = Grupo.objects.filter(idGrupo=pk)[0]
-                for miembro_grupo in UserGrupos.objects.filter(idGrupoUsuario = grupo):
-                   miembros_grupos.append(miembro_grupo.idUser)
-                User = get_user_model()
-                miembros = User.objects.filter(username__in = miembros_grupos)
-                valido = False
-                if request.user in miembros:
-                        valido = True
-                        
-                publicaciones = Publicacion.objects.filter(idGrupoPu = pk, Estado = 1).order_by('-Destacar')
-                nuevoEventoForm = EventoForm()
-                eventos = Evento.objects.filter(idGrupoEvento = pk)
-                miembroGrupo = UserGrupos.objects.filter(idUser = request.user, idGrupoUsuario = pk)[0]
-                return render(request, 'adminlte/grupo_tema.html', {'grupo' : grupo, 'miembros' : miembros, 'publicaciones':publicaciones,'listaSuscripciones': listaSuscripciones, 'formNuevoGrupo': formNuevoGrupo, 'valido':valido, 'nuevoEventoForm':nuevoEventoForm, 'eventos': eventos, 'miembroGrupo':miembroGrupo })
+                grupo = Grupo.objects.get(idGrupo=pk)
+                if (grupo.NivelAcceso == 2 and ValidarAcceso(request, grupo.idGrupo) == True) or grupo.NivelAcceso == 1:
+                        miembros_grupos = []
+                        for miembro_grupo in UserGrupos.objects.filter(idGrupoUsuario = grupo):
+                                miembros_grupos.append(miembro_grupo.idUser)
+                        User = get_user_model()
+                        miembros = User.objects.filter(username__in = miembros_grupos)
+                        valido = False
+                        if request.user in miembros:
+                                valido = True
+                                
+                        publicaciones = Publicacion.objects.filter(idGrupoPu = pk, Estado = 1).order_by('-Destacar')
+                        nuevoEventoForm = EventoForm()
+                        eventos = Evento.objects.filter(idGrupoEvento = pk)
+                        miembroGrupo = UserGrupos.objects.filter(idUser = request.user, idGrupoUsuario = pk)[0]
+                        return render(request, 'adminlte/grupo_tema.html', {'grupo' : grupo, 'miembros' : miembros, 'publicaciones':publicaciones,'listaSuscripciones': listaSuscripciones, 'formNuevoGrupo': formNuevoGrupo, 'valido':valido, 'nuevoEventoForm':nuevoEventoForm, 'eventos': eventos, 'miembroGrupo':miembroGrupo })
         lista_gruposuser = UserGrupos.objects.all().filter(idUser=request.user)
         lista_Grupos = Grupo.objects.all().order_by('NombreGrupo')
         lista_grupos = []
@@ -240,17 +245,21 @@ from .forms import ComentarioForm
 def publicaciones(request, pk=None):
         publicacion = Publicacion.objects.get(idPublicacion = pk)
         comentarios = Comentario.objects.filter(idPublicacionC = publicacion.idPublicacion)
-        if request.method == 'POST':
-                form = ComentarioForm(request.POST)
-                if form.is_valid():
-                        comentario = form.save(commit=False)
-                        comentario.idUserComento = request.user
-                        comentario.idPublicacionC = publicacion
-                        comentario.save()
-        FormComentario = ComentarioForm()
-        listaSuscripciones = Suscripcion.objects.filter(Estado = 1).order_by('-fecha_peticion')
-        formNuevoGrupo = NuevoGrupo()        
-        return render(request, 'adminlte/publicacion.html', {'listaSuscripciones':listaSuscripciones,'formNuevoGrupo':formNuevoGrupo,'publicacion': publicacion, 'comentarios':comentarios, 'FormComentario': FormComentario} )
+        grupo = Grupo.objects.get(idGrupo = publicacion.idGrupoPu.idGrupo)
+        if (grupo.NivelAcceso == 2 and ValidarAcceso(request, grupo.idGrupo) == True) or grupo.NivelAcceso == 1:
+                if request.method == 'POST':
+                        form = ComentarioForm(request.POST)
+                        if form.is_valid():
+                                comentario = form.save(commit=False)
+                                comentario.idUserComento = request.user
+                                comentario.idPublicacionC = publicacion
+                                comentario.save()
+                FormComentario = ComentarioForm()
+                listaSuscripciones = Suscripcion.objects.filter(Estado = 1).order_by('-fecha_peticion')
+                formNuevoGrupo = NuevoGrupo()        
+                return render(request, 'adminlte/publicacion.html', {'listaSuscripciones':listaSuscripciones,'formNuevoGrupo':formNuevoGrupo,'publicacion': publicacion, 'comentarios':comentarios, 'FormComentario': FormComentario} )
+        else:
+                return render(request, 'adminlte/errores/errorPrivado.html')
 from django.urls import reverse
 def grupo_publicacion(request, pk=None):
         grupo = Grupo.objects.filter(idGrupo = pk)[0]
@@ -275,12 +284,15 @@ def crear_grupo(request):
         if request.method == 'POST':
                 nombreGrupo = request.POST.get('nombreGrupo')
                 nivelAcceso = request.POST.get('nivelAcceso')
+                if nivelAcceso == 'Privado':
+                        nivelAcceso = 2
+                else:
+                        nivelAcceso = 1
                 grupo = Grupo()
                 usergrupo = UserGrupos()
-                privacidad = PrivacidadGrupo()
-                privacidad = PrivacidadGrupo.objects.get(Privacidad = nivelAcceso)
                 grupo.NombreGrupo = nombreGrupo
-                grupo.NivelAcceso = privacidad
+
+                grupo.NivelAcceso = nivelAcceso
                 grupo.Creador = request.user
                 grupo.save()
                
