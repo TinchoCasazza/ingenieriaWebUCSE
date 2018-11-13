@@ -32,18 +32,11 @@ class UserManager(AbstractUser):
     avatar = models.CharField(blank = True, null=True, max_length=40)
 
 
-class PrivacidadGrupo(models.Model):
-    idPrivacidadG = models.AutoField(primary_key=True)
-    Privacidad = models.CharField(blank=False, max_length=50)
-
-    def __str__(self):
-        return (self.Privacidad)
-
 class Grupo(models.Model):
     idGrupo = models.AutoField(primary_key=True)
     NombreGrupo = models.CharField(blank= False, max_length=50)
     Creador = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    NivelAcceso = models.ForeignKey(PrivacidadGrupo, on_delete=models.CASCADE)
+    NivelAcceso = models.IntegerField(choices=PRIVACITY_CHOICES, default=1)
     FechaCreacionG = models.DateField(("Fecha Creacion"), default = datetime.date.today, editable = False)
     FechaBajaG = models.DateField(default= None, null = True, editable = False)
     FechaModiG = models.DateField(default = None, null = True, editable = False)
