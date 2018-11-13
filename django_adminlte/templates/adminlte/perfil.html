@@ -17,12 +17,14 @@
 
               <h3 class="profile-username text-center"> {{ publicacion.idUserPublico|capfirst }} </h3>
 
-              <p class="text-muted text-center">Software Engineer 
+              <p class="text-muted text-center">{{ perfil.carrera }}
                 <button type="button" id="btnModificar23" class="btn btn-box-tool" data-widget="edit"><i class="fa fa-pencil"></i></button></p>
 
               <ul class="list-group list-group-unbordered">
                 <li class="list-group-item">
-                  <b>Nombre</b> <a class="pull-center"> {{ user.username|capfirst }}</a>
+                  <b>Nombre</b> <a class="pull-right"> {{ perfil.nombreCompleto|capfirst }}
+                      <button type="button" id="btnModificar23" class="btn btn-box-tool" data-widget="edit"><i class="fa fa-pencil"></i></button>
+                  </a>
                 </li>
                 <li class="list-group-item">
                   <b>Email</b> <a class="pull-right"> {{ user.email }} 
@@ -47,7 +49,7 @@
               <strong><i class="fa fa-book margin-r-5"></i> Educacion</strong>
 
               <p class="text-muted">
-                  Universidad Católica de Santiago del Estero (UCSE)
+                  {{ perfil.universidad }}
                   <button type="button" id="btnModificar23" class="btn btn-box-tool" data-widget="edit"><i class="fa fa-pencil"></i></button>
               </p>
 
@@ -55,7 +57,7 @@
 
               <strong><i class="fa fa-map-marker margin-r-5"></i> Ubicacion</strong>
 
-              <p class="text-muted">Argentina, Santa Fe
+              <p class="text-muted">{{ perfil.localizacion }}
                   <button type="button" id="btnModificar23" class="btn btn-box-tool" data-widget="edit"><i class="fa fa-pencil"></i></button>
                </p>
 
@@ -102,7 +104,7 @@
                     </div>
                     <!-- /.user-block -->
                     <p>
-                      No tiene actividad reciente 
+                      No tiene actividad reciente en el Muro
                     </p>
                     <ul class="list-inline">
                     </ul>

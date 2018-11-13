@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.contrib import messages
 from django.http import HttpResponseRedirect
 from django.template import context
-from .models import Publicacion, Grupo, Comentario, Skin, UserGrupos, Suscripcion, DenunciaUsuarios, DenunciaGrupos
+from .models import Publicacion, Grupo, Comentario, Skin, Perfil, UserGrupos, Suscripcion, DenunciaUsuarios, DenunciaGrupos
 from rest_framework.authtoken.models import Token
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
@@ -368,8 +368,9 @@ def perfil(request, pk=None):
         if pk:
                 print(pk)
                 user = User.objects.get(username =pk)
+                perfil = Perfil.objects.get(user = user)
                 listaPublicaciones = Publicacion.objects.filter( idUserPublico = user, Estado=4).order_by('-FechaPublicacion')[:5]
-        return render(request, 'adminlte/perfil.html',{'listaPublicaciones' : listaPublicaciones, 'user': user})
+        return render(request, 'adminlte/perfil.html',{'listaPublicaciones' : listaPublicaciones, 'user': user, 'perfil':perfil})
 
 
 def cambiarSkin(request):
@@ -602,5 +603,16 @@ def create_auth_token(sender, instance=None, created=False, **kwargs):
 
 
 User = get_user_model()
+
+
 for user in User.objects.all():
     Token.objects.get_or_create(user=user)
+
+for user in User.objects.all():
+    Perfil.objects.get_or_create(user=user)
+
+@receiver(post_save, sender=get_user_model())
+
+def create_perfil(sender, instance=None, created=False, **kwargs):
+    if created:
+        Perfil.objects.create(user=instance)

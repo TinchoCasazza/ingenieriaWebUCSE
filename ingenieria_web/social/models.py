@@ -29,9 +29,15 @@ class UserManager(AbstractUser):
     carrera = models.ForeignKey(Carrera, on_delete=models.CASCADE, null=True)
     skinUser = models.ForeignKey(Skin, on_delete=models.CASCADE, null=True)
     avatar = models.CharField(blank = True, null=True, max_length=40)
-    NombreCompleto = models.CharField(blank = True, null=True, max_length=50)
-    Localizacion = models.CharField(blank = True, null=True, max_length=50)
 
+
+class Perfil(models.Model):
+    idPerfil = models.AutoField(primary_key=True)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    nombreCompleto = models.CharField(blank = True, null=True, max_length=50, default="Agregar Nombre")
+    localizacion = models.CharField(blank = True, null=True, max_length=50, default="Agregar Ubicacion")
+    carrera = models.CharField(blank = True, null=True, max_length=40, default="Agregar Carrera")
+    universidad = models.CharField(blank = True, null=True, max_length=100, default="Agregar Universidad")
 
 class Grupo(models.Model):
     idGrupo = models.AutoField(primary_key=True)
