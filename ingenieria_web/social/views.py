@@ -483,7 +483,7 @@ def administrarGrupo(request, pk=None):
 def borrarGrupo(request,pkGrupo=None):
         if pkGrupo:
                 Grupo.objects.filter(idGrupo=pkGrupo).delete()
-        return render(request, 'adminlte/grupos.html')
+        return HttpResponseRedirect("/grupos/")
 
 def denunciarGrupos(request):
         if request.method == 'POST':
@@ -507,7 +507,7 @@ def denunciarGrupos(request):
         return JsonResponse(data)
 
 def banearUsuario(request, pkGrupo=None, pkUser=None):
-        miembro = UserGrupos.objects.filter(idUser=request.user,idGrupoUsuario=pk)[0]
+        miembro = UserGrupos.objects.filter(idUser=request.user,idGrupoUsuario=pkGrupo)[0]
         if miembro.Rango == 3:
                 UserGrupos.objects.filter(idUser=pkUser,idGrupoUsuario=pkGrupo).delete()
         return HttpResponseRedirect("/grupos/"+pkGrupo+"/admin")
