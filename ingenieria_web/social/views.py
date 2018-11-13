@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.contrib import messages
 from django.http import HttpResponseRedirect
 from django.template import context
-from .models import Publicacion, Grupo, Comentario, Skin, UserGrupos, Suscripcion, DenunciaUsuarios
+from .models import Publicacion, Grupo, Comentario, Skin, UserGrupos, Suscripcion, DenunciaUsuarios, DenunciaGrupos
 from rest_framework.authtoken.models import Token
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
@@ -171,7 +171,6 @@ def denunciarPublicacion(request):
                 contenido = request.POST.get('contenido')
                 denunciaUsuario = DenunciaUsuarios()
                 cantidad = DenunciaUsuarios.objects.filter(idUsuario = request.user, idPublicacion = pkPublicacion).count()
-                PrivacidadGrupo, 
                 if cantidad < 1:
                         publicacion = Publicacion()
                         publicacion = Publicacion.objects.get(idPublicacion = pkPublicacion)
@@ -188,8 +187,10 @@ def denunciarPublicacion(request):
         return JsonResponse(data)
                 
 def denuncias(request):
-        listaDenuncias = DenunciaUsuarios.objects.all()
-        return render(request, 'adminlte/denuncias.html', {'listaDenuncias' : listaDenuncias})
+        DenunciasPublicaciones = DenunciaUsuarios.objects.all()
+        DenunciasGrupos = DenunciaGrupos.objects.all()
+
+        return render(request, 'adminlte/denuncias.html', {'DenunciasPublicaciones' : DenunciasPublicaciones, 'DenunciasGrupos': DenunciasGrupos})
 
 def moderarDenuncia(request, pk=None):
         if pk:
@@ -201,8 +202,23 @@ def moderarDenuncia(request, pk=None):
                 DenunciaUsuarios.objects.filter(idPublicacion = pk).delete()
                 
         
-        listaDenuncias = DenunciaUsuarios.objects.all()
-        return render(request, 'adminlte/denuncias.html', {'listaDenuncias' : listaDenuncias})  
+        DenunciasPublicaciones = DenunciaUsuarios.objects.all()
+        DenunciasGrupos = DenunciaGrupos.objects.all()
+        return render(request, 'adminlte/denuncias.html', {'DenunciasPublicaciones' : DenunciasPublicaciones, 'DenunciasGrupos': DenunciasGrupos})
+
+def moderarDenunciaGrupo(request, pk=None):
+        if pk:
+                grupo = Grupo()
+                grupo = Grupo.objects.get(idGrupo= pk)
+                grupo.Estado = 2 
+                grupo.save()
+
+                DenunciaGrupos.objects.filter(idGrupo = pk).delete()
+                
+        
+        DenunciasPublicaciones = DenunciaUsuarios.objects.all()
+        DenunciasGrupos = DenunciaGrupos.objects.all()
+        return render(request, 'adminlte/denuncias.html', {'DenunciasPublicaciones' : DenunciasPublicaciones, 'DenunciasGrupos': DenunciasGrupos})
 
 from .forms import EventoForm
 from .models import Evento
@@ -464,16 +480,33 @@ def administrarGrupo(request, pk=None):
                 formPrivacidadGrupo = PrivacidadGrupoForm()
                 return render(request, 'adminlte/adminGrupo.html', {'formAdministrarGrupo':formAdministrarGrupo, 'grupo': grupo, 'miembros': miembrosGrupos,'formPrivacidadGrupo':formPrivacidadGrupo})
 
-<<<<<<< HEAD
 def borrarGrupo(request,pkGrupo=None):
         if pkGrupo:
                 Grupo.objects.filter(idGrupo=pkGrupo).delete()
         return render(request, 'adminlte/grupos.html')
 
-def banearUsuario(resquest, pkGrupo=None, pkUser=None):
-=======
+def denunciarGrupos(request):
+        if request.method == 'POST':
+                pkGrupo = request.POST.get('id')
+                contenido = request.POST.get('contenido')
+                denunciaGrupo = DenunciaGrupos()
+                cantidad = DenunciaGrupos.objects.filter(idUsuario = request.user, idGrupo = pkGrupo).count()
+                if cantidad < 1:
+                        grupo = Grupo()
+                        grupo = Grupo.objects.get(idGrupo = pkGrupo)
+                
+                        denunciaGrupo = DenunciaGrupos()
+                        denunciaGrupo.idUsuario = request.user
+                        denunciaGrupo.idGrupo = grupo
+                        denunciaGrupo.Contenido = contenido
+                        denunciaGrupo.save()
+
+                data = {
+                   'mensaje' : "Denuncia Exitosa"
+                } 
+        return JsonResponse(data)
+
 def banearUsuario(request, pkGrupo=None, pkUser=None):
->>>>>>> 788c17f78b61061cb57e503e8adfcbb93a01b281
         miembro = UserGrupos.objects.filter(idUser=request.user,idGrupoUsuario=pk)[0]
         if miembro.Rango == 3:
                 UserGrupos.objects.filter(idUser=pkUser,idGrupoUsuario=pkGrupo).delete()

@@ -73,7 +73,7 @@
                     <div class="mailbox-controls">
                         <!-- Check all button -->
                         <!-- /.btn-group -->
-                        <button type="button" class="btn btn-default btn-sm" id="btnDenunciar{{ grupo.idGrupo }}"  onclick="idButtonModal(this)" data-toggle="modal" data-target="#modalDenuncia"  class="link-black text-lg" style="cursor:pointer;"><i class="fa fa-ban"></i></button>
+                        <button type="button" class="btn btn-default btn-sm" id="btnDenunciar{{ grupo.idGrupo }}"  onclick="idButtonModalDenunciaGrupo(this)" data-toggle="modal" data-target="#modalDenuncia"  class="link-black text-lg" style="cursor:pointer;"><i class="fa fa-ban"></i></button>
                 </div>
                 <!-- /.box-footer-->
             </div>
@@ -82,6 +82,6 @@
     </div>
     <!-- /.box -->
 
-{% include 'adminlte/components/modalDenuncia.html' %}
+{% include 'adminlte/components/modalDenunciaGrupo.html' %}
 
 {% endblock %}
