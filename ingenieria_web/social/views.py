@@ -368,8 +368,8 @@ def perfil(request, pk=None):
         if pk:
                 print(pk)
                 user = User.objects.get(username =pk)
-                listaPublicaciones = Publicacion.objects.filter( idUserPublico = user)
-        return render(request, 'adminlte/perfil.html',{'listaPublicaciones' : listaPublicaciones})
+                listaPublicaciones = Publicacion.objects.filter( idUserPublico = user, Estado=4).order_by('-FechaPublicacion')[:5]
+        return render(request, 'adminlte/perfil.html',{'listaPublicaciones' : listaPublicaciones, 'user': user})
 
 
 def cambiarSkin(request):

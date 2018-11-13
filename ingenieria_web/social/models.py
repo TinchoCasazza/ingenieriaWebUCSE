@@ -26,10 +26,11 @@ class Skin(models.Model):
     
 
 class UserManager(AbstractUser):
-    
     carrera = models.ForeignKey(Carrera, on_delete=models.CASCADE, null=True)
     skinUser = models.ForeignKey(Skin, on_delete=models.CASCADE, null=True)
     avatar = models.CharField(blank = True, null=True, max_length=40)
+    NombreCompleto = models.CharField(blank = True, null=True, max_length=50)
+    Localizacion = models.CharField(blank = True, null=True, max_length=50)
 
 
 class Grupo(models.Model):
