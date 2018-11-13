@@ -1,4 +1,9 @@
 {% extends 'adminlte/base.html' %}
+
+{% block title_outer %}
+        <title>{% block title %} Sarasa | Administracion Grupos {% endblock %}</title>
+{% endblock %}
+
 {% block content_header %}
     <section class="content-header">
       <h1>
@@ -6,35 +11,98 @@
       </h1>
     </section>
     {% block breadcrumbs %}
-    <ol class="breadcrumb" style="background-color:#ecf0f5;" >
-        <li><a href="/inicio"><i class="fa fa fa-home"></i> Inicio</a></li>
-        <li><a href="/grupos/"><i class="fa fa-group "></i> Mis Grupos</a></li>
-        <li><a href="{% url 'grupos_url_with_pk' pk=grupo.idGrupo %}"><i class="fa fa-user "></i>  {{ grupo.NombreGrupo }}</a></li>
-        <li class="active"><a href="{% url 'admin_grupo' pk=grupo.idGrupo %}"><i class="fa fa-cogs "></i> Administrador de {{ grupo.NombreGrupo }}</a></li>
-    </ol>
-      {% endblock %}
+        <ol class="breadcrumb" style="background-color:#ecf0f5;" >
+            <li><a href="/inicio"><i class="fa fa fa-home"></i> Inicio</a></li>
+            <li><a href="/grupos/"><i class="fa fa-group "></i> Mis Grupos</a></li>
+            <li><a href="{% url 'grupos_url_with_pk' pk=grupo.idGrupo %}"><i class="fa fa-user "></i>  {{ grupo.NombreGrupo }}</a></li>
+            <li class="active"><a href="{% url 'admin_grupo' pk=grupo.idGrupo %}"><i class="fa fa-cogs "></i> Administrador de {{ grupo.NombreGrupo }}</a></li>
+        </ol>
+    {% endblock %}
 {% endblock %}
 {% block content %}
-    {% csrf_token %}
-    <form method="POST" class="post-form">
-        {% csrf_token %}
-            {{ formAdministrarGrupo.as_p }}
-            <button type="submit">Cambiar Rango</button>
-        </form>
     
-        <table style="width:100%">
-                <tr>
-                  <th>Usuario</th>
-                  <th>Rango</th> 
-                </tr>
-                {% for miembro in miembros %}
+
+    <div class="col-md-6">
+        <div class="box box-primary">
+                <div class="box-header with-border">
+                <h3 class="box-title">Rangos</h3>
+                </div>
+                <!-- /.box-header -->
+            <form method="POST" class="form-horizontal">
+                {% csrf_token %}
+                
+                {% load widget_tweaks %}
+                <div class="box-body">
+                    <div class="form-group">
+                        <label for="idUser" class="col-sm-2 control-label">Usuario</label>
+                        <div class="col-sm-10">
+                            {{ formAdministrarGrupo.idUser|add_class:"form-control"}}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="idUser" class="col-sm-2 control-label">Rango</label>
+                        <div class="col-sm-10">
+                            {{ formAdministrarGrupo.Rango|add_class:"form-control"}}
+                        </div>
+                    </div>
+                </div>
+                <div class="box-footer">
+                    <button type="submit" class="btn btn-info pull-right">Cambiar Rango</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <div class="col-md-6">
+        <div class="box box-info">
+                <div class="box-header with-border">
+                <h3 class="box-title">Usuarios</h3>
+
+                <div class="box-tools pull-right">
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                    </button>
+                    <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                </div>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                <div class="table-responsive">
+                    <table class="table no-margin">
+                    <thead>
                     <tr>
-                        <td>{{ miembro.idUser }}</td>
-                        <td>{{ miembro.Rango }}</td> 
-                        <td> 
-                            <a href="{% url 'banear_Usuario' pkGrupo=miembro.idGrupoUsuario.idGrupo pkUser=miembro.idUser.id %}"><i class="fa fa-remove"></i></a>
-                        </td>
+                        <th>Usuario</th>
+                        <th>Rango</th>
+                        <th class="pull-right">Eliminar</th>
                     </tr>
-                {% endfor %}
-              </table>
+                    </thead>
+                    <tbody>
+                    
+                        {% for miembro in miembros %}
+                        <tr>
+                            <td>{{ miembro.idUser }}</td>
+                            {% if miembro.Rango == 1 %}
+                                <td><span class="label label-success">Normal</span></td>
+                            {% endif %}
+                            {% if miembro.Rango == 2 %}
+                                <td><span class="label label-warning"> Moderador </span></td>
+                            {% endif %}
+                            {% if miembro.Rango == 3 %}
+                                <td><span class="label label-danger">Administrador</span></td>
+                            {% endif %}
+                            <td> 
+                                <a class="pull-right" href="{% url 'banear_Usuario' pkGrupo=miembro.idGrupoUsuario.idGrupo pkUser=miembro.idUser.id %}"><i class="fa fa-remove"></i></a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    <tr>
+                        
+                    </tr>
+                    </tbody>
+                    </table>
+                </div>
+                <!-- /.table-responsive -->
+                </div>
+                <!-- /.box-body -->
+        </div>
+    </div>    
 {% endblock %}
