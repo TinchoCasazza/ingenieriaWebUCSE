@@ -523,6 +523,18 @@ def cambiarPrivacidadGrupo(request, pk=None):
                         grupo.NivelAcceso = nivelAcceso
                         grupo.save()
         return HttpResponseRedirect("/grupos/"+pk+"/admin")
+
+def salirGrupo(request, pk=None):
+        if pk:
+            miembro = UserGrupos.objects.get(idUser=request.user,idGrupoUsuario=pk)    
+            grupo = Grupo.objects.get(idGrupo=pk)
+            if grupo.Creador != request.user:
+                    UserGrupos.objects.get(idUser=request.user,idGrupoUsuario=pk).delete()
+                    Suscripcion.objects.get(emisor=request.user, idGrupoSuscribio = pk).delete()
+                    return HttpResponseRedirect("/grupos/")
+            else:
+                    return HttpResponseRedirect("/grupos/"+pk)
+
 #Api
 from django.http import JsonResponse
 from rest_framework import viewsets
