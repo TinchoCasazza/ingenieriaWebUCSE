@@ -653,11 +653,3 @@ User = get_user_model()
 for user in User.objects.all():
     Token.objects.get_or_create(user=user)
 
-for user in User.objects.all():
-    Perfil.objects.get_or_create(user=user)
-
-@receiver(post_save, sender=get_user_model())
-
-def create_perfil(sender, instance=None, created=False, **kwargs):
-    if created:
-        Perfil.objects.create(user=instance)
