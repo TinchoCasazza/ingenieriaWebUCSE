@@ -2,11 +2,7 @@ from django.shortcuts import render
 from django.contrib import messages
 from django.http import HttpResponseRedirect
 from django.template import context
-<<<<<<< HEAD
-from .models import Publicacion, Grupo, Comentario, Skin, Perfil, UserGrupos, Suscripcion, DenunciaUsuarios, DenunciaGrupos, DenunciaUser
-=======
-from .models import Publicacion, Grupo, Comentario,SuspensionUsuario, Skin, Perfil, UserGrupos, Suscripcion, DenunciaUsuarios, DenunciaGrupos
->>>>>>> 7c92da6fa85d09dd1f1336e6321924795c4878c6
+from .models import Publicacion, Grupo, Comentario, Skin, Perfil, UserGrupos, Suscripcion, DenunciaUsuarios, DenunciaGrupos, DenunciaUser, SuspensionUsuario
 from rest_framework.authtoken.models import Token
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
@@ -201,8 +197,9 @@ def denunciarPublicacion(request):
 def denuncias(request):
         DenunciasPublicaciones = DenunciaUsuarios.objects.all()
         DenunciasGrupos = DenunciaGrupos.objects.all()
+        DenunciasUsuarios = DenunciaUser.objects.all()
 
-        return render(request, 'adminlte/denuncias.html', {'DenunciasPublicaciones' : DenunciasPublicaciones, 'DenunciasGrupos': DenunciasGrupos})
+        return render(request, 'adminlte/denuncias.html', {'DenunciasPublicaciones' : DenunciasPublicaciones, 'DenunciasGrupos': DenunciasGrupos, 'DenunciasUsuarios': DenunciasUsuarios})
 
 def moderarDenuncia(request, pk=None):
         if pk:
@@ -212,25 +209,29 @@ def moderarDenuncia(request, pk=None):
                 publicacion.save()
 
                 DenunciaUsuarios.objects.filter(idPublicacion = pk).delete()
-                
         
-        DenunciasPublicaciones = DenunciaUsuarios.objects.all()
-        DenunciasGrupos = DenunciaGrupos.objects.all()
-        return render(request, 'adminlte/denuncias.html', {'DenunciasPublicaciones' : DenunciasPublicaciones, 'DenunciasGrupos': DenunciasGrupos})
+        return HttpResponseRedirect('/denuncias/')
+
 
 def moderarDenunciaGrupo(request, pk=None):
         if pk:
-                grupo = Grupo()
-                grupo = Grupo.objects.get(idGrupo= pk)
-                grupo.Estado = 2 
-                grupo.save()
-
+                Grupo.objects.filter(idGrupo = pk).delete()
                 DenunciaGrupos.objects.filter(idGrupo = pk).delete()
                 
-        
-        DenunciasPublicaciones = DenunciaUsuarios.objects.all()
-        DenunciasGrupos = DenunciaGrupos.objects.all()
-        return render(request, 'adminlte/denuncias.html', {'DenunciasPublicaciones' : DenunciasPublicaciones, 'DenunciasGrupos': DenunciasGrupos})
+        return HttpResponseRedirect('/denuncias/')
+
+
+def moderarDenunciaUser(request, pk=None):
+        if pk:
+                user = User.objects.get(id =pk)
+                userSuspendido = SuspensionUsuario()
+                userSuspendido.user = user
+                userSuspendido.save()
+
+                DenunciaUser.objects.filter(idUsuarioDenunciado = pk).delete()
+                
+        return HttpResponseRedirect('/denuncias/')
+
 
 from .forms import EventoForm
 from .models import Evento
