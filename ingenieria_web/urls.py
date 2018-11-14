@@ -68,12 +68,13 @@ urlpatterns = [
     url(r'^grupos/(?P<pkGrupo>\d+)/admin/(?P<pkUser>\d+)/$', login_required(social_views.banearUsuario), name="banear_Usuario"),
     url(r'^grupos/(?P<pkGrupo>\d+)/eliminar$', login_required(social_views.borrarGrupo), name="borrar_Grupo"),
     url(r'^grupos/denunciar/$', login_required(social_views.denunciarGrupos), name="denunciar_grupo_url"),
-    url(r'^grupos/denunciar/$', login_required(social_views.denunciarGrupos), name="denunciar_grupo_url"),
     url(r'^grupos/(?P<pk>\d+)/salirgrupo$', login_required(social_views.salirGrupo), name="salir_grupo"),   
 
     #Denuncias
     url(r'^denuncias/$', login_required(social_views.denuncias), name="denuncias_url"),
     url(r'^denuncias/(?P<pk>\d+)/eliminar$', login_required(social_views.moderarDenuncia), name="moderar_denuncia_pk"),
+    url(r'^denuncias/(?P<pk>\d+)/usuario/eliminar$', login_required(social_views.moderarDenunciaUser), name="moderar_denuncia_user_pk"),
+    url(r'^denuncias/(?P<pk>\d+)/grupo/eliminar$', login_required(social_views.moderarDenunciaGrupo), name="moderar_denuncia_grupo_pk"),
 
     #Eventos
     url(r'^grupos/(?P<pk>\d+)/nuevoEvento$', login_required(social_views.CrearEvento), name="nuevo_evento_with_pk"),
@@ -84,8 +85,8 @@ urlpatterns = [
     url(r'^busqueda/$', search_views.search, name="search_url"),  
 
     #Perfil
+    url(r'^perfil/denunciar/$', login_required(social_views.denunciarUser), name="denunciar_user_url"),
     url(r'^perfil/(?P<pk>[\w\-]+)/$', social_views.perfil, name="perfil_url_pk"),  
-
     #Skin
     url(r'^cambiarSkin/$', social_views.cambiarSkin, name="cambiarSkin_url"),  
 

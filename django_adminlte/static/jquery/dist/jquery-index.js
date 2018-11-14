@@ -316,8 +316,11 @@ function idButtonModal(comp){
 
 function idButtonModalDenunciaGrupo(comp){
     $("#btnConfirmarDenuncia").attr('name',comp.id);
- }
+}
 
+function idButtonModalDenunciaUser(comp){
+    $("#btnConfirmarDenuncia").attr('name',comp.id);
+}
 
 
 function denunciarPublicacion(comp){
@@ -354,6 +357,29 @@ function denunciarGrupo(comp){
     $.ajax({
         type: 'POST',
         url: '/grupos/denunciar/', //direccion a donde hace las requets
+        data: { id: id, contenido: contenido },
+        success: function (data) {
+              console.log(data);
+              $("#contenidoDenuncia").val('');
+        },
+        error: function(data) {
+        }
+      });
+
+}
+
+
+function denunciarUser(comp){
+
+    var userId = comp.name;
+    var id = userId.substr(12);
+    console.log(id);
+    var contenido = $("#contenidoDenuncia").val();
+    console.log(contenido);
+
+    $.ajax({
+        type: 'POST',
+        url: '/perfil/denunciar/', //direccion a donde hace las requets
         data: { id: id, contenido: contenido },
         success: function (data) {
               console.log(data);

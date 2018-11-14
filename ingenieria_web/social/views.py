@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.contrib import messages
 from django.http import HttpResponseRedirect
 from django.template import context
-from .models import Publicacion, Grupo, Comentario,SuspensionUsuario, Skin, Perfil, UserGrupos, Suscripcion, DenunciaUsuarios, DenunciaGrupos
+from .models import Publicacion, Grupo, Comentario, Skin, Perfil, UserGrupos, Suscripcion, DenunciaUsuarios, DenunciaGrupos, DenunciaUser, SuspensionUsuario
 from rest_framework.authtoken.models import Token
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
@@ -197,8 +197,9 @@ def denunciarPublicacion(request):
 def denuncias(request):
         DenunciasPublicaciones = DenunciaUsuarios.objects.all()
         DenunciasGrupos = DenunciaGrupos.objects.all()
+        DenunciasUsuarios = DenunciaUser.objects.all()
 
-        return render(request, 'adminlte/denuncias.html', {'DenunciasPublicaciones' : DenunciasPublicaciones, 'DenunciasGrupos': DenunciasGrupos})
+        return render(request, 'adminlte/denuncias.html', {'DenunciasPublicaciones' : DenunciasPublicaciones, 'DenunciasGrupos': DenunciasGrupos, 'DenunciasUsuarios': DenunciasUsuarios})
 
 def moderarDenuncia(request, pk=None):
         if pk:
@@ -208,25 +209,29 @@ def moderarDenuncia(request, pk=None):
                 publicacion.save()
 
                 DenunciaUsuarios.objects.filter(idPublicacion = pk).delete()
-                
         
-        DenunciasPublicaciones = DenunciaUsuarios.objects.all()
-        DenunciasGrupos = DenunciaGrupos.objects.all()
-        return render(request, 'adminlte/denuncias.html', {'DenunciasPublicaciones' : DenunciasPublicaciones, 'DenunciasGrupos': DenunciasGrupos})
+        return HttpResponseRedirect('/denuncias/')
+
 
 def moderarDenunciaGrupo(request, pk=None):
         if pk:
-                grupo = Grupo()
-                grupo = Grupo.objects.get(idGrupo= pk)
-                grupo.Estado = 2 
-                grupo.save()
-
+                Grupo.objects.filter(idGrupo = pk).delete()
                 DenunciaGrupos.objects.filter(idGrupo = pk).delete()
                 
-        
-        DenunciasPublicaciones = DenunciaUsuarios.objects.all()
-        DenunciasGrupos = DenunciaGrupos.objects.all()
-        return render(request, 'adminlte/denuncias.html', {'DenunciasPublicaciones' : DenunciasPublicaciones, 'DenunciasGrupos': DenunciasGrupos})
+        return HttpResponseRedirect('/denuncias/')
+
+
+def moderarDenunciaUser(request, pk=None):
+        if pk:
+                user = User.objects.get(id =pk)
+                userSuspendido = SuspensionUsuario()
+                userSuspendido.user = user
+                userSuspendido.save()
+
+                DenunciaUser.objects.filter(idUsuarioDenunciado = pk).delete()
+                
+        return HttpResponseRedirect('/denuncias/')
+
 
 from .forms import EventoForm
 from .models import Evento
@@ -379,6 +384,26 @@ def perfil(request, pk=None):
                 listaPublicaciones = Publicacion.objects.filter( idUserPublico = user, Estado=4).order_by('-FechaPublicacion')[:5]
         return render(request, 'adminlte/perfil.html',{'listaPublicaciones' : listaPublicaciones, 'user': user, 'perfil':perfil})
 
+def denunciarUser(request):
+        if request.method == 'POST':
+                pkUser = request.POST.get('id')
+                contenido = request.POST.get('contenido')
+                denunciaUser = DenunciaUser()
+                cantidad = DenunciaUser.objects.filter(idUsuario = request.user, idUsuarioDenunciado = pkUser).count()
+                
+                if cantidad < 1:
+                        user = User.objects.get(id =pkUser)
+                
+                        denunciaUser = DenunciaUser()
+                        denunciaUser.idUsuario = request.user
+                        denunciaUser.idUsuarioDenunciado = user
+                        denunciaUser.Contenido = contenido
+                        denunciaUser.save()
+
+                data = {
+                   'mensaje' : "Denuncia Exitosa"
+                } 
+        return JsonResponse(data)
 
 def cambiarSkin(request):
         if request.method == 'POST':

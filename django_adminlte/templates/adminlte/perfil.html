@@ -33,7 +33,7 @@
                 </li>
               </ul>
 
-              <a href="#" class="btn btn-danger btn-block"><b>Denunciar</b></a>
+              <a id="btnDenunciar{{ user.id }}"  onclick="idButtonModal(this)" data-toggle="modal" data-target="#modalDenuncia" class="btn btn-danger btn-block"><b>Denunciar</b></a>
             </div>
             <!-- /.box-body -->
           </div>
@@ -120,4 +120,7 @@
         </div>
         <!-- /.col -->
       </div>
+
+      {% include 'adminlte/components/modalDenunciaUser.html' %}
+
 {% endblock %}
