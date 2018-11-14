@@ -13,6 +13,9 @@
       </ol>
     {% endblock %}
 
+    {% if messages %}
+        {{ message }}
+    {% endif %}
 
 {% endblock %}
 {% block content %}

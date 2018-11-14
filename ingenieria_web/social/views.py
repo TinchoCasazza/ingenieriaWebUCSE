@@ -94,8 +94,8 @@ def signup(request):
                         mail_subject, message, to=[to_email]
             )
             email.send()
-            valido = True
-            return render(request, 'adminlte/signup.html', {'form': form, 'valido': valido})
+            messages.success(request, u'Listo!, Ahora solo queda que confirme su direccion de email.') 
+            return HttpResponseRedirect('/inicio/')
     else:
         form = SignupForm()
     return render(request, 'adminlte/signup.html', {'form': form})
