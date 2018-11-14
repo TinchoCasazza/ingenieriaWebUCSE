@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.contrib import messages
 from django.http import HttpResponseRedirect
 from django.template import context
-from .models import Publicacion, Grupo, Comentario, Skin, Perfil, UserGrupos, Suscripcion, DenunciaUsuarios, DenunciaGrupos
+from .models import Publicacion, Grupo, Comentario, Skin, Perfil, UserGrupos, Suscripcion, DenunciaUsuarios, DenunciaGrupos, DenunciaUser
 from rest_framework.authtoken.models import Token
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
@@ -372,6 +372,26 @@ def perfil(request, pk=None):
                 listaPublicaciones = Publicacion.objects.filter( idUserPublico = user, Estado=4).order_by('-FechaPublicacion')[:5]
         return render(request, 'adminlte/perfil.html',{'listaPublicaciones' : listaPublicaciones, 'user': user, 'perfil':perfil})
 
+def denunciarUser(request):
+        if request.method == 'POST':
+                pkUser = request.POST.get('id')
+                contenido = request.POST.get('contenido')
+                denunciaUser = DenunciaUser()
+                cantidad = DenunciaUser.objects.filter(idUsuario = request.user, idUsuarioDenunciado = pkUser).count()
+                
+                if cantidad < 1:
+                        user = User.objects.get(id =pkUser)
+                
+                        denunciaUser = DenunciaUser()
+                        denunciaUser.idUsuario = request.user
+                        denunciaUser.idUsuarioDenunciado = user
+                        denunciaUser.Contenido = contenido
+                        denunciaUser.save()
+
+                data = {
+                   'mensaje' : "Denuncia Exitosa"
+                } 
+        return JsonResponse(data)
 
 def cambiarSkin(request):
         if request.method == 'POST':

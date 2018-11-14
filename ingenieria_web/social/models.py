@@ -57,7 +57,8 @@ class UserGrupos(models.Model):
     idUser = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     idGrupoUsuario = models.ForeignKey(Grupo, on_delete=models.CASCADE)
     Rango = models.IntegerField(choices=RANK_CHOICES, default=1)
-    
+
+  
 
 
 
@@ -85,6 +86,12 @@ class DenunciaGrupos(models.Model):
     idUsuario =  models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     idGrupo = models.ForeignKey(Grupo, on_delete=models.CASCADE) 
     Contenido = models.TextField(blank=False, max_length = 150)
+
+class DenunciaUser(models.Model):
+    idUsuario =  models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='userDenuncia')
+    idUsuarioDenunciado = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE,related_name='userDenunciado') 
+    Contenido = models.TextField(blank=False, max_length = 150)
+
 
 class Comentario(models.Model):
     idComentario = models.AutoField(primary_key = True)
