@@ -499,7 +499,7 @@ def administrarGrupo(request, pk=None):
                 miembros = User.objects.filter(username__in = miembros_grupos)
                 formAdministrarGrupo.fields['idUser'].queryset = miembros
                 miembro = UserGrupos.objects.get(idUser=request.user,idGrupoUsuario=pk)
-                if miembro.Rango == 3:
+                if miembro.Rango > 1:
                         return render(request, 'adminlte/adminGrupo.html', {'formAdministrarGrupo':formAdministrarGrupo, 'grupo':grupo, 'miembros':miembrosGrupos,'formPrivacidadGrupo':formPrivacidadGrupo})
                 else:
                         return render(request, 'adminlte/errores/errorAdmin.html', { 'GrupoPk': pk})
