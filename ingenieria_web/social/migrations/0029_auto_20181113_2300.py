@@ -21,24 +21,4 @@ class Migration(migrations.Migration):
                 ('idUsuarioDenunciado', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='userDenunciado', to=settings.AUTH_USER_MODEL)),
             ],
         ),
-        migrations.AlterField(
-            model_name='perfil',
-            name='carrera',
-            field=models.CharField(blank=True, default='Agregar Carrera', max_length=40, null=True),
-        ),
-        migrations.AlterField(
-            model_name='perfil',
-            name='localizacion',
-            field=models.CharField(blank=True, default='Agregar Ubicacion', max_length=50, null=True),
-        ),
-        migrations.AlterField(
-            model_name='perfil',
-            name='nombreCompleto',
-            field=models.CharField(blank=True, default='Agregar Nombre', max_length=50, null=True),
-        ),
-        migrations.AlterField(
-            model_name='perfil',
-            name='universidad',
-            field=models.CharField(blank=True, default='Agregar Universidad', max_length=100, null=True),
-        ),
     ]
