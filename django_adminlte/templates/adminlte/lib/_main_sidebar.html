@@ -52,6 +52,13 @@
                         <i class="fa fa-home"></i> <span>Inicio</span>
                     </a>
                 </li>
+                {% if request.user.is_authenticated %}
+                <li>
+                    <a href="{% url 'perfil_url_pk' pk=request.user %}">
+                        <i class="fa fa-user"></i> <span>Mi Perfil</span>
+                    </a>
+                </li>
+                {% endif %}
                 <li>
                     <!---<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
                                 Launch demo modal

@@ -33,7 +33,7 @@ def inicio(request):
     listaPublicaciones = Publicacion.objects.filter(Estado = 4).order_by('-FechaPublicacion')
     listaGrupos = Grupo.objects.all().order_by('NombreGrupo')
     listaComentarios = Comentario.objects.all()
-    listaSuscripciones = Suscripcion.objects.filter(Estado = 1).order_by('-fecha_peticion')
+    listaSuscripciones = Suscripcion.objects.filter(Estado = 1, receptor=request.user).order_by('-fecha_peticion')
     formNuevoGrupo = NuevoGrupo()
     formNuevaPublicacion = PublicacionForm()
     return render(request, 'adminlte/index.html',{'listaPublicaciones' : listaPublicaciones ,'listaGrupos': listaGrupos, 'formNuevoGrupo': formNuevoGrupo, 'listaComentarios': listaComentarios, 'listaSuscripciones': listaSuscripciones,'formNuevaPublicacion':formNuevaPublicacion})
@@ -560,6 +560,7 @@ def salirGrupo(request, pk=None):
         if pk:
             miembro = UserGrupos.objects.get(idUser=request.user,idGrupoUsuario=pk)    
             grupo = Grupo.objects.get(idGrupo=pk)
+            
             if grupo.Creador != request.user:
                     UserGrupos.objects.get(idUser=request.user,idGrupoUsuario=pk).delete()
                     Suscripcion.objects.get(emisor=request.user, idGrupoSuscribio = pk).delete()

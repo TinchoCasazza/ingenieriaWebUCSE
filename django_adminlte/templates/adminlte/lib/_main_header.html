@@ -40,7 +40,7 @@
                                 <li class="user-header">
                                     <img src={{ request.user.avatar }} size="180" class="img-circle" alt="User Image">
                                     <p>
-                                        {% firstof request.user.get_short_name request.user.get_username %}
+                                        {% firstof request.user.get_short_name request.user.get_username|capfirst  %}
                                         <small>Miembro desde {{ request.user.date_joined }}</small>
                                     </p>
                                 </li>

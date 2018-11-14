@@ -5,11 +5,7 @@
           <div class="btn-group">
               <select class="input-group" id="selectCarrera">
                 <option selected > 
-                    {% if request.user.is_authenticated %}
-                        {{ user.carrera }}
-                    {% else %}
-                        {{ listaCarreras.first }}
-                    {% endif %}
+                    Ingenieria Informatica
                 </option>
                     {% for carrera in listaCarreras%}
                      <option> {{ carrera.NombreCarrera }} </option>

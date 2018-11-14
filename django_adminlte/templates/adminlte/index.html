@@ -25,7 +25,7 @@
 
     <div class="col-md-12">
        <!-- Si el usuario esta logeado y tiene permisos para publicar  -->
-      {% if request.user.is_authenticated %}
+      {% if request.user.is_authenticated and request.user.is_superuser %}
         <div class="box">
             <div class="box-header">
               <h3 class="box-title">Publicar
@@ -54,11 +54,11 @@
                           <img class="img-circle" src="{{ publicacion.idUserPublico.avatar }}" alt="User Image">
                         {% endif %}
                         <span class="username"><a href="{% url 'perfil_url_pk' pk=publicacion.idUserPublico %}">{{ publicacion.idUserPublico }}</a></span>
-                        <span class="title pull-right">{{ publicacion.Titulo }}</span>
+                        <span class="title pull-right"><b>{{ publicacion.Titulo }}</b></span>
                         <span class="description">{{ publicacion.FechaPublicacion }}</span>
                       </div>
                     <div class="box-tools">
-                    {% if publicacion.idUserPublico == request.user %} 
+                    {% if publicacion.idUserPublico == request.user or request.user.is_superuser %} 
                     <button type="button" id="btnModificar{{ publicacion.idPublicacion }}" onclick="modificarPublicacion(this)" class="btn btn-box-tool" data-widget="edit"><i class="fa fa-pencil"></i></button> 
                     <button type="button" id="btnBorrar{{ publicacion.idPublicacion }}"  onclick="borrarPublicacion(this)" class="btn btn-box-tool btnBorrar" data-widget="remove"><i class="fa fa-times"></i></button>
                   {% endif %}                   
