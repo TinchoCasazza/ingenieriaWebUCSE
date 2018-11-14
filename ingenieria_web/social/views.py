@@ -139,7 +139,7 @@ def borrarPublicacion(request):
                 pkPublicacion = request.POST.get('publicacionId')
                 publicacion = Publicacion()
                 publicacion = Publicacion.objects.get(idPublicacion = pkPublicacion)
-                if request.user == publicacion.idUserPublico:
+                if request.user == publicacion.idUserPublico or request.user.is_superuser:
                         publicacion.Estado = 2
                         publicacion.save()
         publicaciones = Publicacion.objects.filter(Estado = 1).order_by('-FechaPublicacion')
@@ -653,3 +653,11 @@ User = get_user_model()
 for user in User.objects.all():
     Token.objects.get_or_create(user=user)
 
+for user in User.objects.all():
+    Perfil.objects.get_or_create(user=user)
+
+@receiver(post_save, sender=get_user_model())
+
+def create_perfil(sender, instance=None, created=False, **kwargs):
+    if created:
+        Perfil.objects.create(user=instance)
