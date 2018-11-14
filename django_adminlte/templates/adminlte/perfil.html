@@ -1,4 +1,9 @@
 {% extends 'adminlte/base.html' %}
+
+{% block title_outer %}
+       <title>{% block title %} Sarasa | Perfil {% endblock %}</title>
+{% endblock %}
+
 {% block content_header %}
     <section class="content-header">
       <h1>
@@ -11,18 +16,19 @@
         <div class="col-md-3">
 
           <!-- Profile Image -->
-          <div class="box box-primary">
+          <div id="perfil" class="box box-primary">
             <div class="box-body box-profile">
               <img class="profile-user-img img-responsive img-circle" src={{ user.avatar }}  alt="User profile picture">
 
               <h3 class="profile-username text-center"> {{ publicacion.idUserPublico|capfirst }} </h3>
 
               <p class="text-muted text-center">{{ perfil.carrera }}</p>
-                <li><a data-target="#editarPerfil" data-toggle="modal" href="#editarPerfil" class"pull-right"><i class="fa fa-pencil"></i></a></li>
-
+              {% if request.user == perfil.user %}
+                <a data-target="#editarPerfil" onclick="cargarPerfil()" data-toggle="modal" href="#editarPerfil" class"pull-right"><i class="fa fa-pencil"></i></a>
+              {% endif %}
               <ul class="list-group list-group-unbordered">
                 <li class="list-group-item">
-                  <b>Nombre</b> <a class="pull-right"> {{ perfil.nombreCompleto|capfirst }}
+                  <b>Nombre</b> <a class="pull-right" id="idNombre"> {{ perfil.nombreCompleto|capfirst }}
                   </a>
                 </li>
                 <li class="list-group-item">
@@ -30,15 +36,16 @@
                   </a>
                 </li>
               </ul>
-
-              <a id="btnDenunciar{{ user.id }}"  onclick="idButtonModal(this)" data-toggle="modal" data-target="#modalDenuncia" class="btn btn-danger btn-block"><b>Denunciar</b></a>
+              
+                <a id="btnDenunciar{{ user.id }}"  onclick="idButtonModal(this)" data-toggle="modal" data-target="#modalDenuncia" class="btn btn-danger btn-block"><b>Denunciar</b></a>
+              
             </div>
             <!-- /.box-body -->
           </div>
           <!-- /.box -->
 
           <!-- About Me Box -->
-          <div class="box box-primary">
+          <div id="perfilInfo" class="box box-primary">
             <div class="box-header with-border">
               <h3 class="box-title">Sobre Mi</h3>
             </div>
@@ -46,15 +53,20 @@
             <div class="box-body">
               <strong><i class="fa fa-book margin-r-5"></i> Educacion</strong>
 
-              <p class="text-muted">
-                  {{ perfil.universidad }}
+              <p class="text-muted" id="idUniversidad">{{ perfil.universidad }}</p>
+
+              <hr>
+
+              <strong><i class="fa fa-book margin-r-5"></i> Educacion</strong>
+
+              <p class="text-muted" id="idCarrera">{{ perfil.carrera }}
               </p>
 
               <hr>
 
               <strong><i class="fa fa-map-marker margin-r-5"></i> Ubicacion</strong>
 
-              <p class="text-muted">{{ perfil.localizacion }}
+              <p class="text-muted" id="idLocalidad">{{ perfil.localizacion }}
                </p>
 
               <hr>

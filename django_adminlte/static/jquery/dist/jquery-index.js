@@ -393,3 +393,41 @@ function denunciarUser(comp){
 
 
 //--------------------------------//
+
+
+// Editar Perfil
+function EditarPerfil(){
+    var nombreCompleto = $("#id_nombreCompleto").val();
+    var carrera = $("#id_carrera").val();
+    var universidad = $("#id_universidad").val();
+    var localizacion = $("#id_localizacion").val();
+
+    $.ajax({
+      type: 'POST',
+      url: '/perfil/editar/', //direccion a donde hace las requets
+      data: {nombreCompleto: nombreCompleto, carrera : carrera, universidad: universidad, localizacion: localizacion},
+      success: function (data) {
+            console.log("Perfil editado con exito ");
+            $("#perfil").load(" #perfil");
+            $("#perfilInfo").load(" #perfilInfo");
+
+      },
+      error: function(data) {
+      }
+    });
+};
+
+//Cargar Perfil
+
+function cargarPerfil(){
+    var nombre = $("#idNombre").text();
+    var universidad = $("#idUniversidad").text();
+    var localidad = $("#idLocalidad").text();
+    var carrera = $("#idCarrera").text();
+
+    $("#id_nombreCompleto").val(nombre);
+    $("#id_localizacion").val(localidad);
+    $("#id_universidad").val(universidad);
+    $("#id_carrera").val(carrera);
+
+}

@@ -85,6 +85,7 @@ urlpatterns = [
     url(r'^busqueda/$', search_views.search, name="search_url"),  
 
     #Perfil
+    url(r'^perfil/editar/$', login_required(social_views.editarPerfil), name="editar_perfil_url"),
     url(r'^perfil/denunciar/$', login_required(social_views.denunciarUser), name="denunciar_user_url"),
     url(r'^perfil/(?P<pk>[\w\-]+)/$', social_views.perfil, name="perfil_url_pk"),  
     #Skin

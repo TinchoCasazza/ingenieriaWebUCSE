@@ -8,7 +8,7 @@
           <h4 class="modal-title">Editar Perfil</h4>
         </div>
         <div class="modal-body">
-            <form method="POST" action="{% url 'perfil_url_pk' pk=request.user %}" id="infoPerfil">
+            <form method="POST" id="infoPerfil">
                 {% csrf_token %}
                 {% load widget_tweaks %}
                 <div class="form-group">
@@ -33,7 +33,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" data-dismiss="modal" class="btn btn-danger">Cancelar</button>
-          <button type="submit" class="btn btn-success" data-dismiss="modal">Aceptar</button>
+          <button type="submit" class="btn btn-success" onclick="EditarPerfil()" data-dismiss="modal">Aceptar</button>
         </div>
       </div>
     </div>

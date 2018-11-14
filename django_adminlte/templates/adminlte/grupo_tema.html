@@ -63,7 +63,7 @@
                                 </td>
                             {% endif %}
                             <td> 
-                              <a id="publicacion{{ publicacion.idPublicacion }}"><i class="fa fa-ban margin-r-5"></i></a>
+                              <a type="button" class="btn btn-default btn-sm" id="btnDenunciar{{ grupo.idGrupo }}"  onclick="idButtonModal(this)" data-toggle="modal" data-target="#modalDenuncia"  class="link-black text-lg" style="cursor:pointer;"><i class="fa fa-ban"></i></a>
                             </td>
                           </tr>
                         {% endfor %}
@@ -203,4 +203,7 @@
               <!--/.box -->
             </div>       
     </div>
+
+    {% include 'adminlte/components/modalDenuncia.html' %}
+
 {% endblock %}

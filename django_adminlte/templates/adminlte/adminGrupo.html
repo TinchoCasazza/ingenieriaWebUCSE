@@ -43,15 +43,15 @@
                                       </tr>
                                   </thead>
                                 <tbody>
-                                  {% for denuncia in DenunciasGrupos %}
-                                      <tr>
-                                          <td class="mailbox-name"><a href="{% url 'perfil_url_pk' pk=denuncia.idUsuario %}">{{ denuncia.idUsuario }} </a></td>
-                                          <td class="mailbox-name"><b>{{ denuncia.Contenido}}</b></td>
-                                          <td class="mailbox-subject">{{ denuncia.idGrupo }} </td>
-                                          <td> 
-                                            <a><i class="fa fa-check-circle  margin-r-5"></i></a>
-                                          </td>
-                                      </tr>
+                                  {% for denuncia in DenunciasPublicaciones %}
+                                        <tr>
+                                            <td class="mailbox-name"><a href="{% url 'perfil_url_pk' pk=denuncia.idUsuario %}">{{ denuncia.idUsuario }} </a></td>
+                                            <td class="mailbox-name"><b>{{ denuncia.Contenido}}</b></td>
+                                            <td class="mailbox-subject">{{ denuncia.idPublicacion }} </td>
+                                            <td> 
+                                                <a><i class="fa fa-check-circle  margin-r-5"></i></a>
+                                            </td>
+                                        </tr>
                                   {% empty %}
                                       <tr>
                                          <td class="mailbox-name"> No hay denuncias para mostrar</td>
