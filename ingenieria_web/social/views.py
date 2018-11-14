@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.contrib import messages
 from django.http import HttpResponseRedirect
 from django.template import context
-from .models import Publicacion, Grupo, Comentario, Skin, Perfil, UserGrupos, Suscripcion, DenunciaUsuarios, DenunciaGrupos
+from .models import Publicacion, Grupo, Comentario,SuspensionUsuario, Skin, Perfil, UserGrupos, Suscripcion, DenunciaUsuarios, DenunciaGrupos
 from rest_framework.authtoken.models import Token
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
@@ -40,21 +40,29 @@ def inicio(request):
 
 
 CRITICAL = 50
-
+from django.shortcuts import get_object_or_404
 def login(request):
         if request.user.is_authenticated:
                 return HttpResponseRedirect('/inicio/')
         else:
                 if request.method == 'POST':
+                        
                         username = request.POST.get('username')
                         password = request.POST.get('password')
                         user = authenticate(request, username=username, password=password)
-                        if user is not None:
+                        try:
+                                baneado = SuspensionUsuario.objects.get(user=user)
+                        except SuspensionUsuario.DoesNotExist:
+                                baneado = None
+                        if user is not None and baneado is None:
                                 auth_login(request , user)
                                 token, _ = Token.objects.get_or_create(user=user)
                                 return HttpResponseRedirect('/inicio/')
                         else:
-                                messages.warning(request, u'Usuario o Contrase\xf1a incorrectos.') 
+                                if baneado is not None:
+                                        messages.warning(request, u'Usuario Suspendido') 
+                                else:
+                                        messages.warning(request, u'Usuario o Contrase\xf1a incorrectos.')
                                 return render(request, 'adminlte/login.html' , {} )
                 else: 
                         return render(request, 'adminlte/login.html' ,{} )
@@ -366,7 +374,6 @@ def suscribirUsuario(request):
 
 def perfil(request, pk=None):
         if pk:
-                print(pk)
                 user = User.objects.get(username =pk)
                 perfil = Perfil.objects.get(user = user)
                 listaPublicaciones = Publicacion.objects.filter( idUserPublico = user, Estado=4).order_by('-FechaPublicacion')[:5]
