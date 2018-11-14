@@ -33,10 +33,14 @@ def inicio(request):
     listaPublicaciones = Publicacion.objects.filter(Estado = 4).order_by('-FechaPublicacion')
     listaGrupos = Grupo.objects.all().order_by('NombreGrupo')
     listaComentarios = Comentario.objects.all()
-    listaSuscripciones = Suscripcion.objects.filter(Estado = 1, receptor=request.user).order_by('-fecha_peticion')
     formNuevoGrupo = NuevoGrupo()
     formNuevaPublicacion = PublicacionForm()
-    return render(request, 'adminlte/index.html',{'listaPublicaciones' : listaPublicaciones ,'listaGrupos': listaGrupos, 'formNuevoGrupo': formNuevoGrupo, 'listaComentarios': listaComentarios, 'listaSuscripciones': listaSuscripciones,'formNuevaPublicacion':formNuevaPublicacion})
+    
+    if  request.user.is_authenticated:
+        listaSuscripciones = Suscripcion.objects.filter(Estado = 1, receptor=request.user).order_by('-fecha_peticion')
+        return render(request, 'adminlte/index.html',{'listaPublicaciones' : listaPublicaciones ,'listaGrupos': listaGrupos, 'formNuevoGrupo': formNuevoGrupo, 'listaComentarios': listaComentarios, 'listaSuscripciones': listaSuscripciones,'formNuevaPublicacion':formNuevaPublicacion})
+    
+    return render(request, 'adminlte/index.html',{'listaPublicaciones' : listaPublicaciones ,'listaGrupos': listaGrupos, 'formNuevoGrupo': formNuevoGrupo, 'listaComentarios': listaComentarios, 'formNuevaPublicacion':formNuevaPublicacion})
 
 
 CRITICAL = 50
@@ -234,6 +238,7 @@ def moderarDenunciaUser(request, pk=None):
 
 
 from .forms import EventoForm
+from .forms import EditarPerfil
 from .models import Evento
 def ValidarAcceso(request, pkGrupo):
         if UserGrupos.objects.filter(idUser = request.user, idGrupoUsuario = pkGrupo).exists():
@@ -381,8 +386,25 @@ def perfil(request, pk=None):
         if pk:
                 user = User.objects.get(username =pk)
                 perfil = Perfil.objects.get(user = user)
+
+                if request.method == "POST":
+                        print('entre')
+                        form = EditarPerfil(request.POST)
+                        if form.is_valid():
+                                perfil = Perfil.objects.get(user= request.user)
+                                perfil.nombreCompleto = form.cleaned_data.get('nombreCompleto')
+                                perfil.carrera = form.cleaned_data.get('carrera')
+                                perfil.universidad = form.cleaned_data.get('universidad')
+                                perfil.localizacion = form.cleaned_data.get('localizacion')
+
+                                perfil.save()
+
                 listaPublicaciones = Publicacion.objects.filter( idUserPublico = user, Estado=4).order_by('-FechaPublicacion')[:5]
-        return render(request, 'adminlte/perfil.html',{'listaPublicaciones' : listaPublicaciones, 'user': user, 'perfil':perfil})
+                formEditarPerfil = EditarPerfil()
+
+        return render(request, 'adminlte/perfil.html',{'listaPublicaciones' : listaPublicaciones, 'user': user, 'perfil':perfil, 'formEditarPerfil':formEditarPerfil})
+
+
 
 def denunciarUser(request):
         if request.method == 'POST':

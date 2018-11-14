@@ -5,7 +5,7 @@ from django.contrib.auth import get_user_model
 
 User = get_user_model()
 
-from .models import Grupo, Publicacion, Comentario, Evento, UserGrupos
+from .models import Grupo, Publicacion, Comentario, Evento, UserGrupos, Perfil
 from django_summernote.widgets import SummernoteWidget, SummernoteInplaceWidget
 
 class SignupForm(UserCreationForm):
@@ -50,6 +50,11 @@ class ComentarioForm(ModelForm):
             'bar': SummernoteInplaceWidget(),
         }
         fields = ['ContenidoComentario']
+
+class EditarPerfil(ModelForm):
+    class Meta:
+        model = Perfil
+        exclude =  ['idPerfil']        
 
 class DateInput(forms.DateInput):
     input_type = 'date'

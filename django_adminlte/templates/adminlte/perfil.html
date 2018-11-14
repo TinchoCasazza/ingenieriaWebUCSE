@@ -17,18 +17,16 @@
 
               <h3 class="profile-username text-center"> {{ publicacion.idUserPublico|capfirst }} </h3>
 
-              <p class="text-muted text-center">{{ perfil.carrera }}
-                <button type="button" id="btnModificar23" class="btn btn-box-tool" data-widget="edit"><i class="fa fa-pencil"></i></button></p>
+              <p class="text-muted text-center">{{ perfil.carrera }}</p>
+                <li><a data-target="#editarPerfil" data-toggle="modal" href="#editarPerfil" class"pull-right"><i class="fa fa-pencil"></i></a></li>
 
               <ul class="list-group list-group-unbordered">
                 <li class="list-group-item">
                   <b>Nombre</b> <a class="pull-right"> {{ perfil.nombreCompleto|capfirst }}
-                      <button type="button" id="btnModificar23" class="btn btn-box-tool" data-widget="edit"><i class="fa fa-pencil"></i></button>
                   </a>
                 </li>
                 <li class="list-group-item">
                   <b>Email</b> <a class="pull-right"> {{ user.email }} 
-                      <button type="button" id="btnModificar23" class="btn btn-box-tool" data-widget="edit"><i class="fa fa-pencil"></i></button>
                   </a>
                 </li>
               </ul>
@@ -50,7 +48,6 @@
 
               <p class="text-muted">
                   {{ perfil.universidad }}
-                  <button type="button" id="btnModificar23" class="btn btn-box-tool" data-widget="edit"><i class="fa fa-pencil"></i></button>
               </p>
 
               <hr>
@@ -58,7 +55,6 @@
               <strong><i class="fa fa-map-marker margin-r-5"></i> Ubicacion</strong>
 
               <p class="text-muted">{{ perfil.localizacion }}
-                  <button type="button" id="btnModificar23" class="btn btn-box-tool" data-widget="edit"><i class="fa fa-pencil"></i></button>
                </p>
 
               <hr>
@@ -122,5 +118,7 @@
       </div>
 
       {% include 'adminlte/components/modalDenunciaUser.html' %}
+      {% include 'adminlte/components/editarPerfil.html' %}
+
 
 {% endblock %}
