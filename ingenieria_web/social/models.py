@@ -39,6 +39,11 @@ class Perfil(models.Model):
     carrera = models.CharField(blank = True, null=True, max_length=40, default="Agregar Carrera")
     universidad = models.CharField(blank = True, null=True, max_length=100, default="Agregar Universidad")
 
+class SuspensionUsuario(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    motivo = models.CharField(blank = True, null=True, max_length=100)
+    fechaSuspension = models.DateField(default = datetime.date.today, editable = False)
+    duracion = models.IntegerField(blank = True, null=True)
 class Grupo(models.Model):
     idGrupo = models.AutoField(primary_key=True)
     NombreGrupo = models.CharField(blank= False, max_length=50)
